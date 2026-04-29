@@ -81,6 +81,96 @@ const DEFAULT_ARTICLES = [
   { id: "a6", category: "PENALTY DEBATE", title: "Embellishment: Hockey's Dirtiest Open Secret", excerpt: "Every fan sees it. Every coach knows it. Players do it on purpose — and the league has been trying to stop it for 30 years. Why does diving keep winning?", author: "FanVerdict Staff", date: "Apr 16, 2026", read_time: "5 min read", hot: false, photo: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&q=80" },
 ];
 
+// ── Parlay Data ──
+const PARLAYS = [
+  {
+    id: "p1",
+    label: "GAME 7 CHAOS PARLAY",
+    legs: 4,
+    odds: "+1840",
+    hot: true,
+    description: "Four series go to Game 7 this week. Bet on the chaos.",
+    picks: [
+      { game: "Oilers vs Canucks", bet: "Oilers ML (Game 7)", line: "-118", sport: "NHL" },
+      { game: "Bruins vs Panthers", bet: "Panthers ML (Game 7)", line: "+140", sport: "NHL" },
+      { game: "Rangers vs Capitals", bet: "Rangers ML (Game 7)", line: "-130", sport: "NHL" },
+      { game: "Stars vs Avs", bet: "Over 5.5 Goals", line: "-115", sport: "NHL" },
+    ],
+    payout: "$100 → $1,940",
+  },
+  {
+    id: "p2",
+    label: "McDaVID PROP MONSTER",
+    legs: 3,
+    odds: "+620",
+    hot: true,
+    description: "McDavid is locked in. Parlay his props for a massive night.",
+    picks: [
+      { game: "Oilers vs Canucks", bet: "McDavid 1+ Point", line: "-160", sport: "NHL PROPS" },
+      { game: "Oilers vs Canucks", bet: "McDavid Anytime Goal Scorer", line: "+135", sport: "NHL PROPS" },
+      { game: "Oilers vs Canucks", bet: "Oilers 1st Period Winner", line: "+105", sport: "NHL PROPS" },
+    ],
+    payout: "$100 → $720",
+  },
+  {
+    id: "p3",
+    label: "GOALIE SHUTOUT SPECIAL",
+    legs: 2,
+    odds: "+480",
+    hot: false,
+    description: "Two elite goalies, two dominant defensive matchups. Back the brick walls.",
+    picks: [
+      { game: "Rangers vs Capitals", bet: "Igor Shesterkin 25+ Saves", line: "-140", sport: "NHL PROPS" },
+      { game: "Stars vs Avs", bet: "Jake Oettinger 30+ Saves", line: "+175", sport: "NHL PROPS" },
+    ],
+    payout: "$100 → $580",
+  },
+  {
+    id: "p4",
+    label: "OVERTIME THRILLER PARLAY",
+    legs: 3,
+    odds: "+1100",
+    hot: true,
+    description: "Playoff hockey is built for overtime. Three games with the look of OT finishes.",
+    picks: [
+      { game: "Bruins vs Panthers", bet: "Game Goes to OT", line: "+280", sport: "NHL" },
+      { game: "Leafs vs Lightning", bet: "Game Goes to OT", line: "+260", sport: "NHL" },
+      { game: "Avs vs Stars", bet: "Over 5.5 Total Goals", line: "-110", sport: "NHL" },
+    ],
+    payout: "$100 → $1,200",
+  },
+  {
+    id: "p5",
+    label: "CROSS-SPORT MEGA PARLAY",
+    legs: 5,
+    odds: "+3200",
+    hot: false,
+    description: "High risk, massive reward. Five legs across NHL and NBA playoffs.",
+    picks: [
+      { game: "Oilers vs Canucks", bet: "Oilers ML", line: "-118", sport: "NHL" },
+      { game: "Rangers vs Capitals", bet: "Under 5.5 Goals", line: "-105", sport: "NHL" },
+      { game: "Celtics vs Knicks", bet: "Celtics -6.5", line: "-110", sport: "NBA" },
+      { game: "Thunder vs Nuggets", bet: "Thunder ML", line: "+115", sport: "NBA" },
+      { game: "Pacers vs Bucks", bet: "Over 224.5 Points", line: "-112", sport: "NBA" },
+    ],
+    payout: "$100 → $3,300",
+  },
+  {
+    id: "p6",
+    label: "PENALTY MINUTE MADNESS",
+    legs: 3,
+    odds: "+740",
+    hot: false,
+    description: "Playoff hockey gets physical. Fade the clean teams, back the hitters.",
+    picks: [
+      { game: "Bruins vs Panthers", bet: "Both Teams 10+ PIM", line: "+175", sport: "NHL" },
+      { game: "Stars vs Avs", bet: "Avs Bowen Byram Anytime Point", line: "+200", sport: "NHL PROPS" },
+      { game: "Oilers vs Canucks", bet: "Darnell Nurse 3+ Hits", line: "-120", sport: "NHL PROPS" },
+    ],
+    payout: "$100 → $840",
+  },
+];
+
 const COLORS = {
   "GOAL REVIEW":    ["#00d4ff18","#00d4ff","#00d4ff44"],
   "FIGHT VERDICT":  ["#ff4d4d18","#ff4d4d","#ff4d4d44"],
@@ -97,6 +187,12 @@ const CAT_COLORS = {
   "PENALTY DEBATE": "#fb923c", "GENERAL": "#c084fc",
 };
 const ARTICLE_CATEGORIES = Object.keys(CAT_COLORS);
+
+const SPORT_COLORS = {
+  "NHL": ["#00d4ff18","#00d4ff","#00d4ff33"],
+  "NHL PROPS": ["#c084fc18","#c084fc","#c084fc33"],
+  "NBA": ["#ff8c0018","#ff8c00","#ff8c0033"],
+};
 
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap');
@@ -117,6 +213,8 @@ const css = `
   .art-card:hover{border-color:#00d4ff33!important;transform:translateY(-3px);box-shadow:0 12px 40px #00000066}
   .feed-card{transition:border-color .2s ease}
   .feed-card:hover{border-color:#1e3a4a!important}
+  .parlay-card{transition:all .22s ease;cursor:pointer}
+  .parlay-card:hover{border-color:#ffd70044!important;transform:translateY(-2px)}
   .nav-btn{background:none;border:1px solid transparent;color:#3a5060;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .18s ease}
   .nav-btn:hover{color:#7a9aaa;border-color:#1e2e3e}
   .nav-btn.active{color:#00d4ff;border-color:#00d4ff44;background:#00d4ff0d}
@@ -139,6 +237,7 @@ export default function App() {
   const [aiLoad, setAiLoad]     = useState({});
   const [active, setActive]     = useState(null);
   const [activeArticle, setActiveArticle] = useState(null);
+  const [activeParlayId, setActiveParlayId] = useState(null);
   const [adminOk, setAdminOk]   = useState(false);
   const [token, setToken]       = useState(null);
   const [user, setUser]         = useState(null);
@@ -257,6 +356,7 @@ export default function App() {
 
   const openDetail = (item) => { setActive(item); setPage("detail"); getAI(item); };
   const openArticle = (article) => { setActiveArticle(article); setPage("article"); };
+  const openParlay = (id) => { setActiveParlayId(id); setPage("parlay_detail"); };
   const total = (id) => Math.max((lv[id]?.[0]||0)+(lv[id]?.[1]||0), 1);
   const pct   = (id, i) => Math.round(((lv[id]?.[i]||0)/total(id))*100);
   const savedItems = items.filter(c => profile?.saved_ids?.includes(c.id));
@@ -282,6 +382,9 @@ export default function App() {
           <nav style={S.nav}>
             <button className={navCls("feed")} onClick={goFeed}>FEED</button>
             <button className={navCls(["forum","article"])} onClick={()=>setPage("forum")}>FORUM</button>
+            <button className={navCls(["parlay","parlay_detail"])} onClick={()=>setPage("parlay")}>
+              <span style={{color:"#ffd700",marginRight:4}}>💰</span>PARLAYS
+            </button>
             {user && <button className={navCls("saved")} onClick={()=>setPage("saved")}>SAVED</button>}
             {user && (
               <button className={navCls("profile")} onClick={()=>setPage("profile")}>
@@ -393,6 +496,15 @@ export default function App() {
 
       {page==="forum" && <ForumPage articles={articles} onOpenArticle={openArticle}/>}
       {page==="article" && activeArticle && <ArticlePage article={activeArticle} onBack={()=>setPage("forum")}/>}
+
+      {page==="parlay" && <ParlayPage parlays={PARLAYS} onOpenParlay={openParlay}/>}
+      {page==="parlay_detail" && activeParlayId && (
+        <ParlayDetailPage
+          parlay={PARLAYS.find(p=>p.id===activeParlayId)}
+          onBack={()=>setPage("parlay")}
+        />
+      )}
+
       {page==="profile" && user && (
         <ProfilePage profile={profile} user={user} savedCount={profile?.saved_ids?.length||0}
           votedCount={Object.keys(uv).length} onLogout={handleLogout} onBack={goFeed}/>
@@ -406,6 +518,8 @@ export default function App() {
         <span style={{color:"#1a2a36"}}>FanVerdict © 2026</span>
         <span style={{color:"#0f1820",margin:"0 12px"}}>·</span>
         <span style={{color:"#1a2a36"}}>Built for hockey fans</span>
+        <span style={{color:"#0f1820",margin:"0 12px"}}>·</span>
+        <span style={{color:"#1a2836",fontSize:10}}>Must be 19+. Gambling can be addictive. Play responsibly.</span>
       </footer>
     </div>
   );
@@ -490,6 +604,256 @@ function AuthModal({ onClose, onLogin }) {
         )}
       </div>
     </div>
+  );
+}
+
+// ── Parlay Page ──
+function ParlayPage({ parlays, onOpenParlay }) {
+  const [filter, setFilter] = useState("ALL");
+  const filters = ["ALL", "2 LEGS", "3 LEGS", "4+ LEGS", "🔥 HOT"];
+  const filtered = parlays.filter(p => {
+    if (filter === "ALL") return true;
+    if (filter === "🔥 HOT") return p.hot;
+    if (filter === "2 LEGS") return p.legs === 2;
+    if (filter === "3 LEGS") return p.legs === 3;
+    if (filter === "4+ LEGS") return p.legs >= 4;
+    return true;
+  });
+
+  return (
+    <main style={S.main}>
+      <div style={{marginBottom:32}}>
+        <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:8,flexWrap:"wrap"}}>
+          <h1 style={{fontSize:"clamp(28px,5vw,52px)",fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>PARLAY</h1>
+          <span style={{fontSize:"clamp(28px,5vw,52px)",fontWeight:900,letterSpacing:3,color:"#ffd700"}}>BOARD</span>
+          <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ffd700",background:"#ffd70014",border:"1px solid #ffd70033",padding:"3px 10px",borderRadius:4,alignSelf:"center"}}>LIVE ODDS</span>
+        </div>
+        <p style={{color:"#2a4050",fontSize:14,letterSpacing:1}}>Curated parlays built for playoff hockey fans. Real lines. Real risk. Real payout.</p>
+      </div>
+
+      <div style={{background:"#0a0d10",border:"1px solid #ffd70022",borderRadius:10,padding:"12px 18px",marginBottom:28,display:"flex",alignItems:"center",gap:10}}>
+        <span style={{fontSize:13,color:"#ffd70066"}}>⚠</span>
+        <span style={{fontSize:12,color:"#3a4050",letterSpacing:.3}}>Odds are for informational purposes only. Must be 19+ to bet. Gambling involves risk. Play responsibly.</span>
+      </div>
+
+      <div style={{display:"flex",gap:8,marginBottom:28,flexWrap:"wrap"}}>
+        {filters.map(f => {
+          const active = filter === f;
+          return (
+            <button key={f} onClick={()=>setFilter(f)} style={{
+              padding:"5px 14px",
+              background: active ? "#ffd70014" : "transparent",
+              border: `1px solid ${active ? "#ffd70055" : "#161e2e"}`,
+              borderRadius:20,
+              color: active ? "#ffd700" : "#3a5060",
+              fontFamily:"'Barlow Condensed',sans-serif",
+              fontSize:11,fontWeight:800,letterSpacing:1.5,cursor:"pointer",
+              transition:"all .15s ease",
+            }}>{f}</button>
+          );
+        })}
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",gap:22}}>
+        {filtered.map((parlay,i) => (
+          <ParlayCard key={parlay.id} parlay={parlay} idx={i} onOpen={()=>onOpenParlay(parlay.id)}/>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+// ── Parlay Card ──
+function ParlayCard({ parlay, idx, onOpen }) {
+  const isPos = parlay.odds.startsWith("+");
+  return (
+    <div
+      className="cfade parlay-card"
+      style={{
+        background:"#0b1018",
+        border:"1px solid #161e2e",
+        borderRadius:16,
+        padding:"22px 24px",
+        position:"relative",
+        overflow:"hidden",
+        animationDelay:`${idx*.07}s`,
+        cursor:"pointer",
+      }}
+      onClick={onOpen}
+    >
+      {parlay.hot && (
+        <div style={{position:"absolute",top:14,right:14,display:"inline-flex",alignItems:"center",gap:5,background:"#0d0a07",border:"1px solid #ff5a1a44",borderRadius:6,padding:"4px 10px"}}>
+          <span style={{fontSize:11}}>🔥</span>
+          <span style={{fontSize:10,fontWeight:900,letterSpacing:2.5,color:"#ff6633"}}>HOT</span>
+        </div>
+      )}
+
+      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+        <span style={{
+          fontSize:9,fontWeight:800,letterSpacing:2,
+          color:"#ffd700",
+          background:"#ffd70014",
+          border:"1px solid #ffd70033",
+          padding:"3px 9px",borderRadius:4,
+        }}>💰 {parlay.legs}-LEG PARLAY</span>
+      </div>
+
+      <h2 style={{fontSize:19,fontWeight:900,letterSpacing:1.5,color:"#dce6f0",marginBottom:8,lineHeight:1.2,paddingRight:parlay.hot?60:0}}>{parlay.label}</h2>
+      <p style={{fontSize:13,color:"#3a5060",lineHeight:1.6,marginBottom:18}}>{parlay.description}</p>
+
+      <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:18}}>
+        <div style={{
+          fontSize:28,fontWeight:900,
+          color: isPos ? "#4ade80" : "#ff4d4d",
+          letterSpacing:1,
+          lineHeight:1,
+        }}>{parlay.odds}</div>
+        <div style={{flex:1}}>
+          <div style={{fontSize:10,color:"#2a4050",letterSpacing:1,marginBottom:2}}>AMERICAN ODDS</div>
+          <div style={{fontSize:12,color:"#ffd700",fontWeight:700}}>{parlay.payout}</div>
+        </div>
+      </div>
+
+      <div style={{borderTop:"1px solid #0f1820",paddingTop:14,display:"flex",flexDirection:"column",gap:7}}>
+        {parlay.picks.slice(0,2).map((pick,i) => {
+          const [bg,tc] = SPORT_COLORS[pick.sport]||SPORT_COLORS["NHL"];
+          return (
+            <div key={i} style={{display:"flex",alignItems:"center",gap:8}}>
+              <span style={{fontSize:9,fontWeight:800,letterSpacing:1,color:tc,background:bg,border:`1px solid ${tc}44`,padding:"2px 7px",borderRadius:3,flexShrink:0,whiteSpace:"nowrap"}}>{pick.sport}</span>
+              <span style={{fontSize:12,color:"#5a7080",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}}>{pick.bet}</span>
+              <span style={{fontSize:12,fontWeight:700,color:"#3a5060",flexShrink:0}}>{pick.line}</span>
+            </div>
+          );
+        })}
+        {parlay.picks.length > 2 && (
+          <div style={{fontSize:11,color:"#1e3040",letterSpacing:.5,paddingTop:2}}>+{parlay.picks.length-2} more leg{parlay.picks.length-2>1?"s":""} → tap to view</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Parlay Detail Page ──
+function ParlayDetailPage({ parlay, onBack }) {
+  const [aiVerdict, setAiVerdict] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const isPos = parlay.odds.startsWith("+");
+
+  const getAIParlayVerdict = async () => {
+    if (aiVerdict || aiLoading) return;
+    setAiLoading(true);
+    try {
+      const picksText = parlay.picks.map((p,i) => `${i+1}. ${p.game} — ${p.bet} (${p.line})`).join("\n");
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          model:"claude-sonnet-4-20250514", max_tokens:1000,
+          system:"You are a sharp sports betting analyst who specializes in NHL parlays. Give a punchy, confident 3-4 sentence breakdown of this parlay's potential. Mention the riskiest leg and the strongest leg. End with a bold one-line take in ALL CAPS.",
+          messages:[{role:"user",content:`Parlay: ${parlay.label}\nOdds: ${parlay.odds}\nPayout: ${parlay.payout}\n\nLegs:\n${picksText}\n\nGive your analyst breakdown.`}],
+        }),
+      });
+      const d = await res.json();
+      setAiVerdict(d.content?.map(b=>b.text||"").join("")||"Verdict unavailable.");
+    } catch { setAiVerdict("AI analyst timed out — try again."); }
+    setAiLoading(false);
+  };
+
+  useEffect(() => { getAIParlayVerdict(); }, []);
+
+  return (
+    <main style={S.main}>
+      <button style={S.back} onClick={onBack}>← Back to Parlays</button>
+      <div style={{maxWidth:680,margin:"0 auto"}}>
+
+        <div style={{background:"#0b1018",border:"1px solid #1a2030",borderRadius:16,padding:"28px 30px",marginBottom:4}}>
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
+            <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ffd700",background:"#ffd70014",border:"1px solid #ffd70033",padding:"3px 10px",borderRadius:4}}>💰 {parlay.legs}-LEG PARLAY</span>
+            {parlay.hot && <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ff6633",background:"#ff663314",border:"1px solid #ff663333",padding:"3px 10px",borderRadius:4}}>🔥 HOT</span>}
+          </div>
+
+          <h1 style={{fontSize:"clamp(22px,4vw,34px)",fontWeight:900,letterSpacing:2,color:"#dce6f0",marginBottom:10,lineHeight:1.15}}>{parlay.label}</h1>
+          <p style={{fontSize:14,color:"#3a5060",lineHeight:1.7,marginBottom:24}}>{parlay.description}</p>
+
+          <div style={{display:"flex",gap:16,marginBottom:28,flexWrap:"wrap"}}>
+            <div style={{background:"#070c12",border:"1px solid #0f1820",borderRadius:10,padding:"16px 22px",flex:1,minWidth:140}}>
+              <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#2a4050",marginBottom:6}}>TOTAL ODDS</div>
+              <div style={{fontSize:36,fontWeight:900,color:isPos?"#4ade80":"#ff4d4d",letterSpacing:1,lineHeight:1}}>{parlay.odds}</div>
+            </div>
+            <div style={{background:"#070c12",border:"1px solid #0f1820",borderRadius:10,padding:"16px 22px",flex:1,minWidth:140}}>
+              <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#2a4050",marginBottom:6}}>$100 PAYS</div>
+              <div style={{fontSize:28,fontWeight:900,color:"#ffd700",letterSpacing:1,lineHeight:1}}>{parlay.payout.split("→")[1]?.trim()}</div>
+            </div>
+            <div style={{background:"#070c12",border:"1px solid #0f1820",borderRadius:10,padding:"16px 22px",flex:1,minWidth:100}}>
+              <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#2a4050",marginBottom:6}}>LEGS</div>
+              <div style={{fontSize:36,fontWeight:900,color:"#c084fc",letterSpacing:1,lineHeight:1}}>{parlay.legs}</div>
+            </div>
+          </div>
+
+          <div style={{fontSize:11,fontWeight:800,letterSpacing:2.5,color:"#1e3040",marginBottom:14}}>ALL PICKS</div>
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            {parlay.picks.map((pick,i) => {
+              const [bg,tc,bc] = SPORT_COLORS[pick.sport]||SPORT_COLORS["NHL"];
+              const lineNum = parseFloat(pick.line);
+              const lineColor = lineNum > 0 ? "#4ade80" : lineNum < -150 ? "#ff6b6b" : "#ffd700";
+              return (
+                <div key={i} style={{
+                  background:"#070b12",
+                  border:`1px solid #111820`,
+                  borderLeft:`3px solid ${tc}`,
+                  borderRadius:8,
+                  padding:"14px 18px",
+                  display:"flex",
+                  alignItems:"center",
+                  gap:12,
+                  flexWrap:"wrap",
+                }}>
+                  <div style={{
+                    width:24,height:24,borderRadius:"50%",
+                    background:bg,border:`1px solid ${bc}`,
+                    display:"flex",alignItems:"center",justifyContent:"center",
+                    fontSize:11,fontWeight:900,color:tc,flexShrink:0,
+                  }}>{i+1}</div>
+                  <div style={{flex:1,minWidth:180}}>
+                    <div style={{fontSize:11,color:"#2a4050",letterSpacing:.5,marginBottom:3}}>{pick.game}</div>
+                    <div style={{fontSize:15,fontWeight:700,color:"#c0d0e0"}}>{pick.bet}</div>
+                  </div>
+                  <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
+                    <span style={{fontSize:9,fontWeight:800,letterSpacing:1.5,color:tc,background:bg,border:`1px solid ${bc}`,padding:"3px 8px",borderRadius:3}}>{pick.sport}</span>
+                    <span style={{fontSize:16,fontWeight:900,color:lineColor}}>{pick.line}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div style={S.aiBox}>
+          <div style={S.aiHdr}>
+            <span style={S.aiIcon}>🤖</span>
+            <span style={S.aiLbl}>AI ANALYST BREAKDOWN</span>
+            <span style={{flex:1}}/>
+            <span style={{fontSize:10,color:"#2a3850",letterSpacing:1}}>POWERED BY CLAUDE</span>
+          </div>
+          {aiLoading
+            ? <div style={{padding:"8px 0"}}>
+                <p style={S.aiWait} className="pulse">Breaking down the parlay…</p>
+                <div style={{display:"flex",gap:6,marginTop:14}}>
+                  {[1,2,3].map(i=><div key={i} style={{height:6,flex:1,background:"#0f1825",borderRadius:3}}/>)}
+                </div>
+              </div>
+            : aiVerdict
+              ? <p style={S.aiTxt}>{aiVerdict}</p>
+              : <button style={S.aiCallBtn} className="hbtn" onClick={getAIParlayVerdict}>Get AI Breakdown →</button>
+          }
+        </div>
+
+        <div style={{marginTop:16,background:"#070a0e",border:"1px solid #0f1418",borderRadius:8,padding:"12px 16px"}}>
+          <p style={{fontSize:11,color:"#1e2a36",lineHeight:1.7,letterSpacing:.2}}>
+            ⚠️ <strong style={{color:"#2a3a46"}}>Disclaimer:</strong> Odds shown are for entertainment and informational purposes only. FanVerdict does not facilitate gambling transactions. Lines may differ from your sportsbook. Must be 19+ (18+ in some jurisdictions). If gambling is a problem for you, call 1-800-522-4700 (North America).
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }
 
