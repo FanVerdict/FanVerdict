@@ -81,7 +81,7 @@ const DEFAULT_ARTICLES = [
   { id: "a6", category: "PENALTY DEBATE", title: "Embellishment: Hockey's Dirtiest Open Secret", excerpt: "Every fan sees it. Every coach knows it. Players do it on purpose — and the league has been trying to stop it for 30 years. Why does diving keep winning?", author: "FanVerdict Staff", date: "Apr 16, 2026", read_time: "5 min read", hot: false, photo: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&q=80" },
 ];
 
-const PARLAYS = [
+const DEFAULT_PARLAYS = [
   {
     id: "p1",
     label: "GAME 7 CHAOS PARLAY",
@@ -192,6 +192,7 @@ const SPORT_COLORS = {
   "NHL PROPS": ["#c084fc18","#c084fc","#c084fc33"],
   "NBA": ["#ff8c0018","#ff8c00","#ff8c0033"],
 };
+const SPORT_OPTIONS = ["NHL", "NHL PROPS", "NBA"];
 
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap');
@@ -229,6 +230,7 @@ export default function App() {
   const [page, setPage]         = useState("feed");
   const [items, setItems]       = useState([]);
   const [articles, setArticles] = useState(DEFAULT_ARTICLES);
+  const [parlays, setParlays]   = useState(DEFAULT_PARLAYS);
   const [loading, setLoading]   = useState(true);
   const [lv, setLv]             = useState({});
   const [uv, setUv]             = useState({});
@@ -285,6 +287,8 @@ export default function App() {
     setLv(list.reduce((a, c) => ({ ...a, [c.id]: [c.votes_a||0, c.votes_b||0] }), {}));
     const arts = await db.select("articles");
     if (Array.isArray(arts) && arts.length) setArticles(arts);
+    const pars = await db.select("parlays");
+    if (Array.isArray(pars) && pars.length) setParlays(pars);
     setLoading(false);
   }, []);
 
@@ -362,6 +366,8 @@ export default function App() {
 
   const handleAddArticle = (a) => setArticles(prev => [a, ...prev]);
   const handleDeleteArticle = (id) => setArticles(prev => prev.filter(a => a.id !== id));
+  const handleAddParlay = (p) => setParlays(prev => [p, ...prev]);
+  const handleDeleteParlay = (id) => setParlays(prev => prev.filter(p => p.id !== id));
 
   const navCls = (activePage) => {
     const pages = Array.isArray(activePage) ? activePage : [activePage];
@@ -494,10 +500,10 @@ export default function App() {
       {page==="forum" && <ForumPage articles={articles} onOpenArticle={openArticle}/>}
       {page==="article" && activeArticle && <ArticlePage article={activeArticle} onBack={()=>setPage("forum")}/>}
 
-      {page==="parlay" && <ParlayPage parlays={PARLAYS} onOpenParlay={openParlay}/>}
+      {page==="parlay" && <ParlayPage parlays={parlays} onOpenParlay={openParlay}/>}
       {page==="parlay_detail" && activeParlayId && (
         <ParlayDetailPage
-          parlay={PARLAYS.find(p=>p.id===activeParlayId)}
+          parlay={parlays.find(p=>p.id===activeParlayId)}
           onBack={()=>setPage("parlay")}
         />
       )}
@@ -508,7 +514,8 @@ export default function App() {
       )}
       {page==="admin" && (
         <AdminPanel authed={adminOk} onAuth={setAdminOk} items={items} lv={lv} onRefresh={load}
-          articles={articles} onAddArticle={handleAddArticle} onDeleteArticle={handleDeleteArticle}/>
+          articles={articles} onAddArticle={handleAddArticle} onDeleteArticle={handleDeleteArticle}
+          parlays={parlays} onAddParlay={handleAddParlay} onDeleteParlay={handleDeleteParlay}/>
       )}
 
       <footer style={S.foot}>
@@ -1114,18 +1121,38 @@ function CardBody({ item, uv, lv, pct, total, onVote }) {
 }
 
 // ── Admin Panel ──
-function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle }) {
+function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, parlays, onAddParlay, onDeleteParlay }) {
   const [pw,setPw]       = useState("");
   const [err,setErr]     = useState(false);
   const [tab,setTab]     = useState("post");
   const [ok,setOk]       = useState(false);
   const [artOk,setArtOk] = useState(false);
+  const [parOk,setParOk] = useState(false);
   const [busy,setBusy]   = useState(false);
   const [form,setForm]   = useState({type:"GOAL REVIEW",game:"",title:"",description:"",option_a:"",option_b:"",official_call:"",hot:false});
   const [artForm,setArtForm] = useState({category:"CONTROVERSIAL CALL",title:"",excerpt:"",author:"FanVerdict Staff",read_time:"5 min read",hot:false,photo:""});
 
+  // Parlay form state
+  const emptyPick = () => ({ game:"", bet:"", line:"", sport:"NHL" });
+  const [parForm, setParForm] = useState({
+    label:"", odds:"", description:"", hot:false, payout:"",
+    picks:[emptyPick(), emptyPick()],
+  });
+
   const set    = (k,v) => setForm(p=>({...p,[k]:v}));
   const setArt = (k,v) => setArtForm(p=>({...p,[k]:v}));
+  const setPar = (k,v) => setParForm(p=>({...p,[k]:v}));
+
+  const updatePick = (idx, k, v) => {
+    setParForm(p => {
+      const picks = [...p.picks];
+      picks[idx] = { ...picks[idx], [k]: v };
+      return { ...p, picks };
+    });
+  };
+  const addPick = () => setParForm(p => ({ ...p, picks: [...p.picks, emptyPick()] }));
+  const removePick = (idx) => setParForm(p => ({ ...p, picks: p.picks.filter((_,i)=>i!==idx) }));
+
   const tryAuth = () => { if(pw===ADMIN_PASSWORD){onAuth(true);setErr(false);}else setErr(true); };
 
   const post = async () => {
@@ -1154,6 +1181,28 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
     setBusy(false);
   };
 
+  const postParlay = async () => {
+    if(!parForm.label||!parForm.odds||!parForm.description||!parForm.payout) return alert("Fill in all required parlay fields (*).");
+    const validPicks = parForm.picks.filter(p=>p.game&&p.bet&&p.line);
+    if(validPicks.length < 2) return alert("Add at least 2 complete picks.");
+    setBusy(true);
+    const newParlay = {
+      id: "par_"+Date.now(),
+      label: parForm.label,
+      legs: validPicks.length,
+      odds: parForm.odds,
+      hot: parForm.hot,
+      description: parForm.description,
+      payout: parForm.payout,
+      picks: validPicks,
+    };
+    await db.insert("parlays", newParlay);
+    onAddParlay(newParlay);
+    setParOk(true); setTimeout(()=>setParOk(false),3500);
+    setParForm({ label:"", odds:"", description:"", hot:false, payout:"", picks:[emptyPick(), emptyPick()] });
+    setBusy(false);
+  };
+
   const remove = async (id) => {
     if(!window.confirm("Delete this controversy?")) return;
     await db.del("controversies",id); onRefresh();
@@ -1162,6 +1211,11 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const removeArticle = async (id) => {
     if(!window.confirm("Delete this article?")) return;
     await db.del("articles",id); onDeleteArticle(id);
+  };
+
+  const removeParlay = async (id) => {
+    if(!window.confirm("Delete this parlay?")) return;
+    await db.del("parlays",id); onDeleteParlay(id);
   };
 
   if(!authed) return (
@@ -1176,7 +1230,14 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
     </main>
   );
 
-  const tabs = [["post","POST VERDICT"],["manage","MANAGE VERDICTS"],["forum_post","POST ARTICLE"],["forum_manage","MANAGE ARTICLES"]];
+  const tabs = [
+    ["post","POST VERDICT"],
+    ["manage","MANAGE VERDICTS"],
+    ["forum_post","POST ARTICLE"],
+    ["forum_manage","MANAGE ARTICLES"],
+    ["parlay_post","POST PARLAY"],
+    ["parlay_manage","MANAGE PARLAYS"],
+  ];
 
   return (
     <main style={S.main}>
@@ -1266,6 +1327,72 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                     <div style={{fontSize:12,color:"#2a4050"}}>{a.author} · {a.date}{a.hot?" · 🔥":""}</div>
                   </div>
                   <button style={S.delBtn} onClick={()=>removeArticle(a.id)}>🗑 Delete</button>
+                </div>
+              ))
+            }
+          </div>
+        )}
+
+        {tab==="parlay_post" && (
+          <div style={S.fbox}>
+            {parOk && <div style={S.succ}>✅ Parlay posted to the board!</div>}
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+              <FG label="PARLAY LABEL *"><input style={S.inp} placeholder="e.g. GAME 7 CHAOS PARLAY" value={parForm.label} onChange={e=>setPar("label",e.target.value)}/></FG>
+              <FG label="ODDS *"><input style={S.inp} placeholder="e.g. +1840 or -110" value={parForm.odds} onChange={e=>setPar("odds",e.target.value)}/></FG>
+            </div>
+            <FG label="DESCRIPTION *"><textarea style={{...S.inp,minHeight:80,resize:"vertical",lineHeight:1.6}} placeholder="Short hook for the parlay…" value={parForm.description} onChange={e=>setPar("description",e.target.value)}/></FG>
+            <FG label="PAYOUT *"><input style={S.inp} placeholder="e.g. $100 → $1,940" value={parForm.payout} onChange={e=>setPar("payout",e.target.value)}/></FG>
+            <label style={{display:"flex",alignItems:"center",gap:8,fontSize:15,fontWeight:700,color:"#5a7080",cursor:"pointer",marginBottom:22}}>
+              <input type="checkbox" checked={parForm.hot} onChange={e=>setPar("hot",e.target.checked)}/> 🔥 Mark as HOT
+            </label>
+
+            <div style={{fontSize:11,fontWeight:800,letterSpacing:2.5,color:"#1e3040",marginBottom:14}}>PICKS (min 2)</div>
+            <div style={{display:"flex",flexDirection:"column",gap:12,marginBottom:16}}>
+              {parForm.picks.map((pick, idx) => (
+                <div key={idx} style={{background:"#070b12",border:"1px solid #0f1820",borderRadius:10,padding:"14px 16px"}}>
+                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
+                    <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:"#ffd700"}}>LEG {idx+1}</span>
+                    {parForm.picks.length > 2 && (
+                      <button onClick={()=>removePick(idx)} style={{background:"transparent",border:"1px solid #ff1a1a22",color:"#cc3333",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:5,cursor:"pointer"}}>✕ Remove</button>
+                    )}
+                  </div>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:10}}>
+                    <FG label="GAME"><input style={S.inp} placeholder="e.g. Oilers vs Canucks" value={pick.game} onChange={e=>updatePick(idx,"game",e.target.value)}/></FG>
+                    <FG label="SPORT">
+                      <select style={S.sel} value={pick.sport} onChange={e=>updatePick(idx,"sport",e.target.value)}>
+                        {SPORT_OPTIONS.map(s=><option key={s}>{s}</option>)}
+                      </select>
+                    </FG>
+                  </div>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr auto",gap:10}}>
+                    <FG label="BET / SELECTION"><input style={S.inp} placeholder="e.g. Oilers ML (Game 7)" value={pick.bet} onChange={e=>updatePick(idx,"bet",e.target.value)}/></FG>
+                    <FG label="LINE"><input style={{...S.inp,width:90}} placeholder="-118" value={pick.line} onChange={e=>updatePick(idx,"line",e.target.value)}/></FG>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button onClick={addPick} style={{width:"100%",padding:"10px",background:"transparent",border:"1px dashed #1e3040",borderRadius:8,color:"#2a4050",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer",marginBottom:22,transition:"all .15s"}}>
+              + ADD LEG
+            </button>
+            <button style={{...S.subBtn,background:"linear-gradient(135deg,#9a7a00,#c09800)",opacity:busy?.6:1}} onClick={postParlay} disabled={busy}>{busy?"POSTING…":"POST PARLAY"}</button>
+          </div>
+        )}
+
+        {tab==="parlay_manage" && (
+          <div style={{background:"#0c1420",border:"1px solid #111828",borderRadius:14,overflow:"hidden"}}>
+            {parlays.length===0
+              ? <p style={{color:"#334",textAlign:"center",padding:40}}>No parlays yet.</p>
+              : parlays.map(p=>(
+                <div key={p.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0d1620",gap:12}}>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+                      <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ffd700"}}>💰 {p.legs}-LEG</span>
+                      {p.hot && <span style={{fontSize:10,color:"#ff6633"}}>🔥 HOT</span>}
+                    </div>
+                    <div style={{fontSize:15,fontWeight:700,color:"#dce6f0",marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{p.label}</div>
+                    <div style={{fontSize:12,color:"#2a4050"}}>{p.odds} · {p.payout}</div>
+                  </div>
+                  <button style={S.delBtn} onClick={()=>removeParlay(p.id)}>🗑 Delete</button>
                 </div>
               ))
             }
