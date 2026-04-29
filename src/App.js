@@ -114,6 +114,9 @@ const css = `
   .modal-bg{position:fixed;inset:0;background:#000000cc;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
   .art-card:hover{border-color:#00d4ff44!important;transform:translateY(-2px);transition:all .2s}
   .art-card{transition:all .2s}
+  .nav-btn{background:none;border:1px solid transparent;color:#3a5060;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s}
+  .nav-btn:hover{color:#8aa0b0;border-color:#1e2840}
+  .nav-btn.active{color:#00d4ff;border-color:#00d4ff33;background:#00d4ff11}
 `;
 
 export default function App() {
@@ -252,6 +255,12 @@ export default function App() {
   const handleAddArticle = (a) => setArticles(prev => [a, ...prev]);
   const handleDeleteArticle = (id) => setArticles(prev => prev.filter(a => a.id !== id));
 
+  // Nav helper: returns className string for nav buttons
+  const navCls = (activePage) => {
+    const pages = Array.isArray(activePage) ? activePage : [activePage];
+    return "nav-btn" + (pages.includes(page) ? " active" : "");
+  };
+
   return (
     <div style={S.root}>
       <style>{css}</style>
@@ -260,15 +269,24 @@ export default function App() {
         <div style={S.hdrI}>
           <div style={S.logo} onClick={goFeed}>🏒 <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span></div>
           <nav style={S.nav}>
-            <button style={{...S.nb,...(page==="feed"?S.na:{})}} onClick={goFeed}>FEED</button>
-            <button style={{...S.nb,...(page==="forum"||page==="article"?S.na:{})}} onClick={()=>setPage("forum")}>FORUM</button>
-            {user && <button style={{...S.nb,...(page==="saved"?S.na:{})}} onClick={()=>setPage("saved")}>SAVED</button>}
-            {user && <button style={{...S.nb,...(page==="profile"?S.na:{})}} onClick={()=>setPage("profile")}>
-              {profile?.avatar_url
-                ? <img src={profile.avatar_url} style={{width:22,height:22,borderRadius:"50%",verticalAlign:"middle"}} alt="avatar"/>
-                : "👤"} {profile?.display_name?.split(" ")[0] || "ME"}
-            </button>}
-            {!user && <button style={{...S.nb,color:"#00d4ff",borderColor:"#00d4ff33",background:"#00d4ff11"}} onClick={()=>setShowAuth(true)}>LOG IN</button>}
+            <button className={navCls("feed")} onClick={goFeed}>FEED</button>
+            <button className={navCls(["forum","article"])} onClick={()=>setPage("forum")}>FORUM</button>
+            {user && <button className={navCls("saved")} onClick={()=>setPage("saved")}>SAVED</button>}
+            {user && (
+              <button className={navCls("profile")} onClick={()=>setPage("profile")}>
+                {profile?.avatar_url
+                  ? <img src={profile.avatar_url} style={{width:22,height:22,borderRadius:"50%",verticalAlign:"middle"}} alt="avatar"/>
+                  : "👤"} {profile?.display_name?.split(" ")[0] || "ME"}
+              </button>
+            )}
+            {!user && (
+              <button
+                className={"nav-btn" + (showAuth ? " active" : "")}
+                onClick={()=>setShowAuth(true)}
+              >
+                LOG IN
+              </button>
+            )}
           </nav>
           <div style={S.live}><span className="blink">●</span> LIVE</div>
         </div>
@@ -603,10 +621,12 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, saved, onSave, loggedIn, onAuthPrompt }) {
   return (
     <div style={{...S.card,animationDelay:`${idx*.07}s`}} className="cfade">
-      {item.hot && <div style={S.hot}>🔥 HOT</div>}
-      <button style={{...S.saveBtn,...(saved?S.saveBtnOn:{})}} onClick={onSave} title={saved?"Unsave":"Save"}>
-        {saved ? "🔖" : "🏷️"}
-      </button>
+      {item.hot && (
+        <div style={S.hotBadge}>
+          <span style={S.hotFlame}>🔥</span>
+          <span style={S.hotText}>HOT</span>
+        </div>
+      )}
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote}/>
       <button style={S.fullBtn} className="hbtn" onClick={() => onDetail(item)}>🤖 Get AI Ref Verdict →</button>
     </div>
@@ -780,7 +800,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
             <label style={{display:"flex",alignItems:"center",gap:8,fontSize:15,fontWeight:700,color:"#5a7080",cursor:"pointer",marginBottom:16}}>
               <input type="checkbox" checked={artForm.hot} onChange={e=>setArt("hot",e.target.checked)}/> 🔥 Mark as HOT
             </label>
-            <div style={{background:"#080c14",border:"1px solid #0f1825",borderRadius:8,padding:"11px 14px",marginBottom:18,fontSize:12,color:"#3a5060"}}>
+            <div style={{background:"#080c14",border:"1px solid #0f1925",borderRadius:8,padding:"11px 14px",marginBottom:18,fontSize:12,color:"#3a5060"}}>
               💡 AI writes the full article body automatically when readers open it.
             </div>
             <button style={{...S.subBtn,opacity:busy?.6:1}} onClick={postArticle} disabled={busy}>{busy?"PUBLISHING…":"PUBLISH ARTICLE"}</button>
@@ -824,8 +844,6 @@ const S = {
   logoT:     {fontSize:22,fontWeight:900,letterSpacing:3,color:"#dce6f0"},
   acc:       {color:"#00d4ff"},
   nav:       {display:"flex",gap:8,alignItems:"center"},
-  nb:        {background:"none",border:"1px solid transparent",color:"#3a5060",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:2,padding:"6px 14px",borderRadius:6,cursor:"pointer"},
-  na:        {color:"#00d4ff",borderColor:"#00d4ff33",background:"#00d4ff11"},
   live:      {fontSize:11,fontWeight:800,letterSpacing:2,color:"#ff4d4d",display:"flex",alignItems:"center",gap:4},
   main:      {maxWidth:1100,margin:"0 auto",padding:"40px 20px 80px"},
   hero:      {textAlign:"center",marginBottom:36},
@@ -836,9 +854,9 @@ const S = {
   ldg:       {textAlign:"center",padding:80,color:"#3a5060",fontSize:16,letterSpacing:2},
   grid:      {display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(330px,1fr))",gap:24},
   card:      {background:"#0c1420",border:"1px solid #161e2e",borderRadius:14,padding:26,position:"relative",overflow:"hidden"},
-  hot:       {position:"absolute",top:14,right:46,fontSize:11,fontWeight:800,background:"#ff5a1a22",border:"1px solid #ff5a1a55",color:"#ff7040",padding:"3px 9px",borderRadius:4},
-  saveBtn:   {position:"absolute",top:12,right:12,background:"none",border:"none",fontSize:18,cursor:"pointer",opacity:.4,padding:4},
-  saveBtnOn: {opacity:1},
+  hotBadge:  {display:"inline-flex",alignItems:"center",gap:5,background:"linear-gradient(135deg,#ff5a1a22,#ff3d0022)",border:"1px solid #ff5a1a55",borderRadius:6,padding:"4px 10px",marginBottom:14,backdropFilter:"blur(4px)"},
+  hotFlame:  {fontSize:13},
+  hotText:   {fontSize:10,fontWeight:900,letterSpacing:2.5,color:"#ff7040"},
   meta:      {display:"flex",alignItems:"center",gap:10,marginBottom:12},
   tag:       {fontSize:10,fontWeight:800,letterSpacing:2,padding:"3px 9px",borderRadius:4,border:"1px solid"},
   game:      {fontSize:11,color:"#2a4050",letterSpacing:1},
