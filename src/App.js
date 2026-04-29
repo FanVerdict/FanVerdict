@@ -277,7 +277,7 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
 
 export default function App() {
   const [page, setPage]         = useState("verdicts");
-  const [feedTab, setFeedTab]   = useState("verdicts"); // "verdicts" | "predictions"
+  const [feedTab, setFeedTab]   = useState("verdicts");
   const [items, setItems]       = useState([]);
   const [articles, setArticles] = useState(DEFAULT_ARTICLES);
   const [parlays, setParlays]   = useState(DEFAULT_PARLAYS);
@@ -334,7 +334,6 @@ export default function App() {
   const load = useCallback(async () => {
     setLoading(true);
     const data = await db.select("controversies");
-    // Merge DB data with demo, splitting by feed_type
     const dbList = Array.isArray(data) && data.length ? data : [];
     const allItems = dbList.length ? dbList : [...DEMO_VERDICTS, ...DEMO_PREDICTIONS];
     setItems(allItems);
@@ -493,17 +492,14 @@ export default function App() {
       )}
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} onLogin={handleLogin} />}
 
-      {/* ── HOME (Verdicts + Predictions) ── */}
       {isHomePage && (
         <main style={S.main}>
-          {/* Hero */}
           <div style={S.hero}>
             <div style={S.heroPill}>🏒 PLAYOFF SEASON · LIVE VERDICTS</div>
             <h1 style={S.heroT}>YOU'RE THE REF.</h1>
             <p style={S.heroS}>Officials made their call. Now the fans decide.</p>
           </div>
 
-          {/* Tab Bar */}
           <div style={{ borderBottom: "1px solid #0f1820", marginBottom: 32, display: "flex", gap: 32 }}>
             <button
               className={`section-tab ${feedTab === "verdicts" ? "tab-verdict" : "tab-inactive"}`}
@@ -533,7 +529,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* VERDICTS TAB */}
           {feedTab === "verdicts" && (
             <>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
@@ -555,10 +550,8 @@ export default function App() {
             </>
           )}
 
-          {/* PREDICTIONS TAB */}
           {feedTab === "predictions" && (
             <>
-              {/* Prediction header strip */}
               <div style={{ background: "#0a0812", border: "1px solid #a78bfa22", borderRadius: 12, padding: "16px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 14 }}>
                 <span style={{ fontSize: 22 }}>🔮</span>
                 <div>
@@ -583,7 +576,6 @@ export default function App() {
         </main>
       )}
 
-      {/* ── SAVED ── */}
       {page === "saved" && (
         <main style={S.main}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 32 }}>
@@ -604,7 +596,6 @@ export default function App() {
         </main>
       )}
 
-      {/* ── DETAIL ── */}
       {page === "detail" && active && (
         <main style={S.main}>
           <button style={S.back} onClick={goHome}>← Back</button>
@@ -660,7 +651,6 @@ export default function App() {
   );
 }
 
-// ── Empty State ──
 function EmptyState({ icon, title, sub }) {
   return (
     <div style={{ textAlign: "center", padding: "60px 0", color: "#4a6070" }}>
@@ -671,7 +661,6 @@ function EmptyState({ icon, title, sub }) {
   );
 }
 
-// ── Feed Card (Verdicts) ──
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
@@ -689,24 +678,29 @@ function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, o
   );
 }
 
-// ── Prediction Card ──
+// ── Prediction Card — FIXED for iOS ──
 function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s`, borderColor: "#1a1030", background: "#0b0a18" }} className="cfade pred-card">
-      {/* Prediction strip */}
+      {/* Top accent bar */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #a78bfa, #7c3aed)" }} />
-      {item.hot && (
-        <div style={{ ...S.hotBadge, borderColor: "#a78bfa44", background: "#0d0a18" }}>
-          <span style={{ fontSize: 12 }}>🔥</span>
-          <span style={{ ...S.hotText, color: "#a78bfa" }}>HOT</span>
-        </div>
-      )}
-      {/* Game date badge */}
-      {item.game_date && (
-        <div style={{ position: "absolute", bottom: 68, right: 16, fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#6040a0", background: "#120d20", border: "1px solid #a78bfa22", borderRadius: 4, padding: "3px 8px" }}>
-          📅 {item.game_date}
-        </div>
-      )}
+
+      {/* HOT badge + date badge: inline row, no absolute positioning */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+        {item.hot && (
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a18", border: "1px solid #a78bfa44", borderRadius: 6, padding: "4px 10px" }}>
+            <span style={{ fontSize: 12 }}>🔥</span>
+            <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#a78bfa" }}>HOT</span>
+          </div>
+        )}
+        {item.game_date && (
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#6040a0", background: "#120d20", border: "1px solid #a78bfa22", borderRadius: 4, padding: "4px 8px" }}>
+            <span>📅</span>
+            <span>{item.game_date}</span>
+          </div>
+        )}
+      </div>
+
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} isPrediction />
       <button style={{ ...S.aiBtn, borderColor: "#1e0f40", color: "#6040a0" }} className="hbtn" onClick={() => onDetail(item)}>
         <span style={{ marginRight: 6 }}>🔮</span> Get AI Prediction →
@@ -715,7 +709,6 @@ function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, logge
   );
 }
 
-// ── Card Body ──
 function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, isPrediction }) {
   const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
   const hasVoted = uv !== undefined;
@@ -763,7 +756,6 @@ function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, is
   );
 }
 
-// ── Auth Modal ──
 function AuthModal({ onClose, onLogin }) {
   const [mode, setMode]   = useState("login");
   const [email, setEmail] = useState("");
@@ -845,7 +837,6 @@ function AuthModal({ onClose, onLogin }) {
   );
 }
 
-// ── Parlay Page ──
 function ParlayPage({ parlays, onOpenParlay }) {
   const [filter, setFilter] = useState("ALL");
   const filters = ["ALL", "2 LEGS", "3 LEGS", "4+ LEGS", "🔥 HOT"];
@@ -889,7 +880,6 @@ function ParlayPage({ parlays, onOpenParlay }) {
   );
 }
 
-// ── Parlay Card ──
 function ParlayCard({ parlay, idx, onOpen }) {
   const isPos = parlay.odds.startsWith("+");
   return (
@@ -929,7 +919,6 @@ function ParlayCard({ parlay, idx, onOpen }) {
   );
 }
 
-// ── Parlay Detail Page ──
 function ParlayDetailPage({ parlay, onBack }) {
   const [aiVerdict, setAiVerdict] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
@@ -1027,7 +1016,6 @@ function ParlayDetailPage({ parlay, onBack }) {
   );
 }
 
-// ── Forum Page ──
 function ForumPage({ articles, onOpenArticle }) {
   const [filter, setFilter] = useState("ALL");
   const categories = ["ALL", ...ARTICLE_CATEGORIES];
@@ -1111,7 +1099,6 @@ function ForumPage({ articles, onOpenArticle }) {
   );
 }
 
-// ── Article Page ──
 function ArticlePage({ article, onBack }) {
   const [aiContent, setAiContent] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
@@ -1175,7 +1162,6 @@ function ArticlePage({ article, onBack }) {
   );
 }
 
-// ── Profile Page ──
 function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }) {
   return (
     <main style={S.main}>
@@ -1199,7 +1185,6 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
   );
 }
 
-// ── Admin Panel ──
 function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, parlays, onAddParlay, onDeleteParlay }) {
   const [pw, setPw]       = useState("");
   const [err, setErr]     = useState(false);
@@ -1276,7 +1261,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   );
 
   const tabs = [["post", "POST VERDICT"], ["manage", "MANAGE VERDICTS"], ["forum_post", "POST ARTICLE"], ["forum_manage", "MANAGE ARTICLES"], ["parlay_post", "POST PARLAY"], ["parlay_manage", "MANAGE PARLAYS"]];
-  const allTypes = [...VERDICT_TYPES, ...PREDICTION_TYPES];
 
   return (
     <main style={S.main}>
@@ -1291,7 +1275,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
         {tab === "post" && (
           <div style={S.fbox}>
             {ok && <div style={S.succ}>✅ Posted live!</div>}
-            {/* Feed type selector */}
             <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
               {["verdict", "prediction"].map(ft => (
                 <button key={ft} onClick={() => {
