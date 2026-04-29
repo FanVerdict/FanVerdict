@@ -445,40 +445,14 @@ function ForumPage({ articles, onOpenArticle }) {
 
   return (
     <main style={S.main}>
-
-      {/* ── FORUM HEADER — same card style as feed cards and login modal ── */}
-      <div style={{
-        background: "#0c1420",
-        border: "1px solid #1e2840",
-        borderRadius: 14,
-        padding: "28px 32px 24px",
-        marginBottom: 24,
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        {/* blue top accent line — same vibe as the modal/card borders */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 2,
-          background: "linear-gradient(90deg, #00d4ff88, #00d4ff22, transparent)",
-        }}/>
-
-        <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:8,flexWrap:"wrap"}}>
-          <h1 style={{fontSize:"clamp(26px,5vw,46px)",fontWeight:900,letterSpacing:3,color:"#dce6f0",lineHeight:1}}>
-            THE LOCKER ROOM
-          </h1>
-          <span style={{
-            fontSize:10,fontWeight:800,letterSpacing:2,
-            color:"#00d4ff",background:"#00d4ff14",
-            border:"1px solid #00d4ff33",padding:"4px 11px",borderRadius:4,
-          }}>FORUM</span>
+      <div style={{marginBottom:32}}>
+        <div style={{display:"flex",alignItems:"baseline",gap:14,marginBottom:6}}>
+          <h1 style={{fontSize:"clamp(28px,5vw,54px)",fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>THE LOCKER ROOM</h1>
+          <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#00d4ff",background:"#00d4ff14",border:"1px solid #00d4ff33",padding:"3px 10px",borderRadius:4}}>FORUM</span>
         </div>
-        <p style={{color:"#3a5060",fontSize:14,letterSpacing:1}}>
-          Controversial calls. Epic fights. The debates that never die.
-        </p>
+        <p style={{color:"#3a5060",fontSize:14,letterSpacing:1}}>Controversial calls. Epic fights. The debates that never die.</p>
       </div>
-
-      {/* ── Filter pills ── */}
-      <div style={{display:"flex",gap:8,marginBottom:24,flexWrap:"wrap"}}>
+      <div style={{display:"flex",gap:8,marginBottom:28,flexWrap:"wrap"}}>
         {categories.map(cat => (
           <button key={cat} onClick={()=>setFilter(cat)} style={{
             padding:"6px 13px",
@@ -489,21 +463,18 @@ function ForumPage({ articles, onOpenArticle }) {
           }}>{cat}</button>
         ))}
       </div>
-
       {filtered.length===0 && <p style={{color:"#3a5060",textAlign:"center",padding:60}}>No articles in this category yet.</p>}
-
-      {/* ── Featured article ── */}
       {featured && (
         <div className="art-card" onClick={()=>onOpenArticle(featured)} style={{
           background:"#0c1420", border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}33`,
-          borderRadius:14, marginBottom:24, overflow:"hidden", cursor:"pointer",
+          borderRadius:14, marginBottom:24, overflow:"hidden", cursor:"pointer"
         }}>
           <div style={{position:"relative",height:220,overflow:"hidden"}}>
             <img src={featured.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
             <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 20%,#0c142088 65%,#0c1420 100%)"}}/>
             <div style={{position:"absolute",bottom:16,left:20,display:"flex",alignItems:"center",gap:10}}>
               <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:CAT_COLORS[featured.category]||"#00d4ff",background:(CAT_COLORS[featured.category]||"#00d4ff")+"22",border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}44`,padding:"3px 10px",borderRadius:4}}>{featured.category}</span>
-              {featured.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#ff5a1a22",border:"1px solid #ff5a1a55",padding:"3px 9px",borderRadius:4}}>🔥 HOT</span>}
+              {featured.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#ff5a1a22",border:"1px solid #ff5a1a55",padding:"3px 9px",borderRadius:4}}>HOT</span>}
             </div>
           </div>
           <div style={{padding:"22px 24px"}}>
@@ -515,8 +486,6 @@ function ForumPage({ articles, onOpenArticle }) {
           </div>
         </div>
       )}
-
-      {/* ── Article grid ── */}
       {rest.length > 0 && (
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(290px,1fr))",gap:18}}>
           {rest.map(a => {
@@ -529,7 +498,7 @@ function ForumPage({ articles, onOpenArticle }) {
                   <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 30%,#0c1420cc 100%)"}}/>
                   <div style={{position:"absolute",bottom:10,left:14,display:"flex",alignItems:"center",gap:8}}>
                     <span style={{fontSize:9,fontWeight:800,letterSpacing:1.5,color:col,background:col+"22",border:`1px solid ${col}44`,padding:"2px 8px",borderRadius:4}}>{a.category}</span>
-                    {a.hot && <span style={{fontSize:10,color:"#ff7040"}}>🔥 HOT</span>}
+                    {a.hot && <span style={{fontSize:10,color:"#ff7040"}}>HOT</span>}
                   </div>
                 </div>
                 <div style={{padding:"16px 18px"}}>
@@ -583,7 +552,7 @@ function ArticlePage({ article, onBack }) {
           <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 20%,#07090d88 60%,#07090d 100%)"}}/>
           <div style={{position:"absolute",bottom:20,left:22,display:"flex",alignItems:"center",gap:10}}>
             <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color,background:color+"22",border:`1px solid ${color}44`,padding:"3px 10px",borderRadius:4}}>{article.category}</span>
-            {article.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#ff5a1a22",border:"1px solid #ff5a1a55",padding:"3px 9px",borderRadius:4}}>🔥 HOT</span>}
+            {article.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#ff5a1a22",border:"1px solid #ff5a1a55",padding:"3px 9px",borderRadius:4}}>HOT</span>}
           </div>
         </div>
         <h1 style={{fontSize:"clamp(22px,4vw,38px)",fontWeight:900,lineHeight:1.15,color:"#dce6f0",marginBottom:14}}>{article.title}</h1>
@@ -631,20 +600,13 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
 }
 
 // ── Feed Card ──
-// HOT badge and save button are now in a flex row at the top — no more absolute positioning overlap
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, saved, onSave, loggedIn, onAuthPrompt }) {
   return (
     <div style={{...S.card,animationDelay:`${idx*.07}s`}} className="cfade">
-      {/* Top row: HOT badge left, save button right — inline so they never overlap */}
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12,minHeight:26}}>
-        {item.hot
-          ? <span style={S.hotInline}>🔥 HOT</span>
-          : <span/>
-        }
-        <button style={{...S.saveBtn,...(saved?S.saveBtnOn:{})}} onClick={onSave} title={saved?"Unsave":"Save"}>
-          {saved ? "🔖" : "🏷️"}
-        </button>
-      </div>
+      {item.hot && <div style={S.hot}>🔥 HOT</div>}
+      <button style={{...S.saveBtn,...(saved?S.saveBtnOn:{})}} onClick={onSave} title={saved?"Unsave":"Save"}>
+        {saved ? "🔖" : "🏷️"}
+      </button>
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote}/>
       <button style={S.fullBtn} className="hbtn" onClick={() => onDetail(item)}>🤖 Get AI Ref Verdict →</button>
     </div>
@@ -818,7 +780,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
             <label style={{display:"flex",alignItems:"center",gap:8,fontSize:15,fontWeight:700,color:"#5a7080",cursor:"pointer",marginBottom:16}}>
               <input type="checkbox" checked={artForm.hot} onChange={e=>setArt("hot",e.target.checked)}/> 🔥 Mark as HOT
             </label>
-            <div style={{background:"#080c14",border:"1px solid #0f1925",borderRadius:8,padding:"11px 14px",marginBottom:18,fontSize:12,color:"#3a5060"}}>
+            <div style={{background:"#080c14",border:"1px solid #0f1825",borderRadius:8,padding:"11px 14px",marginBottom:18,fontSize:12,color:"#3a5060"}}>
               💡 AI writes the full article body automatically when readers open it.
             </div>
             <button style={{...S.subBtn,opacity:busy?.6:1}} onClick={postArticle} disabled={busy}>{busy?"PUBLISHING…":"PUBLISH ARTICLE"}</button>
@@ -834,7 +796,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:CAT_COLORS[a.category]||"#00d4ff",marginBottom:4}}>{a.category}</div>
                     <div style={{fontSize:15,fontWeight:700,color:"#dce6f0",marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
-                    <div style={{fontSize:12,color:"#2a4050"}}>{a.author} · {a.date}{a.hot?" · 🔥 HOT":""}</div>
+                    <div style={{fontSize:12,color:"#2a4050"}}>{a.author} · {a.date}{a.hot?" · HOT":""}</div>
                   </div>
                   <button style={S.delBtn} onClick={()=>removeArticle(a.id)}>🗑 Delete</button>
                 </div>
@@ -873,11 +835,9 @@ const S = {
   bannerBtn: {background:"#00d4ff",color:"#07090d",border:"none",borderRadius:6,padding:"7px 16px",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:900,letterSpacing:2,cursor:"pointer"},
   ldg:       {textAlign:"center",padding:80,color:"#3a5060",fontSize:16,letterSpacing:2},
   grid:      {display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(330px,1fr))",gap:24},
-  // Card no longer uses overflow:hidden so the inner flex top row works cleanly
-  card:      {background:"#0c1420",border:"1px solid #1e2840",borderRadius:14,padding:26,position:"relative"},
-  // HOT is now inline in a flex row — no more absolute positioning
-  hotInline: {fontSize:11,fontWeight:800,background:"#ff5a1a22",border:"1px solid #ff5a1a55",color:"#ff7040",padding:"3px 9px",borderRadius:4,display:"inline-block"},
-  saveBtn:   {background:"none",border:"none",fontSize:18,cursor:"pointer",opacity:.4,padding:4,lineHeight:1},
+  card:      {background:"#0c1420",border:"1px solid #161e2e",borderRadius:14,padding:26,position:"relative",overflow:"hidden"},
+  hot:       {position:"absolute",top:14,right:46,fontSize:11,fontWeight:800,background:"#ff5a1a22",border:"1px solid #ff5a1a55",color:"#ff7040",padding:"3px 9px",borderRadius:4},
+  saveBtn:   {position:"absolute",top:12,right:12,background:"none",border:"none",fontSize:18,cursor:"pointer",opacity:.4,padding:4},
   saveBtnOn: {opacity:1},
   meta:      {display:"flex",alignItems:"center",gap:10,marginBottom:12},
   tag:       {fontSize:10,fontWeight:800,letterSpacing:2,padding:"3px 9px",borderRadius:4,border:"1px solid"},
@@ -904,7 +864,7 @@ const S = {
   aiWait:    {color:"#3a4060",fontSize:14,fontStyle:"italic",margin:0},
   aiTxt:     {fontSize:15,color:"#9ab0c0",lineHeight:1.75,margin:0},
   back:      {background:"none",border:"1px solid #161e2e",color:"#3a5060",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,padding:"7px 16px",borderRadius:6,cursor:"pointer",marginBottom:28},
-  authBox:   {maxWidth:360,margin:"80px auto",background:"#0c1420",border:"1px solid #1e2840",borderRadius:16,padding:40,textAlign:"center"},
+  authBox:   {maxWidth:360,margin:"80px auto",background:"#0c1420",border:"1px solid #161e2e",borderRadius:16,padding:40,textAlign:"center"},
   modal:     {background:"#0c1420",border:"1px solid #1e2840",borderRadius:16,padding:36,width:"100%",maxWidth:400,position:"relative"},
   modalClose:{position:"absolute",top:14,right:16,background:"none",border:"none",color:"#3a5060",fontSize:18,cursor:"pointer"},
   googleBtn: {display:"flex",alignItems:"center",justifyContent:"center",width:"100%",padding:"12px",background:"#fff",borderRadius:8,color:"#1a1a1a",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,fontWeight:700,letterSpacing:1,cursor:"pointer",textDecoration:"none",marginBottom:16},
@@ -912,9 +872,9 @@ const S = {
   divTxt:    {color:"#2a4050",fontSize:12,letterSpacing:1,flexShrink:0},
   tabBtn:    {padding:"10px 18px",background:"#0c1420",border:"1px solid #161e2e",borderRadius:8,color:"#3a5060",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer"},
   tabOn:     {background:"#00d4ff18",borderColor:"#00d4ff44",color:"#00d4ff"},
-  fbox:      {background:"#0c1420",border:"1px solid #1e2840",borderRadius:14,padding:28},
-  inp:       {width:"100%",background:"#080c14",border:"1px solid #1e2840",borderRadius:8,color:"#c0d0e0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",boxSizing:"border-box"},
-  sel:       {width:"100%",background:"#080c14",border:"1px solid #1e2840",borderRadius:8,color:"#c0d0e0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",cursor:"pointer"},
+  fbox:      {background:"#0c1420",border:"1px solid #161e2e",borderRadius:14,padding:28},
+  inp:       {width:"100%",background:"#080c14",border:"1px solid #161e2e",borderRadius:8,color:"#c0d0e0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",boxSizing:"border-box"},
+  sel:       {width:"100%",background:"#080c14",border:"1px solid #161e2e",borderRadius:8,color:"#c0d0e0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",cursor:"pointer"},
   subBtn:    {width:"100%",padding:14,background:"linear-gradient(135deg,#00a8cc,#0088aa)",border:"none",borderRadius:9,color:"#fff",fontFamily:"'Barlow Condensed',sans-serif",fontSize:16,fontWeight:900,letterSpacing:3,cursor:"pointer"},
   succ:      {background:"#00ff8818",border:"1px solid #00ff8855",color:"#00ff88",borderRadius:8,padding:"12px 16px",marginBottom:20,fontSize:14,fontWeight:700},
   delBtn:    {background:"#ff1a1a14",border:"1px solid #ff1a1a33",color:"#ff4d4d",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,padding:"6px 12px",borderRadius:6,cursor:"pointer",flexShrink:0},
