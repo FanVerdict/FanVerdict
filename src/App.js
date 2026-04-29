@@ -200,7 +200,7 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
           <div style={{ padding: "44px 36px", textAlign: "center" }}>
             <div style={{ fontSize: 52, marginBottom: 16 }}>📧</div>
             <h2 style={{ fontSize: 24, fontWeight: 900, letterSpacing: 3, color: "#dce6f0", marginBottom: 12 }}>CHECK YOUR EMAIL</h2>
-            <p style={{ color: "#4a6070", fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
+            <p style={{ color: "#5a7080", fontSize: 16, lineHeight: 1.7, marginBottom: 24 }}>
               Confirmation sent to <strong style={{ color: "#00d4ff" }}>{email}</strong>.<br />Click the link then come back to cast your vote.
             </p>
             <button style={{ ...S.subBtn, background: "#0c1420", border: "1px solid #1e2840", color: "#5a7080" }} onClick={onClose}>← BACK TO FEED</button>
@@ -212,7 +212,7 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
               <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: 2, color: "#dce6f0", marginBottom: 6, lineHeight: 1.1 }}>
                 {mode === "signup" ? "JOIN TO CAST YOUR VOTE" : "LOG IN TO VOTE"}
               </h2>
-              <p style={{ fontSize: 14, color: "#3a5060", letterSpacing: 0.5, marginBottom: 20 }}>
+              <p style={{ fontSize: 15, color: "#4a6070", letterSpacing: 0.5, marginBottom: 20 }}>
                 {mode === "signup" ? "Free forever. No credit card. Just your take." : "Good to have you back."}
               </p>
 
@@ -221,7 +221,7 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
                   {perks.map((p, i) => (
                     <div key={i} style={{ background: "#0a1018", border: "1px solid #0f1a28", borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "flex-start", gap: 8 }}>
                       <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>{p.icon}</span>
-                      <span style={{ fontSize: 13, color: "#5a7080", lineHeight: 1.4 }}>{p.text}</span>
+                      <span style={{ fontSize: 14, color: "#6a8090", lineHeight: 1.4 }}>{p.text}</span>
                     </div>
                   ))}
                 </div>
@@ -247,13 +247,13 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
 
               <input style={{ ...S.inp, marginBottom: 10 }} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
               <input style={{ ...S.inp, marginBottom: err ? 8 : 16 }} type="password" placeholder={mode === "signup" ? "Create a password (6+ chars)" : "Password"} value={pw} onChange={e => setPw(e.target.value)} onKeyDown={e => e.key === "Enter" && submit()} />
-              {err && <p style={{ color: "#ff4d4d", fontSize: 13, marginBottom: 12, letterSpacing: 0.3 }}>{err}</p>}
+              {err && <p style={{ color: "#ff4d4d", fontSize: 14, marginBottom: 12, letterSpacing: 0.3 }}>{err}</p>}
 
               <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1, marginBottom: 14 }} onClick={submit} disabled={busy}>
                 {busy ? "…" : mode === "signup" ? "CREATE FREE ACCOUNT & VOTE" : "LOG IN & VOTE"}
               </button>
 
-              <p style={{ textAlign: "center", fontSize: 14, color: "#3a5060" }}>
+              <p style={{ textAlign: "center", fontSize: 15, color: "#4a6070" }}>
                 {mode === "signup" ? "Already have an account? " : "No account? "}
                 <span style={{ color: "#00d4ff", cursor: "pointer", fontWeight: 700 }} onClick={() => { setMode(m => m === "signup" ? "login" : "signup"); setErr(""); }}>
                   {mode === "signup" ? "Log in" : "Sign up free"}
@@ -383,7 +383,6 @@ export default function App() {
     }
   };
 
-  // Gate: must be logged in to vote — clicking vote button opens signup modal
   const vote = (id, oi) => {
     if (!user) {
       setPendingVote({ id, oi });
@@ -510,10 +509,10 @@ export default function App() {
             <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", background: "#00d4ff14", border: "1px solid #00d4ff33", padding: "3px 10px", borderRadius: 4 }}>{savedItems.length}</span>
           </div>
           {savedItems.length === 0
-            ? <div style={{ textAlign: "center", padding: "60px 0", color: "#2a3a4a" }}>
+            ? <div style={{ textAlign: "center", padding: "60px 0", color: "#4a6070" }}>
               <div style={{ fontSize: 40, marginBottom: 12 }}>🔖</div>
-              <p style={{ fontSize: 17, letterSpacing: 1 }}>No saved verdicts yet.</p>
-              <p style={{ fontSize: 14, marginTop: 6, color: "#1a2a36" }}>Vote on a controversy to save it here.</p>
+              <p style={{ fontSize: 18, letterSpacing: 1 }}>No saved verdicts yet.</p>
+              <p style={{ fontSize: 15, marginTop: 6, color: "#3a5060" }}>Vote on a controversy to save it here.</p>
             </div>
             : <div style={S.grid}>{savedItems.map((c, i) => (
               <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
@@ -579,11 +578,11 @@ export default function App() {
       )}
 
       <footer style={S.foot}>
-        <span style={{ color: "#1a2a36" }}>FanVerdict © 2026</span>
+        <span style={{ color: "#2a3a46" }}>FanVerdict © 2026</span>
         <span style={{ color: "#0f1820", margin: "0 12px" }}>·</span>
-        <span style={{ color: "#1a2a36" }}>Built for hockey fans</span>
+        <span style={{ color: "#2a3a46" }}>Built for hockey fans</span>
         <span style={{ color: "#0f1820", margin: "0 12px" }}>·</span>
-        <span style={{ color: "#1a2836", fontSize: 11 }}>Must be 19+. Gambling can be addictive. Play responsibly.</span>
+        <span style={{ color: "#2a3a46", fontSize: 12 }}>Must be 19+. Gambling can be addictive. Play responsibly.</span>
       </footer>
     </div>
   );
@@ -624,7 +623,7 @@ function AuthModal({ onClose, onLogin }) {
           <div style={{ textAlign: "center", padding: "20px 0" }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>📧</div>
             <h2 style={{ fontSize: 22, fontWeight: 900, letterSpacing: 3, color: "#dce6f0", marginBottom: 12 }}>CHECK YOUR EMAIL</h2>
-            <p style={{ color: "#4a6070", fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
+            <p style={{ color: "#5a7080", fontSize: 16, lineHeight: 1.7, marginBottom: 24 }}>
               We sent a confirmation link to <strong style={{ color: "#00d4ff" }}>{email}</strong>.<br />Click it to activate your account.
             </p>
             <button style={{ ...S.subBtn, background: "#0c1420", border: "1px solid #1e2840", color: "#5a7080" }} onClick={onClose}>← BACK TO SITE</button>
@@ -635,7 +634,7 @@ function AuthModal({ onClose, onLogin }) {
             <h2 style={{ fontSize: 22, fontWeight: 900, letterSpacing: 3, color: "#dce6f0", textAlign: "center", marginBottom: 6 }}>
               {mode === "login" ? "WELCOME BACK" : "JOIN FANVERDICT"}
             </h2>
-            <p style={{ textAlign: "center", fontSize: 14, color: "#3a5060", marginBottom: 24, letterSpacing: 0.5 }}>
+            <p style={{ textAlign: "center", fontSize: 15, color: "#4a6070", marginBottom: 24, letterSpacing: 0.5 }}>
               {mode === "login" ? "Good to see you again." : "The fans are waiting for your verdict."}
             </p>
             <a href={auth.googleUrl()} style={S.googleBtn}>
@@ -654,11 +653,11 @@ function AuthModal({ onClose, onLogin }) {
             </div>
             <input style={{ ...S.inp, marginBottom: 10 }} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
             <input style={{ ...S.inp, marginBottom: err ? 8 : 18 }} type="password" placeholder="Password" value={pw} onChange={e => setPw(e.target.value)} onKeyDown={e => e.key === "Enter" && submit()} />
-            {err && <p style={{ color: "#ff4d4d", fontSize: 13, marginBottom: 12, letterSpacing: 0.3 }}>{err}</p>}
+            {err && <p style={{ color: "#ff4d4d", fontSize: 14, marginBottom: 12, letterSpacing: 0.3 }}>{err}</p>}
             <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={submit} disabled={busy}>
               {busy ? "…" : mode === "login" ? "LOG IN" : "CREATE ACCOUNT"}
             </button>
-            <p style={{ textAlign: "center", fontSize: 14, color: "#3a5060", marginTop: 16 }}>
+            <p style={{ textAlign: "center", fontSize: 15, color: "#4a6070", marginTop: 16 }}>
               {mode === "login" ? "No account? " : "Already have one? "}
               <span style={{ color: "#00d4ff", cursor: "pointer", fontWeight: 700 }} onClick={() => { setMode(m => m === "login" ? "signup" : "login"); setErr(""); }}>
                 {mode === "login" ? "Sign up free" : "Log in"}
@@ -692,11 +691,11 @@ function ParlayPage({ parlays, onOpenParlay }) {
           <span style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 900, letterSpacing: 3, color: "#ffd700" }}>BOARD</span>
           <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 10px", borderRadius: 4, alignSelf: "center" }}>LIVE ODDS</span>
         </div>
-        <p style={{ color: "#2a4050", fontSize: 15, letterSpacing: 1 }}>Curated parlays built for playoff hockey fans. Real lines. Real risk. Real payout.</p>
+        <p style={{ color: "#4a6070", fontSize: 16, letterSpacing: 0.5 }}>Curated parlays built for playoff hockey fans. Real lines. Real risk. Real payout.</p>
       </div>
       <div style={{ background: "#0a0d10", border: "1px solid #ffd70022", borderRadius: 10, padding: "12px 18px", marginBottom: 28, display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ fontSize: 14, color: "#ffd70066" }}>⚠</span>
-        <span style={{ fontSize: 13, color: "#3a4050", letterSpacing: 0.3 }}>Odds are for informational purposes only. Must be 19+ to bet. Gambling involves risk. Play responsibly.</span>
+        <span style={{ fontSize: 14, color: "#4a5060", letterSpacing: 0.3 }}>Odds are for informational purposes only. Must be 19+ to bet. Gambling involves risk. Play responsibly.</span>
       </div>
       <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
         {filters.map(f => {
@@ -730,7 +729,7 @@ function ParlayCard({ parlay, idx, onOpen }) {
         <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 9px", borderRadius: 4 }}>💰 {parlay.legs}-LEG PARLAY</span>
       </div>
       <h2 style={{ fontSize: 19, fontWeight: 900, letterSpacing: 1.5, color: "#dce6f0", marginBottom: 8, lineHeight: 1.2, paddingRight: parlay.hot ? 60 : 0 }}>{parlay.label}</h2>
-      <p style={{ fontSize: 14, color: "#3a5060", lineHeight: 1.6, marginBottom: 18 }}>{parlay.description}</p>
+      <p style={{ fontSize: 15, color: "#4a6070", lineHeight: 1.6, marginBottom: 18 }}>{parlay.description}</p>
       <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 18 }}>
         <div style={{ fontSize: 28, fontWeight: 900, color: isPos ? "#4ade80" : "#ff4d4d", letterSpacing: 1, lineHeight: 1 }}>{parlay.odds}</div>
         <div style={{ flex: 1 }}>
@@ -744,12 +743,12 @@ function ParlayCard({ parlay, idx, onOpen }) {
           return (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, color: tc, background: bg, border: `1px solid ${tc}44`, padding: "2px 7px", borderRadius: 3, flexShrink: 0, whiteSpace: "nowrap" }}>{pick.sport}</span>
-              <span style={{ fontSize: 13, color: "#5a7080", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{pick.bet}</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#3a5060", flexShrink: 0 }}>{pick.line}</span>
+              <span style={{ fontSize: 14, color: "#5a7080", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{pick.bet}</span>
+              <span style={{ fontSize: 14, fontWeight: 700, color: "#4a6070", flexShrink: 0 }}>{pick.line}</span>
             </div>
           );
         })}
-        {parlay.picks.length > 2 && <div style={{ fontSize: 12, color: "#1e3040", letterSpacing: 0.5, paddingTop: 2 }}>+{parlay.picks.length - 2} more leg{parlay.picks.length - 2 > 1 ? "s" : ""} → tap to view</div>}
+        {parlay.picks.length > 2 && <div style={{ fontSize: 13, color: "#2a4050", letterSpacing: 0.5, paddingTop: 2 }}>+{parlay.picks.length - 2} more leg{parlay.picks.length - 2 > 1 ? "s" : ""} → tap to view</div>}
       </div>
     </div>
   );
@@ -792,7 +791,7 @@ function ParlayDetailPage({ parlay, onBack }) {
             {parlay.hot && <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ff6633", background: "#ff663314", border: "1px solid #ff663333", padding: "3px 10px", borderRadius: 4 }}>🔥 HOT</span>}
           </div>
           <h1 style={{ fontSize: "clamp(22px,4vw,34px)", fontWeight: 900, letterSpacing: 2, color: "#dce6f0", marginBottom: 10, lineHeight: 1.15 }}>{parlay.label}</h1>
-          <p style={{ fontSize: 15, color: "#3a5060", lineHeight: 1.7, marginBottom: 24 }}>{parlay.description}</p>
+          <p style={{ fontSize: 16, color: "#4a6070", lineHeight: 1.7, marginBottom: 24 }}>{parlay.description}</p>
           <div style={{ display: "flex", gap: 16, marginBottom: 28, flexWrap: "wrap" }}>
             <div style={{ background: "#070c12", border: "1px solid #0f1820", borderRadius: 10, padding: "16px 22px", flex: 1, minWidth: 140 }}>
               <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#2a4050", marginBottom: 6 }}>TOTAL ODDS</div>
@@ -817,7 +816,7 @@ function ParlayDetailPage({ parlay, onBack }) {
                 <div key={i} style={{ background: "#070b12", border: "1px solid #111820", borderLeft: `3px solid ${tc}`, borderRadius: 8, padding: "14px 18px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                   <div style={{ width: 24, height: 24, borderRadius: "50%", background: bg, border: `1px solid ${bc}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 900, color: tc, flexShrink: 0 }}>{i + 1}</div>
                   <div style={{ flex: 1, minWidth: 180 }}>
-                    <div style={{ fontSize: 12, color: "#2a4050", letterSpacing: 0.5, marginBottom: 3 }}>{pick.game}</div>
+                    <div style={{ fontSize: 13, color: "#3a5060", letterSpacing: 0.5, marginBottom: 3 }}>{pick.game}</div>
                     <div style={{ fontSize: 15, fontWeight: 700, color: "#c0d0e0" }}>{pick.bet}</div>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
@@ -844,8 +843,8 @@ function ParlayDetailPage({ parlay, onBack }) {
           }
         </div>
         <div style={{ marginTop: 16, background: "#070a0e", border: "1px solid #0f1418", borderRadius: 8, padding: "12px 16px" }}>
-          <p style={{ fontSize: 12, color: "#1e2a36", lineHeight: 1.7, letterSpacing: 0.2 }}>
-            ⚠️ <strong style={{ color: "#2a3a46" }}>Disclaimer:</strong> Odds shown are for entertainment and informational purposes only. FanVerdict does not facilitate gambling transactions. Lines may differ from your sportsbook. Must be 19+ (18+ in some jurisdictions). If gambling is a problem for you, call 1-800-522-4700 (North America).
+          <p style={{ fontSize: 13, color: "#2a3a46", lineHeight: 1.7, letterSpacing: 0.2 }}>
+            ⚠️ <strong style={{ color: "#3a4a56" }}>Disclaimer:</strong> Odds shown are for entertainment and informational purposes only. FanVerdict does not facilitate gambling transactions. Lines may differ from your sportsbook. Must be 19+ (18+ in some jurisdictions). If gambling is a problem for you, call 1-800-522-4700 (North America).
           </p>
         </div>
       </div>
@@ -868,7 +867,7 @@ function ForumPage({ articles, onOpenArticle }) {
           <h1 style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 900, letterSpacing: 3, color: "#dce6f0" }}>THE LOCKER ROOM</h1>
           <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", background: "#00d4ff14", border: "1px solid #00d4ff33", padding: "3px 10px", borderRadius: 4, alignSelf: "center" }}>FORUM</span>
         </div>
-        <p style={{ color: "#2a4050", fontSize: 15, letterSpacing: 1 }}>Controversial calls. Epic fights. The debates that never die.</p>
+        <p style={{ color: "#4a6070", fontSize: 16, letterSpacing: 0.5 }}>Controversial calls. Epic fights. The debates that never die.</p>
       </div>
       <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
         {categories.map(cat => {
@@ -879,7 +878,7 @@ function ForumPage({ articles, onOpenArticle }) {
           );
         })}
       </div>
-      {filtered.length === 0 && <div style={{ textAlign: "center", padding: "60px 0", color: "#2a3a4a" }}><p style={{ fontSize: 17, letterSpacing: 1 }}>No articles in this category yet.</p></div>}
+      {filtered.length === 0 && <div style={{ textAlign: "center", padding: "60px 0", color: "#4a6070" }}><p style={{ fontSize: 18, letterSpacing: 1 }}>No articles in this category yet.</p></div>}
       {featured && (
         <div className="art-card" onClick={() => onOpenArticle(featured)} style={{ background: "#0c1420", border: `1px solid ${CAT_COLORS[featured.category] || "#00d4ff"}22`, borderRadius: 16, marginBottom: 24, overflow: "hidden" }}>
           <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
@@ -894,13 +893,13 @@ function ForumPage({ articles, onOpenArticle }) {
           </div>
           <div style={{ padding: "22px 26px 24px" }}>
             <h2 style={{ fontSize: "clamp(18px,2.5vw,26px)", fontWeight: 900, lineHeight: 1.2, color: "#dce6f0", marginBottom: 10 }}>{featured.title}</h2>
-            <p style={{ fontSize: 14, color: "#4a6070", lineHeight: 1.75, marginBottom: 16 }}>{featured.excerpt}</p>
-            <div style={{ display: "flex", gap: 12, fontSize: 13, color: "#243040", alignItems: "center" }}>
-              <span style={{ color: "#3a5060" }}>By {featured.author}</span>
+            <p style={{ fontSize: 15, color: "#5a7080", lineHeight: 1.75, marginBottom: 16 }}>{featured.excerpt}</p>
+            <div style={{ display: "flex", gap: 12, fontSize: 14, color: "#3a5060", alignItems: "center" }}>
+              <span style={{ color: "#4a6070" }}>By {featured.author}</span>
               <span style={{ color: "#1a2a36" }}>·</span>
-              <span>{featured.date}</span>
+              <span style={{ color: "#3a5060" }}>{featured.date}</span>
               <span style={{ color: "#1a2a36" }}>·</span>
-              <span>{featured.read_time}</span>
+              <span style={{ color: "#3a5060" }}>{featured.read_time}</span>
             </div>
           </div>
         </div>
@@ -923,8 +922,8 @@ function ForumPage({ articles, onOpenArticle }) {
                 </div>
                 <div style={{ padding: "16px 18px 18px" }}>
                   <h3 style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.25, color: "#dce6f0", marginBottom: 8 }}>{a.title}</h3>
-                  <p style={{ fontSize: 13, color: "#3a5060", lineHeight: 1.65, marginBottom: 12, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{a.excerpt}</p>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#1e3040" }}>
+                  <p style={{ fontSize: 14, color: "#4a6070", lineHeight: 1.65, marginBottom: 12, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{a.excerpt}</p>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#3a4a56" }}>
                     <span>{a.author}</span><span>{a.read_time}</span>
                   </div>
                 </div>
@@ -978,21 +977,21 @@ function ArticlePage({ article, onBack }) {
           </div>
         </div>
         <h1 style={{ fontSize: "clamp(22px,4vw,38px)", fontWeight: 900, lineHeight: 1.15, color: "#dce6f0", marginBottom: 14 }}>{article.title}</h1>
-        <div style={{ display: "flex", gap: 12, fontSize: 13, color: "#243040", marginBottom: 28, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ color: "#3a5060" }}>By {article.author}</span>
+        <div style={{ display: "flex", gap: 12, fontSize: 14, color: "#3a5060", marginBottom: 28, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ color: "#4a6070" }}>By {article.author}</span>
           <span style={{ color: "#1a2a36" }}>·</span>
           <span>{article.date}</span>
           <span style={{ color: "#1a2a36" }}>·</span>
           <span>{article.read_time}</span>
         </div>
         <div style={{ borderLeft: `3px solid ${color}44`, paddingLeft: 20, marginBottom: 28 }}>
-          <p style={{ fontSize: 16, color: "#6a8090", lineHeight: 1.85, fontStyle: "italic" }}>{article.excerpt}</p>
+          <p style={{ fontSize: 17, color: "#7a8fa0", lineHeight: 1.85, fontStyle: "italic" }}>{article.excerpt}</p>
         </div>
         <div style={{ background: "#090e18", border: "1px solid #111828", borderRadius: 14, padding: 28, minHeight: 200 }}>
           {aiLoading
-            ? <div><p className="pulse" style={{ color: "#3a4060", fontSize: 15, fontStyle: "italic", marginBottom: 16 }}>Writing the full story…</p>{[100, 85, 92, 70].map((w, i) => <div key={i} style={{ height: 10, width: `${w}%`, background: "#0f1825", borderRadius: 3, marginBottom: 10 }} />)}</div>
+            ? <div><p className="pulse" style={{ color: "#4a5070", fontSize: 15, fontStyle: "italic", marginBottom: 16 }}>Writing the full story…</p>{[100, 85, 92, 70].map((w, i) => <div key={i} style={{ height: 10, width: `${w}%`, background: "#0f1825", borderRadius: 3, marginBottom: 10 }} />)}</div>
             : aiContent
-              ? <div style={{ fontSize: 15, color: "#8a9eb0", lineHeight: 1.95, whiteSpace: "pre-wrap" }}>{aiContent}</div>
+              ? <div style={{ fontSize: 16, color: "#8a9eb0", lineHeight: 1.95, whiteSpace: "pre-wrap" }}>{aiContent}</div>
               : <button style={S.aiCallBtn} className="hbtn" onClick={generateArticle}>Load Full Article →</button>
           }
         </div>
@@ -1013,7 +1012,7 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
             : <div style={{ width: 76, height: 76, borderRadius: "50%", background: "#00d4ff0d", border: "2px solid #00d4ff22", margin: "0 auto 18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>
           }
           <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: 2, color: "#dce6f0", marginBottom: 4 }}>{profile?.display_name || "Fan"}</h2>
-          <p style={{ fontSize: 14, color: "#2a4050", marginBottom: 30, letterSpacing: 0.3 }}>{user?.email}</p>
+          <p style={{ fontSize: 15, color: "#3a5060", marginBottom: 30, letterSpacing: 0.3 }}>{user?.email}</p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", marginBottom: 32 }}>
             <div style={S.statBox}><div style={S.statNum}>{votedCount}</div><div style={S.statLbl}>VOTES CAST</div></div>
             <div style={S.statBox}><div style={S.statNum}>{savedCount}</div><div style={S.statLbl}>SAVED</div></div>
@@ -1044,7 +1043,6 @@ function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, o
 }
 
 // ── Card Body ──
-// KEY CHANGE: no blur/lock for logged-out users. Vote buttons just trigger the gate modal on click.
 function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt }) {
   const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
   const hasVoted = uv !== undefined;
@@ -1063,22 +1061,9 @@ function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt }) 
       </div>
 
       {!hasVoted ? (
-        // Clean vote buttons for everyone — clicking triggers gate if not logged in
         <div style={S.vrow}>
-          <button
-            className="vote-btn"
-            style={{ ...S.vb, ...S.vba }}
-            onClick={() => onVote(item.id, 0)}
-          >
-            {item.option_a}
-          </button>
-          <button
-            className="vote-btn"
-            style={{ ...S.vb, ...S.vbb }}
-            onClick={() => onVote(item.id, 1)}
-          >
-            {item.option_b}
-          </button>
+          <button className="vote-btn" style={{ ...S.vb, ...S.vba }} onClick={() => onVote(item.id, 0)}>{item.option_a}</button>
+          <button className="vote-btn" style={{ ...S.vb, ...S.vbb }} onClick={() => onVote(item.id, 1)}>{item.option_b}</button>
         </div>
       ) : (
         <div style={S.res}>
@@ -1221,7 +1206,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", marginBottom: 4 }}>{c.type}</div>
                     <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.title}</div>
-                    <div style={{ fontSize: 13, color: "#2a3a4a" }}>{c.option_a}: {lv?.[c.id]?.[0] ?? c.votes_a ?? 0} | {c.option_b}: {lv?.[c.id]?.[1] ?? c.votes_b ?? 0}</div>
+                    <div style={{ fontSize: 14, color: "#3a5060" }}>{c.option_a}: {lv?.[c.id]?.[0] ?? c.votes_a ?? 0} | {c.option_b}: {lv?.[c.id]?.[1] ?? c.votes_b ?? 0}</div>
                   </div>
                   <button style={S.delBtn} onClick={() => remove(c.id)}>🗑 Delete</button>
                 </div>
@@ -1246,7 +1231,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
             <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 16 }}>
               <input type="checkbox" checked={artForm.hot} onChange={e => setArt("hot", e.target.checked)} /> 🔥 Mark as HOT
             </label>
-            <div style={{ background: "#070b12", border: "1px solid #0f1825", borderRadius: 8, padding: "11px 14px", marginBottom: 18, fontSize: 13, color: "#2a4050", letterSpacing: 0.3 }}>
+            <div style={{ background: "#070b12", border: "1px solid #0f1825", borderRadius: 8, padding: "11px 14px", marginBottom: 18, fontSize: 14, color: "#3a5060", letterSpacing: 0.3 }}>
               💡 AI writes the full article body automatically when readers open it.
             </div>
             <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={postArticle} disabled={busy}>{busy ? "PUBLISHING…" : "PUBLISH ARTICLE"}</button>
@@ -1262,7 +1247,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: CAT_COLORS[a.category] || "#00d4ff", marginBottom: 4 }}>{a.category}</div>
                     <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.title}</div>
-                    <div style={{ fontSize: 13, color: "#2a4050" }}>{a.author} · {a.date}{a.hot ? " · 🔥" : ""}</div>
+                    <div style={{ fontSize: 14, color: "#3a5060" }}>{a.author} · {a.date}{a.hot ? " · 🔥" : ""}</div>
                   </div>
                   <button style={S.delBtn} onClick={() => removeArticle(a.id)}>🗑 Delete</button>
                 </div>
@@ -1304,7 +1289,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                 </div>
               ))}
             </div>
-            <button onClick={addPick} style={{ width: "100%", padding: "10px", background: "transparent", border: "1px dashed #1e3040", borderRadius: 8, color: "#2a4050", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 1, cursor: "pointer", marginBottom: 22, transition: "all .15s" }}>+ ADD LEG</button>
+            <button onClick={addPick} style={{ width: "100%", padding: "10px", background: "transparent", border: "1px dashed #1e3040", borderRadius: 8, color: "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 1, cursor: "pointer", marginBottom: 22, transition: "all .15s" }}>+ ADD LEG</button>
             <button style={{ ...S.subBtn, background: "linear-gradient(135deg,#9a7a00,#c09800)", opacity: busy ? 0.6 : 1 }} onClick={postParlay} disabled={busy}>{busy ? "POSTING…" : "POST PARLAY"}</button>
           </div>
         )}
@@ -1321,7 +1306,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                       {p.hot && <span style={{ fontSize: 11, color: "#ff6633" }}>🔥 HOT</span>}
                     </div>
                     <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.label}</div>
-                    <div style={{ fontSize: 13, color: "#2a4050" }}>{p.odds} · {p.payout}</div>
+                    <div style={{ fontSize: 14, color: "#3a5060" }}>{p.odds} · {p.payout}</div>
                   </div>
                   <button style={S.delBtn} onClick={() => removeParlay(p.id)}>🗑 Delete</button>
                 </div>
@@ -1356,45 +1341,45 @@ const S = {
   heroPill:  { display: "inline-block", fontSize: 14, fontWeight: 800, letterSpacing: 2.5, color: "#3a6070", background: "#0c1820", border: "1px solid #0f2030", borderRadius: 20, padding: "5px 14px", marginBottom: 18 },
   heroT:     { fontSize: "clamp(52px,10vw,100px)", fontWeight: 900, letterSpacing: 4, margin: "0 0 10px", background: "linear-gradient(135deg,#e8f0f8 20%,#00d4ff 80%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1 },
   heroS:     { fontSize: 21, color: "#2a4050", letterSpacing: 2, marginTop: 6 },
-  ldg:       { textAlign: "center", padding: 80, color: "#2a4050", fontSize: 17, letterSpacing: 2 },
+  ldg:       { textAlign: "center", padding: 80, color: "#3a5060", fontSize: 18, letterSpacing: 2 },
   grid:      { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 },
   card:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 16, padding: "24px 26px", position: "relative", overflow: "hidden" },
   hotBadge:  { position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6, padding: "4px 10px" },
   hotText:   { fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" },
   meta:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 13 },
   tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid" },
-  game:      { fontSize: 12, color: "#243040", letterSpacing: 0.5 },
+  game:      { fontSize: 13, color: "#3a5060", letterSpacing: 0.5 },
   ctitle:    { fontSize: 21, fontWeight: 800, margin: "0 0 10px", lineHeight: 1.2, color: "#d0dce8" },
-  cdesc:     { fontSize: 14, color: "#3a5060", lineHeight: 1.75, margin: "0 0 16px" },
+  cdesc:     { fontSize: 15, color: "#4a6070", lineHeight: 1.75, margin: "0 0 16px" },
   offBox:    { background: "#080d14", border: "1px solid #0f1820", borderRadius: 8, padding: "10px 14px", marginBottom: 20, fontSize: 13, display: "flex", gap: 8, alignItems: "baseline" },
   offLbl:    { fontWeight: 800, color: "#1e3040", letterSpacing: 1.5, fontSize: 11, flexShrink: 0 },
-  offTxt:    { color: "#5a7080", lineHeight: 1.4 },
+  offTxt:    { fontSize: 14, color: "#6a8090", lineHeight: 1.4 },
   vrow:      { display: "flex", gap: 10, marginBottom: 14 },
   vb:        { flex: 1, padding: "14px 8px", borderRadius: 8, border: "1px solid", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 800, letterSpacing: 0.5, cursor: "pointer", transition: "all .2s" },
   vba:       { background: "#00d4ff0d", borderColor: "#00d4ff33", color: "#00d4ff" },
   vbb:       { background: "#ff4d4d0d", borderColor: "#ff4d4d33", color: "#ff5555" },
   res:       { marginBottom: 14 },
   rrow:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 10 },
-  rlbl:      { width: 120, fontSize: 13, fontWeight: 700, flexShrink: 0, lineHeight: 1.2, transition: "color .2s" },
+  rlbl:      { width: 120, fontSize: 14, fontWeight: 700, flexShrink: 0, lineHeight: 1.2, transition: "color .2s" },
   btrack:    { flex: 1, height: 7, background: "#0a0f18", borderRadius: 4, overflow: "hidden" },
   rpct:      { width: 38, textAlign: "right", fontSize: 14, fontWeight: 800, flexShrink: 0, transition: "color .2s" },
-  vtot:      { fontSize: 12, color: "#1e2e3e", letterSpacing: 1, textAlign: "right", marginTop: 6 },
+  vtot:      { fontSize: 13, color: "#2a3e4e", letterSpacing: 1, textAlign: "right", marginTop: 6 },
   aiBtn:     { width: "100%", marginTop: 12, padding: "12px 16px", background: "#0a0f18", border: "1px solid #141e30", borderRadius: 8, color: "#4060a0", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 1, cursor: "pointer", transition: "all .2s", display: "flex", alignItems: "center", justifyContent: "center" },
   aiBox:     { marginTop: 4, background: "#080d16", border: "1px solid #0f1830", borderRadius: 0, borderBottomLeftRadius: 16, borderBottomRightRadius: 16, padding: "18px 26px 22px" },
   aiHdr:     { display: "flex", alignItems: "center", gap: 8, marginBottom: 14 },
   aiIcon:    { fontSize: 17 },
   aiLbl:     { fontSize: 12, fontWeight: 800, letterSpacing: 3, color: "#3a4870" },
-  aiWait:    { color: "#2a3860", fontSize: 14, fontStyle: "italic", margin: 0 },
-  aiTxt:     { fontSize: 15, color: "#7a96b0", lineHeight: 1.8, margin: 0 },
+  aiWait:    { color: "#3a4870", fontSize: 15, fontStyle: "italic", margin: 0 },
+  aiTxt:     { fontSize: 16, color: "#8a9eb0", lineHeight: 1.8, margin: 0 },
   aiCallBtn: { width: "100%", padding: 12, background: "#0a0f18", border: "1px solid #141e30", borderRadius: 8, color: "#4060a0", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 1, cursor: "pointer" },
-  back:      { background: "none", border: "1px solid #0f1820", color: "#2a4050", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 1, padding: "7px 16px", borderRadius: 6, cursor: "pointer", marginBottom: 28, transition: "all .2s" },
+  back:      { background: "none", border: "1px solid #0f1820", color: "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: 1, padding: "7px 16px", borderRadius: 6, cursor: "pointer", marginBottom: 28, transition: "all .2s" },
   authBox:   { maxWidth: 360, margin: "80px auto", background: "#0b1018", border: "1px solid #111820", borderRadius: 18, padding: 40, textAlign: "center" },
   modal:     { background: "#0b1018", border: "1px solid #141e2e", borderRadius: 18, padding: "36px 32px", width: "100%", maxWidth: 400, position: "relative" },
   modalClose: { position: "absolute", top: 14, right: 16, background: "none", border: "none", color: "#2a3a4a", fontSize: 18, cursor: "pointer", padding: 4 },
   googleBtn: { display: "flex", alignItems: "center", justifyContent: "center", width: "100%", padding: "12px", background: "#fff", borderRadius: 9, color: "#111", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, fontWeight: 700, letterSpacing: 0.5, cursor: "pointer", textDecoration: "none", marginBottom: 18, transition: "opacity .15s" },
   divider:   { display: "flex", alignItems: "center", gap: 12, margin: "0 0 18px" },
   divTxt:    { color: "#1e2e3e", fontSize: 13, letterSpacing: 1 },
-  tabBtn:    { padding: "9px 18px", background: "transparent", border: "1px solid #0f1820", borderRadius: 8, color: "#2a4050", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 1.5, cursor: "pointer", transition: "all .15s" },
+  tabBtn:    { padding: "9px 18px", background: "transparent", border: "1px solid #0f1820", borderRadius: 8, color: "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 1.5, cursor: "pointer", transition: "all .15s" },
   tabOn:     { background: "#00d4ff0d", borderColor: "#00d4ff33", color: "#00d4ff" },
   fbox:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 14, padding: 28 },
   inp:       { width: "100%", background: "#070b12", border: "1px solid #0f1820", borderRadius: 8, color: "#b0c4d4", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, padding: "11px 14px", boxSizing: "border-box", transition: "border-color .15s" },
