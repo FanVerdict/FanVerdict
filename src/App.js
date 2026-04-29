@@ -99,24 +99,33 @@ const CAT_COLORS = {
 const ARTICLE_CATEGORIES = Object.keys(CAT_COLORS);
 
 const css = `
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap');
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:#07090d;font-family:'Barlow Condensed',sans-serif}
   input::placeholder,textarea::placeholder{color:#2a3a4a}
-  input:focus,textarea:focus,select:focus{border-color:#00d4ff55!important;outline:none}
+  input:focus,textarea:focus,select:focus{border-color:#00d4ff55!important;outline:none;box-shadow:0 0 0 3px #00d4ff11}
   .cfade{animation:fadeUp .45s ease both}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-  .hbtn:hover{filter:brightness(1.3);transform:scale(1.02)}
-  .banim{transition:width .9s cubic-bezier(.4,0,.2,1)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .hbtn:hover{filter:brightness(1.25);transform:scale(1.02)}
+  .banim{transition:width 1s cubic-bezier(.4,0,.2,1)}
   .blink{animation:blink 1.4s ease infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
   .pulse{animation:pulse 1.6s ease infinite;display:inline-block}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  .modal-bg{position:fixed;inset:0;background:#000000cc;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
-  .art-card:hover{border-color:#00d4ff44!important;transform:translateY(-2px);transition:all .2s}
-  .art-card{transition:all .2s}
-  .nav-btn{background:none;border:1px solid transparent;color:#3a5060;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s}
-  .nav-btn:hover{color:#8aa0b0;border-color:#1e2840}
-  .nav-btn.active{color:#00d4ff;border-color:#00d4ff33;background:#00d4ff11}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  .modal-bg{position:fixed;inset:0;background:#000000dd;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+  .art-card{transition:all .22s ease;cursor:pointer}
+  .art-card:hover{border-color:#00d4ff33!important;transform:translateY(-3px);box-shadow:0 12px 40px #00000066}
+  .feed-card{transition:border-color .2s ease}
+  .feed-card:hover{border-color:#1e3a4a!important}
+  .nav-btn{background:none;border:1px solid transparent;color:#3a5060;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .18s ease}
+  .nav-btn:hover{color:#7a9aaa;border-color:#1e2e3e}
+  .nav-btn.active{color:#00d4ff;border-color:#00d4ff44;background:#00d4ff0d}
+  .vote-btn{transition:all .2s ease}
+  .vote-btn:hover{transform:translateY(-1px)}
+  scrollbar-width:thin;scrollbar-color:#1e2840 transparent}
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
 `;
 
 export default function App() {
@@ -255,7 +264,6 @@ export default function App() {
   const handleAddArticle = (a) => setArticles(prev => [a, ...prev]);
   const handleDeleteArticle = (id) => setArticles(prev => prev.filter(a => a.id !== id));
 
-  // Nav helper: returns className string for nav buttons
   const navCls = (activePage) => {
     const pages = Array.isArray(activePage) ? activePage : [activePage];
     return "nav-btn" + (pages.includes(page) ? " active" : "");
@@ -267,7 +275,10 @@ export default function App() {
 
       <header style={S.hdr}>
         <div style={S.hdrI}>
-          <div style={S.logo} onClick={goFeed}>🏒 <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span></div>
+          <div style={S.logo} onClick={goFeed}>
+            <span style={S.logoIcon}>🏒</span>
+            <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span>
+          </div>
           <nav style={S.nav}>
             <button className={navCls("feed")} onClick={goFeed}>FEED</button>
             <button className={navCls(["forum","article"])} onClick={()=>setPage("forum")}>FORUM</button>
@@ -275,20 +286,18 @@ export default function App() {
             {user && (
               <button className={navCls("profile")} onClick={()=>setPage("profile")}>
                 {profile?.avatar_url
-                  ? <img src={profile.avatar_url} style={{width:22,height:22,borderRadius:"50%",verticalAlign:"middle"}} alt="avatar"/>
-                  : "👤"} {profile?.display_name?.split(" ")[0] || "ME"}
+                  ? <img src={profile.avatar_url} style={{width:20,height:20,borderRadius:"50%",verticalAlign:"middle",marginRight:4,border:"1px solid #00d4ff44"}} alt="avatar"/>
+                  : <span style={{marginRight:4}}>👤</span>}
+                {profile?.display_name?.split(" ")[0] || "ME"}
               </button>
             )}
             {!user && (
-              <button
-                className={"nav-btn" + (showAuth ? " active" : "")}
-                onClick={()=>setShowAuth(true)}
-              >
+              <button className={"nav-btn" + (showAuth ? " active" : "")} onClick={()=>setShowAuth(true)}>
                 LOG IN
               </button>
             )}
           </nav>
-          <div style={S.live}><span className="blink">●</span> LIVE</div>
+          <div style={S.live}><span className="blink" style={{color:"#ff4d4d"}}>●</span> LIVE</div>
         </div>
       </header>
 
@@ -297,12 +306,19 @@ export default function App() {
       {page==="feed" && (
         <main style={S.main}>
           <div style={S.hero}>
+            <div style={S.heroPill}>🏒 PLAYOFF SEASON · LIVE VERDICTS</div>
             <h1 style={S.heroT}>YOU'RE THE REF.</h1>
-            <p style={S.heroS}>Officials made their call. The fans have a say.</p>
+            <p style={S.heroS}>Officials made their call. Now the fans decide.</p>
           </div>
           {!user && (
             <div style={S.signupBanner}>
-              <span>🏒 Sign up to save verdicts & track your votes</span>
+              <div style={{display:"flex",alignItems:"center",gap:10}}>
+                <span style={{fontSize:20}}>🏒</span>
+                <div>
+                  <div style={{fontSize:14,fontWeight:800,color:"#c0d4e0",letterSpacing:1}}>JOIN FANVERDICT</div>
+                  <div style={{fontSize:12,color:"#3a5060"}}>Save verdicts & track your votes</div>
+                </div>
+              </div>
               <button style={S.bannerBtn} onClick={()=>setShowAuth(true)}>JOIN FREE →</button>
             </div>
           )}
@@ -323,9 +339,16 @@ export default function App() {
 
       {page==="saved" && (
         <main style={S.main}>
-          <h2 style={{fontSize:26,fontWeight:900,letterSpacing:3,marginBottom:28,color:"#dce6f0"}}>🔖 SAVED VERDICTS</h2>
+          <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:32}}>
+            <h2 style={{fontSize:28,fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>SAVED VERDICTS</h2>
+            <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:"#00d4ff",background:"#00d4ff14",border:"1px solid #00d4ff33",padding:"3px 10px",borderRadius:4}}>{savedItems.length}</span>
+          </div>
           {savedItems.length === 0
-            ? <p style={{color:"#3a5060",fontSize:16,letterSpacing:1}}>No saved verdicts yet.</p>
+            ? <div style={{textAlign:"center",padding:"60px 0",color:"#2a3a4a"}}>
+                <div style={{fontSize:40,marginBottom:12}}>🔖</div>
+                <p style={{fontSize:16,letterSpacing:1}}>No saved verdicts yet.</p>
+                <p style={{fontSize:13,marginTop:6,color:"#1a2a36"}}>Vote on a controversy to save it here.</p>
+              </div>
             : <div style={S.grid}>{savedItems.map((c,i) => (
                 <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id]||[0,0]} pct={pct} total={total}
                   onVote={vote} onDetail={openDetail}
@@ -341,37 +364,49 @@ export default function App() {
       {page==="detail" && active && (
         <main style={S.main}>
           <button style={S.back} onClick={goFeed}>← Back to Feed</button>
-          <div style={{...S.card,maxWidth:660,margin:"0 auto"}}>
-            <CardBody item={active} uv={uv[active.id]} lv={lv[active.id]||[0,0]} pct={pct} total={total} onVote={vote}/>
+          <div style={{maxWidth:660,margin:"0 auto"}}>
+            <div style={{...S.card,marginBottom:0}}>
+              <CardBody item={active} uv={uv[active.id]} lv={lv[active.id]||[0,0]} pct={pct} total={total} onVote={vote}/>
+            </div>
             <div style={S.aiBox}>
-              <div style={S.aiHdr}>🤖 <span style={S.aiLbl}>AI REF VERDICT</span></div>
-              {aiLoad[active.id] ? <p style={S.aiWait} className="pulse">Reviewing the play…</p>
-                : ai[active.id] ? <p style={S.aiTxt}>{ai[active.id]}</p>
-                : <button style={S.fullBtn} className="hbtn" onClick={() => getAI(active)}>Ask the AI Ref</button>}
+              <div style={S.aiHdr}>
+                <span style={S.aiIcon}>🤖</span>
+                <span style={S.aiLbl}>AI REF VERDICT</span>
+                <span style={{flex:1}}/>
+                <span style={{fontSize:10,color:"#2a3850",letterSpacing:1}}>POWERED BY CLAUDE</span>
+              </div>
+              {aiLoad[active.id]
+                ? <div style={{padding:"8px 0"}}>
+                    <p style={S.aiWait} className="pulse">Reviewing the play…</p>
+                    <div style={{display:"flex",gap:6,marginTop:14}}>
+                      {[1,2,3].map(i=><div key={i} style={{height:6,flex:1,background:"#0f1825",borderRadius:3}}/>)}
+                    </div>
+                  </div>
+                : ai[active.id]
+                  ? <p style={S.aiTxt}>{ai[active.id]}</p>
+                  : <button style={S.aiCallBtn} className="hbtn" onClick={() => getAI(active)}>Ask the AI Ref →</button>
+              }
             </div>
           </div>
         </main>
       )}
 
-      {page==="forum" && (
-        <ForumPage articles={articles} onOpenArticle={openArticle}/>
-      )}
-
-      {page==="article" && activeArticle && (
-        <ArticlePage article={activeArticle} onBack={()=>setPage("forum")}/>
-      )}
-
+      {page==="forum" && <ForumPage articles={articles} onOpenArticle={openArticle}/>}
+      {page==="article" && activeArticle && <ArticlePage article={activeArticle} onBack={()=>setPage("forum")}/>}
       {page==="profile" && user && (
         <ProfilePage profile={profile} user={user} savedCount={profile?.saved_ids?.length||0}
           votedCount={Object.keys(uv).length} onLogout={handleLogout} onBack={goFeed}/>
       )}
-
       {page==="admin" && (
         <AdminPanel authed={adminOk} onAuth={setAdminOk} items={items} lv={lv} onRefresh={load}
           articles={articles} onAddArticle={handleAddArticle} onDeleteArticle={handleDeleteArticle}/>
       )}
 
-      <footer style={S.foot}>FanVerdict © 2026 — Built for hockey fans</footer>
+      <footer style={S.foot}>
+        <span style={{color:"#1a2a36"}}>FanVerdict © 2026</span>
+        <span style={{color:"#0f1820",margin:"0 12px"}}>·</span>
+        <span style={{color:"#1a2a36"}}>Built for hockey fans</span>
+      </footer>
     </div>
   );
 }
@@ -409,21 +444,22 @@ function AuthModal({ onClose, onLogin }) {
         <button style={S.modalClose} onClick={onClose}>✕</button>
         {done ? (
           <div style={{textAlign:"center",padding:"20px 0"}}>
-            <div style={{fontSize:44,marginBottom:16}}>📧</div>
+            <div style={{fontSize:48,marginBottom:16}}>📧</div>
             <h2 style={{fontSize:22,fontWeight:900,letterSpacing:3,color:"#dce6f0",marginBottom:12}}>CHECK YOUR EMAIL</h2>
-            <p style={{color:"#4a6070",fontSize:15,lineHeight:1.6,marginBottom:24}}>
-              We sent a confirmation link to <strong style={{color:"#00d4ff"}}>{email}</strong>. Click it to activate your account.
+            <p style={{color:"#4a6070",fontSize:14,lineHeight:1.7,marginBottom:24}}>
+              We sent a confirmation link to <strong style={{color:"#00d4ff"}}>{email}</strong>.<br/>Click it to activate your account.
             </p>
-            <button style={{...S.subBtn,background:"#0c1420",border:"1px solid #1e2840",color:"#5a7080"}} onClick={onClose}>
-              ← BACK TO SITE
-            </button>
+            <button style={{...S.subBtn,background:"#0c1420",border:"1px solid #1e2840",color:"#5a7080"}} onClick={onClose}>← BACK TO SITE</button>
           </div>
         ) : (
           <>
-            <div style={{fontSize:36,textAlign:"center",marginBottom:8}}>🏒</div>
-            <h2 style={{fontSize:22,fontWeight:900,letterSpacing:3,color:"#dce6f0",textAlign:"center",marginBottom:24}}>
+            <div style={{fontSize:38,textAlign:"center",marginBottom:6}}>🏒</div>
+            <h2 style={{fontSize:22,fontWeight:900,letterSpacing:3,color:"#dce6f0",textAlign:"center",marginBottom:6}}>
               {mode==="login" ? "WELCOME BACK" : "JOIN FANVERDICT"}
             </h2>
+            <p style={{textAlign:"center",fontSize:13,color:"#3a5060",marginBottom:24,letterSpacing:.5}}>
+              {mode==="login" ? "Good to see you again." : "The fans are waiting for your verdict."}
+            </p>
             <a href={auth.googleUrl()} style={S.googleBtn}>
               <svg width="18" height="18" viewBox="0 0 48 48" style={{marginRight:10,flexShrink:0}}>
                 <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -433,16 +469,20 @@ function AuthModal({ onClose, onLogin }) {
               </svg>
               Continue with Google
             </a>
-            <div style={S.divider}><span style={S.divTxt}>or</span></div>
-            <input style={{...S.inp,marginBottom:12}} type="email" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)}/>
-            <input style={{...S.inp,marginBottom:err?8:16}} type="password" placeholder="Password" value={pw} onChange={e=>setPw(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()}/>
-            {err && <p style={{color:"#ff4d4d",fontSize:13,marginBottom:12}}>{err}</p>}
+            <div style={S.divider}>
+              <div style={{flex:1,height:1,background:"#0f1825"}}/>
+              <span style={S.divTxt}>or</span>
+              <div style={{flex:1,height:1,background:"#0f1825"}}/>
+            </div>
+            <input style={{...S.inp,marginBottom:10}} type="email" placeholder="Email address" value={email} onChange={e=>setEmail(e.target.value)}/>
+            <input style={{...S.inp,marginBottom:err?8:18}} type="password" placeholder="Password" value={pw} onChange={e=>setPw(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()}/>
+            {err && <p style={{color:"#ff4d4d",fontSize:12,marginBottom:12,letterSpacing:.3}}>{err}</p>}
             <button style={{...S.subBtn,opacity:busy?.6:1}} onClick={submit} disabled={busy}>
               {busy ? "…" : mode==="login" ? "LOG IN" : "CREATE ACCOUNT"}
             </button>
             <p style={{textAlign:"center",fontSize:13,color:"#3a5060",marginTop:16}}>
               {mode==="login" ? "No account? " : "Already have one? "}
-              <span style={{color:"#00d4ff",cursor:"pointer"}} onClick={()=>{setMode(m=>m==="login"?"signup":"login");setErr("");}}>
+              <span style={{color:"#00d4ff",cursor:"pointer",fontWeight:700}} onClick={()=>{setMode(m=>m==="login"?"signup":"login");setErr("");}}>
                 {mode==="login" ? "Sign up free" : "Log in"}
               </span>
             </p>
@@ -464,42 +504,60 @@ function ForumPage({ articles, onOpenArticle }) {
   return (
     <main style={S.main}>
       <div style={{marginBottom:32}}>
-        <div style={{display:"flex",alignItems:"baseline",gap:14,marginBottom:6}}>
-          <h1 style={{fontSize:"clamp(28px,5vw,54px)",fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>THE LOCKER ROOM</h1>
-          <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#00d4ff",background:"#00d4ff14",border:"1px solid #00d4ff33",padding:"3px 10px",borderRadius:4}}>FORUM</span>
+        <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:8}}>
+          <h1 style={{fontSize:"clamp(28px,5vw,52px)",fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>THE LOCKER ROOM</h1>
+          <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#00d4ff",background:"#00d4ff14",border:"1px solid #00d4ff33",padding:"3px 10px",borderRadius:4,alignSelf:"center"}}>FORUM</span>
         </div>
-        <p style={{color:"#3a5060",fontSize:14,letterSpacing:1}}>Controversial calls. Epic fights. The debates that never die.</p>
+        <p style={{color:"#2a4050",fontSize:14,letterSpacing:1}}>Controversial calls. Epic fights. The debates that never die.</p>
       </div>
       <div style={{display:"flex",gap:8,marginBottom:28,flexWrap:"wrap"}}>
-        {categories.map(cat => (
-          <button key={cat} onClick={()=>setFilter(cat)} style={{
-            padding:"6px 13px",
-            background:filter===cat?(CAT_COLORS[cat]||"#00d4ff")+"22":"#0c1420",
-            border:`1px solid ${filter===cat?(CAT_COLORS[cat]||"#00d4ff")+"66":"#161e2e"}`,
-            borderRadius:6, color:filter===cat?(CAT_COLORS[cat]||"#00d4ff"):"#3a5060",
-            fontFamily:"'Barlow Condensed',sans-serif", fontSize:11, fontWeight:800, letterSpacing:1.5, cursor:"pointer"
-          }}>{cat}</button>
-        ))}
+        {categories.map(cat => {
+          const col = CAT_COLORS[cat] || "#00d4ff";
+          const active = filter === cat;
+          return (
+            <button key={cat} onClick={()=>setFilter(cat)} style={{
+              padding:"5px 14px",
+              background: active ? col+"1a" : "transparent",
+              border: `1px solid ${active ? col+"66" : "#161e2e"}`,
+              borderRadius:20,
+              color: active ? col : "#3a5060",
+              fontFamily:"'Barlow Condensed',sans-serif",
+              fontSize:11, fontWeight:800, letterSpacing:1.5, cursor:"pointer",
+              transition:"all .15s ease",
+            }}>{cat}</button>
+          );
+        })}
       </div>
-      {filtered.length===0 && <p style={{color:"#3a5060",textAlign:"center",padding:60}}>No articles in this category yet.</p>}
+      {filtered.length===0 && (
+        <div style={{textAlign:"center",padding:"60px 0",color:"#2a3a4a"}}>
+          <p style={{fontSize:16,letterSpacing:1}}>No articles in this category yet.</p>
+        </div>
+      )}
       {featured && (
         <div className="art-card" onClick={()=>onOpenArticle(featured)} style={{
-          background:"#0c1420", border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}33`,
-          borderRadius:14, marginBottom:24, overflow:"hidden", cursor:"pointer"
+          background:"#0c1420",
+          border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}22`,
+          borderRadius:16, marginBottom:24, overflow:"hidden",
         }}>
-          <div style={{position:"relative",height:220,overflow:"hidden"}}>
-            <img src={featured.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
-            <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 20%,#0c142088 65%,#0c1420 100%)"}}/>
-            <div style={{position:"absolute",bottom:16,left:20,display:"flex",alignItems:"center",gap:10}}>
-              <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:CAT_COLORS[featured.category]||"#00d4ff",background:(CAT_COLORS[featured.category]||"#00d4ff")+"22",border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}44`,padding:"3px 10px",borderRadius:4}}>{featured.category}</span>
-              {featured.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#ff5a1a22",border:"1px solid #ff5a1a55",padding:"3px 9px",borderRadius:4}}>HOT</span>}
+          <div style={{position:"relative",height:240,overflow:"hidden"}}>
+            <img src={featured.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .4s ease"}} onError={e=>e.target.style.display="none"}/>
+            <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 15%,#0c142090 60%,#0c1420 100%)"}}/>
+            <div style={{position:"absolute",top:16,right:16,display:"flex",gap:8}}>
+              {featured.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#07090dcc",border:"1px solid #ff5a1a55",padding:"4px 10px",borderRadius:20,letterSpacing:1}}>🔥 HOT</span>}
+            </div>
+            <div style={{position:"absolute",bottom:18,left:22}}>
+              <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:CAT_COLORS[featured.category]||"#00d4ff",background:"#07090dcc",border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}44`,padding:"4px 12px",borderRadius:20}}>{featured.category}</span>
             </div>
           </div>
-          <div style={{padding:"22px 24px"}}>
-            <h2 style={{fontSize:"clamp(18px,2.5vw,26px)",fontWeight:900,lineHeight:1.2,color:"#dce6f0",marginBottom:11}}>{featured.title}</h2>
-            <p style={{fontSize:13,color:"#4a6070",lineHeight:1.7,marginBottom:14}}>{featured.excerpt}</p>
-            <div style={{display:"flex",gap:14,fontSize:11,color:"#2a4050"}}>
-              <span>By {featured.author}</span><span>·</span><span>{featured.date}</span><span>·</span><span>{featured.read_time}</span>
+          <div style={{padding:"22px 26px 24px"}}>
+            <h2 style={{fontSize:"clamp(18px,2.5vw,26px)",fontWeight:900,lineHeight:1.2,color:"#dce6f0",marginBottom:10}}>{featured.title}</h2>
+            <p style={{fontSize:13,color:"#4a6070",lineHeight:1.75,marginBottom:16}}>{featured.excerpt}</p>
+            <div style={{display:"flex",gap:12,fontSize:11,color:"#243040",alignItems:"center"}}>
+              <span style={{color:"#3a5060"}}>By {featured.author}</span>
+              <span style={{color:"#1a2a36"}}>·</span>
+              <span>{featured.date}</span>
+              <span style={{color:"#1a2a36"}}>·</span>
+              <span>{featured.read_time}</span>
             </div>
           </div>
         </div>
@@ -510,19 +568,21 @@ function ForumPage({ articles, onOpenArticle }) {
             const col = CAT_COLORS[a.category]||"#00d4ff";
             return (
               <div key={a.id} className="art-card" onClick={()=>onOpenArticle(a)}
-                style={{background:"#0c1420",border:"1px solid #161e2e",borderRadius:13,overflow:"hidden",cursor:"pointer"}}>
-                <div style={{position:"relative",height:150,overflow:"hidden"}}>
+                style={{background:"#0c1420",border:"1px solid #121a24",borderRadius:14,overflow:"hidden"}}>
+                <div style={{position:"relative",height:160,overflow:"hidden"}}>
                   <img src={a.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
-                  <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 30%,#0c1420cc 100%)"}}/>
-                  <div style={{position:"absolute",bottom:10,left:14,display:"flex",alignItems:"center",gap:8}}>
-                    <span style={{fontSize:9,fontWeight:800,letterSpacing:1.5,color:col,background:col+"22",border:`1px solid ${col}44`,padding:"2px 8px",borderRadius:4}}>{a.category}</span>
-                    {a.hot && <span style={{fontSize:10,color:"#ff7040"}}>HOT</span>}
+                  <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 25%,#0c1420dd 100%)"}}/>
+                  <div style={{position:"absolute",top:10,right:10}}>
+                    {a.hot && <span style={{fontSize:9,fontWeight:800,color:"#ff7040",background:"#07090dcc",border:"1px solid #ff5a1a44",padding:"3px 8px",borderRadius:20,letterSpacing:1}}>🔥 HOT</span>}
+                  </div>
+                  <div style={{position:"absolute",bottom:10,left:12}}>
+                    <span style={{fontSize:9,fontWeight:800,letterSpacing:1.5,color:col,background:"#07090dcc",border:`1px solid ${col}44`,padding:"3px 9px",borderRadius:20}}>{a.category}</span>
                   </div>
                 </div>
-                <div style={{padding:"16px 18px"}}>
+                <div style={{padding:"16px 18px 18px"}}>
                   <h3 style={{fontSize:16,fontWeight:800,lineHeight:1.25,color:"#dce6f0",marginBottom:8}}>{a.title}</h3>
-                  <p style={{fontSize:12,color:"#3a5060",lineHeight:1.6,marginBottom:12,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{a.excerpt}</p>
-                  <div style={{display:"flex",justifyContent:"space-between",fontSize:11,color:"#1a3040"}}>
+                  <p style={{fontSize:12,color:"#3a5060",lineHeight:1.65,marginBottom:12,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{a.excerpt}</p>
+                  <div style={{display:"flex",justifyContent:"space-between",fontSize:11,color:"#1e3040"}}>
                     <span>{a.author}</span><span>{a.read_time}</span>
                   </div>
                 </div>
@@ -564,28 +624,37 @@ function ArticlePage({ article, onBack }) {
   return (
     <main style={S.main}>
       <button style={S.back} onClick={onBack}>← Back to Forum</button>
-      <div style={{maxWidth:680,margin:"0 auto"}}>
-        <div style={{borderRadius:13,overflow:"hidden",marginBottom:28,position:"relative",height:280}}>
+      <div style={{maxWidth:700,margin:"0 auto"}}>
+        <div style={{borderRadius:16,overflow:"hidden",marginBottom:30,position:"relative",height:300}}>
           <img src={article.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
-          <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 20%,#07090d88 60%,#07090d 100%)"}}/>
-          <div style={{position:"absolute",bottom:20,left:22,display:"flex",alignItems:"center",gap:10}}>
-            <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color,background:color+"22",border:`1px solid ${color}44`,padding:"3px 10px",borderRadius:4}}>{article.category}</span>
-            {article.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#ff5a1a22",border:"1px solid #ff5a1a55",padding:"3px 9px",borderRadius:4}}>HOT</span>}
+          <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 20%,#07090d88 55%,#07090d 100%)"}}/>
+          <div style={{position:"absolute",top:16,right:16,display:"flex",gap:8}}>
+            {article.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#07090dcc",border:"1px solid #ff5a1a55",padding:"4px 10px",borderRadius:20,letterSpacing:1}}>🔥 HOT</span>}
+          </div>
+          <div style={{position:"absolute",bottom:20,left:24}}>
+            <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color,background:"#07090dcc",border:`1px solid ${color}44`,padding:"4px 12px",borderRadius:20}}>{article.category}</span>
           </div>
         </div>
         <h1 style={{fontSize:"clamp(22px,4vw,38px)",fontWeight:900,lineHeight:1.15,color:"#dce6f0",marginBottom:14}}>{article.title}</h1>
-        <div style={{display:"flex",gap:14,fontSize:12,color:"#2a4050",marginBottom:28,flexWrap:"wrap"}}>
-          <span>By {article.author}</span><span>·</span><span>{article.date}</span><span>·</span><span>{article.read_time}</span>
+        <div style={{display:"flex",gap:12,fontSize:12,color:"#243040",marginBottom:28,flexWrap:"wrap",alignItems:"center"}}>
+          <span style={{color:"#3a5060"}}>By {article.author}</span>
+          <span style={{color:"#1a2a36"}}>·</span>
+          <span>{article.date}</span>
+          <span style={{color:"#1a2a36"}}>·</span>
+          <span>{article.read_time}</span>
         </div>
-        <div style={{borderLeft:`3px solid ${color}`,paddingLeft:18,marginBottom:28}}>
-          <p style={{fontSize:16,color:"#6a8090",lineHeight:1.8,fontStyle:"italic"}}>{article.excerpt}</p>
+        <div style={{borderLeft:`3px solid ${color}44`,paddingLeft:20,marginBottom:28}}>
+          <p style={{fontSize:16,color:"#6a8090",lineHeight:1.85,fontStyle:"italic"}}>{article.excerpt}</p>
         </div>
-        <div style={{background:"#090e18",border:"1px solid #161e38",borderRadius:12,padding:26,minHeight:180}}>
+        <div style={{background:"#090e18",border:"1px solid #111828",borderRadius:14,padding:28,minHeight:200}}>
           {aiLoading
-            ? <p className="pulse" style={{color:"#3a4060",fontSize:14,fontStyle:"italic"}}>Writing the full story…</p>
+            ? <div>
+                <p className="pulse" style={{color:"#3a4060",fontSize:14,fontStyle:"italic",marginBottom:16}}>Writing the full story…</p>
+                {[100,85,92,70].map((w,i)=><div key={i} style={{height:10,width:`${w}%`,background:"#0f1825",borderRadius:3,marginBottom:10}}/>)}
+              </div>
             : aiContent
-              ? <div style={{fontSize:14,color:"#8a9eb0",lineHeight:1.9,whiteSpace:"pre-wrap"}}>{aiContent}</div>
-              : <button style={S.fullBtn} className="hbtn" onClick={generateArticle}>Load Full Article</button>
+              ? <div style={{fontSize:14,color:"#8a9eb0",lineHeight:1.95,whiteSpace:"pre-wrap"}}>{aiContent}</div>
+              : <button style={S.aiCallBtn} className="hbtn" onClick={generateArticle}>Load Full Article →</button>
           }
         </div>
       </div>
@@ -598,19 +667,25 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
   return (
     <main style={S.main}>
       <button style={S.back} onClick={onBack}>← Back</button>
-      <div style={{maxWidth:480,margin:"0 auto"}}>
-        <div style={{...S.card,textAlign:"center",padding:36}}>
+      <div style={{maxWidth:460,margin:"0 auto"}}>
+        <div style={{...S.card,textAlign:"center",padding:"40px 36px"}}>
           {profile?.avatar_url
-            ? <img src={profile.avatar_url} style={{width:72,height:72,borderRadius:"50%",margin:"0 auto 16px",display:"block",border:"2px solid #00d4ff44"}} alt="avatar"/>
-            : <div style={{width:72,height:72,borderRadius:"50%",background:"#00d4ff18",border:"2px solid #00d4ff44",margin:"0 auto 16px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:32}}>👤</div>
+            ? <img src={profile.avatar_url} style={{width:76,height:76,borderRadius:"50%",margin:"0 auto 18px",display:"block",border:"2px solid #00d4ff33"}} alt="avatar"/>
+            : <div style={{width:76,height:76,borderRadius:"50%",background:"#00d4ff0d",border:"2px solid #00d4ff22",margin:"0 auto 18px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:30}}>👤</div>
           }
-          <h2 style={{fontSize:24,fontWeight:900,letterSpacing:2,color:"#dce6f0",marginBottom:4}}>{profile?.display_name||"Fan"}</h2>
-          <p style={{fontSize:13,color:"#3a5060",marginBottom:28}}>{user?.email}</p>
-          <div style={{display:"flex",gap:16,justifyContent:"center",marginBottom:28}}>
-            <div style={S.statBox}><div style={S.statNum}>{votedCount}</div><div style={S.statLbl}>VOTES CAST</div></div>
-            <div style={S.statBox}><div style={S.statNum}>{savedCount}</div><div style={S.statLbl}>SAVED</div></div>
+          <h2 style={{fontSize:26,fontWeight:900,letterSpacing:2,color:"#dce6f0",marginBottom:4}}>{profile?.display_name||"Fan"}</h2>
+          <p style={{fontSize:13,color:"#2a4050",marginBottom:30,letterSpacing:.3}}>{user?.email}</p>
+          <div style={{display:"flex",gap:14,justifyContent:"center",marginBottom:32}}>
+            <div style={S.statBox}>
+              <div style={S.statNum}>{votedCount}</div>
+              <div style={S.statLbl}>VOTES CAST</div>
+            </div>
+            <div style={S.statBox}>
+              <div style={S.statNum}>{savedCount}</div>
+              <div style={S.statLbl}>SAVED</div>
+            </div>
           </div>
-          <button style={{...S.subBtn,background:"#ff1a1a22",border:"1px solid #ff1a1a44",color:"#ff4d4d"}} onClick={onLogout}>LOG OUT</button>
+          <button style={{...S.subBtn,background:"transparent",border:"1px solid #ff1a1a33",color:"#ff4d4d"}} onClick={onLogout}>LOG OUT</button>
         </div>
       </div>
     </main>
@@ -618,17 +693,19 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
 }
 
 // ── Feed Card ──
-function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, saved, onSave, loggedIn, onAuthPrompt }) {
+function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail }) {
   return (
-    <div style={{...S.card,animationDelay:`${idx*.07}s`}} className="cfade">
+    <div style={{...S.card,animationDelay:`${idx*.07}s`}} className="cfade feed-card">
       {item.hot && (
         <div style={S.hotBadge}>
-          <span style={S.hotFlame}>🔥</span>
+          <span style={{fontSize:11}}>🔥</span>
           <span style={S.hotText}>HOT</span>
         </div>
       )}
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote}/>
-      <button style={S.fullBtn} className="hbtn" onClick={() => onDetail(item)}>🤖 Get AI Ref Verdict →</button>
+      <button style={S.aiBtn} className="hbtn" onClick={() => onDetail(item)}>
+        <span style={{marginRight:6}}>🤖</span> Get AI Ref Verdict →
+      </button>
     </div>
   );
 }
@@ -644,18 +721,28 @@ function CardBody({ item, uv, lv, pct, total, onVote }) {
       </div>
       <h2 style={S.ctitle}>{item.title}</h2>
       <p style={S.cdesc}>{item.description}</p>
-      <div style={S.offBox}><span style={S.offLbl}>OFFICIAL CALL: </span><span style={S.offTxt}>{item.official_call}</span></div>
+      <div style={S.offBox}>
+        <span style={S.offLbl}>OFFICIAL CALL </span>
+        <span style={S.offTxt}>{item.official_call}</span>
+      </div>
       {uv===undefined
         ? <div style={S.vrow}>
-            <button style={{...S.vb,...S.vba}} className="hbtn" onClick={()=>onVote(item.id,0)}>{item.option_a}</button>
-            <button style={{...S.vb,...S.vbb}} className="hbtn" onClick={()=>onVote(item.id,1)}>{item.option_b}</button>
+            <button style={{...S.vb,...S.vba}} className="vote-btn" onClick={()=>onVote(item.id,0)}>{item.option_a}</button>
+            <button style={{...S.vb,...S.vbb}} className="vote-btn" onClick={()=>onVote(item.id,1)}>{item.option_b}</button>
           </div>
         : <div style={S.res}>
             {[item.option_a,item.option_b].map((opt,oi)=>(
               <div key={oi} style={S.rrow}>
-                <span style={{...S.rlbl,opacity:uv===oi||uv===-1?1:.4}}>{opt}</span>
-                <div style={S.btrack}><div className="banim" style={{width:`${pct(item.id,oi)}%`,background:oi===0?"#00d4ff":"#ff4d4d",opacity:uv===oi||uv===-1?1:.3,height:"100%",borderRadius:4}}/></div>
-                <span style={{...S.rpct,color:uv===oi?"#fff":"#445"}}>{pct(item.id,oi)}%</span>
+                <span style={{...S.rlbl,opacity:uv===oi||uv===-1?1:.35,color:uv===oi?(oi===0?"#00d4ff":"#ff4d4d"):"#6a8090"}}>{opt}</span>
+                <div style={S.btrack}>
+                  <div className="banim" style={{
+                    width:`${pct(item.id,oi)}%`,
+                    background:oi===0?"linear-gradient(90deg,#0099bb,#00d4ff)":"linear-gradient(90deg,#cc2233,#ff4d4d)",
+                    opacity:uv===oi||uv===-1?1:.25,
+                    height:"100%",borderRadius:4,
+                  }}/>
+                </div>
+                <span style={{...S.rpct,color:uv===oi?(oi===0?"#00d4ff":"#ff4d4d"):"#2a4050"}}>{pct(item.id,oi)}%</span>
               </div>
             ))}
             <div style={S.vtot}>{total(item.id).toLocaleString()} fan verdicts</div>
@@ -713,8 +800,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
 
   const removeArticle = async (id) => {
     if(!window.confirm("Delete this article?")) return;
-    await db.del("articles",id);
-    onDeleteArticle(id);
+    await db.del("articles",id); onDeleteArticle(id);
   };
 
   if(!authed) return (
@@ -724,7 +810,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
         <h2 style={{fontSize:24,fontWeight:900,letterSpacing:4,margin:"0 0 24px",color:"#dce6f0"}}>ADMIN ACCESS</h2>
         <input style={{...S.inp,textAlign:"center",letterSpacing:6}} type="password" placeholder="Password" value={pw} onChange={e=>setPw(e.target.value)} onKeyDown={e=>e.key==="Enter"&&tryAuth()}/>
         {err && <p style={{color:"#ff4d4d",fontSize:13,marginTop:8}}>Wrong password</p>}
-        <button style={{...S.subBtn,marginTop:16}} onClick={tryAuth}>ENTER</button>
+        <button style={{...S.subBtn,marginTop:18}} onClick={tryAuth}>ENTER</button>
       </div>
     </main>
   );
@@ -763,15 +849,15 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
         )}
 
         {tab==="manage" && (
-          <div style={{background:"#0c1420",border:"1px solid #161e2e",borderRadius:14,overflow:"hidden"}}>
+          <div style={{background:"#0c1420",border:"1px solid #111828",borderRadius:14,overflow:"hidden"}}>
             {items.length===0
               ? <p style={{color:"#334",textAlign:"center",padding:40}}>No controversies yet.</p>
               : items.map(c=>(
-                <div key={c.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0f1825",gap:12}}>
+                <div key={c.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0d1620",gap:12}}>
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#00d4ff",marginBottom:4}}>{c.type}</div>
                     <div style={{fontSize:15,fontWeight:700,color:"#dce6f0",marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.title}</div>
-                    <div style={{fontSize:12,color:"#445"}}>{c.option_a}: {lv?.[c.id]?.[0]??c.votes_a??0} | {c.option_b}: {lv?.[c.id]?.[1]??c.votes_b??0}</div>
+                    <div style={{fontSize:12,color:"#2a3a4a"}}>{c.option_a}: {lv?.[c.id]?.[0]??c.votes_a??0} | {c.option_b}: {lv?.[c.id]?.[1]??c.votes_b??0}</div>
                   </div>
                   <button style={S.delBtn} onClick={()=>remove(c.id)}>🗑 Delete</button>
                 </div>
@@ -800,7 +886,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
             <label style={{display:"flex",alignItems:"center",gap:8,fontSize:15,fontWeight:700,color:"#5a7080",cursor:"pointer",marginBottom:16}}>
               <input type="checkbox" checked={artForm.hot} onChange={e=>setArt("hot",e.target.checked)}/> 🔥 Mark as HOT
             </label>
-            <div style={{background:"#080c14",border:"1px solid #0f1925",borderRadius:8,padding:"11px 14px",marginBottom:18,fontSize:12,color:"#3a5060"}}>
+            <div style={{background:"#070b12",border:"1px solid #0f1825",borderRadius:8,padding:"11px 14px",marginBottom:18,fontSize:12,color:"#2a4050",letterSpacing:.3}}>
               💡 AI writes the full article body automatically when readers open it.
             </div>
             <button style={{...S.subBtn,opacity:busy?.6:1}} onClick={postArticle} disabled={busy}>{busy?"PUBLISHING…":"PUBLISH ARTICLE"}</button>
@@ -808,15 +894,15 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
         )}
 
         {tab==="forum_manage" && (
-          <div style={{background:"#0c1420",border:"1px solid #161e2e",borderRadius:14,overflow:"hidden"}}>
+          <div style={{background:"#0c1420",border:"1px solid #111828",borderRadius:14,overflow:"hidden"}}>
             {articles.length===0
               ? <p style={{color:"#334",textAlign:"center",padding:40}}>No articles yet.</p>
               : articles.map(a=>(
-                <div key={a.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0f1825",gap:12}}>
+                <div key={a.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0d1620",gap:12}}>
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:CAT_COLORS[a.category]||"#00d4ff",marginBottom:4}}>{a.category}</div>
                     <div style={{fontSize:15,fontWeight:700,color:"#dce6f0",marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
-                    <div style={{fontSize:12,color:"#2a4050"}}>{a.author} · {a.date}{a.hot?" · HOT":""}</div>
+                    <div style={{fontSize:12,color:"#2a4050"}}>{a.author} · {a.date}{a.hot?" · 🔥":""}</div>
                   </div>
                   <button style={S.delBtn} onClick={()=>removeArticle(a.id)}>🗑 Delete</button>
                 </div>
@@ -831,73 +917,76 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
 
 const FG = ({label,children}) => (
   <div style={{marginBottom:18}}>
-    <label style={{display:"block",fontSize:11,fontWeight:800,letterSpacing:2,color:"#2a4050",marginBottom:7}}>{label}</label>
+    <label style={{display:"block",fontSize:11,fontWeight:800,letterSpacing:2,color:"#243040",marginBottom:7}}>{label}</label>
     {children}
   </div>
 );
 
 const S = {
   root:      {minHeight:"100vh",background:"#07090d",color:"#dce6f0",fontFamily:"'Barlow Condensed',sans-serif"},
-  hdr:       {background:"#0b0f16",borderBottom:"1px solid #161e28",position:"sticky",top:0,zIndex:100},
-  hdrI:      {maxWidth:1100,margin:"0 auto",padding:"14px 20px",display:"flex",alignItems:"center",justifyContent:"space-between"},
-  logo:      {display:"flex",alignItems:"center",gap:10,cursor:"pointer",fontSize:22,fontWeight:900},
-  logoT:     {fontSize:22,fontWeight:900,letterSpacing:3,color:"#dce6f0"},
+  hdr:       {background:"#080c13",borderBottom:"1px solid #0f1820",position:"sticky",top:0,zIndex:100},
+  hdrI:      {maxWidth:1100,margin:"0 auto",padding:"13px 24px",display:"flex",alignItems:"center",justifyContent:"space-between"},
+  logo:      {display:"flex",alignItems:"center",gap:10,cursor:"pointer"},
+  logoIcon:  {fontSize:20},
+  logoT:     {fontSize:21,fontWeight:900,letterSpacing:3,color:"#dce6f0"},
   acc:       {color:"#00d4ff"},
-  nav:       {display:"flex",gap:8,alignItems:"center"},
-  live:      {fontSize:11,fontWeight:800,letterSpacing:2,color:"#ff4d4d",display:"flex",alignItems:"center",gap:4},
-  main:      {maxWidth:1100,margin:"0 auto",padding:"40px 20px 80px"},
-  hero:      {textAlign:"center",marginBottom:36},
-  heroT:     {fontSize:"clamp(48px,9vw,92px)",fontWeight:900,letterSpacing:4,margin:0,background:"linear-gradient(135deg,#fff 30%,#00d4ff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"},
-  heroS:     {fontSize:17,color:"#3a5060",letterSpacing:2,marginTop:8},
-  signupBanner:{display:"flex",alignItems:"center",justifyContent:"space-between",background:"#00d4ff0e",border:"1px solid #00d4ff22",borderRadius:10,padding:"14px 20px",marginBottom:32,fontSize:14,color:"#5a8090",flexWrap:"wrap",gap:10},
-  bannerBtn: {background:"#00d4ff",color:"#07090d",border:"none",borderRadius:6,padding:"7px 16px",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:900,letterSpacing:2,cursor:"pointer"},
-  ldg:       {textAlign:"center",padding:80,color:"#3a5060",fontSize:16,letterSpacing:2},
-  grid:      {display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(330px,1fr))",gap:24},
-  card:      {background:"#0c1420",border:"1px solid #161e2e",borderRadius:14,padding:26,position:"relative",overflow:"hidden"},
-  hotBadge:  {display:"inline-flex",alignItems:"center",gap:5,background:"linear-gradient(135deg,#ff5a1a22,#ff3d0022)",border:"1px solid #ff5a1a55",borderRadius:6,padding:"4px 10px",marginBottom:14,backdropFilter:"blur(4px)"},
-  hotFlame:  {fontSize:13},
-  hotText:   {fontSize:10,fontWeight:900,letterSpacing:2.5,color:"#ff7040"},
-  meta:      {display:"flex",alignItems:"center",gap:10,marginBottom:12},
-  tag:       {fontSize:10,fontWeight:800,letterSpacing:2,padding:"3px 9px",borderRadius:4,border:"1px solid"},
-  game:      {fontSize:11,color:"#2a4050",letterSpacing:1},
-  ctitle:    {fontSize:20,fontWeight:800,margin:"0 0 10px",lineHeight:1.2},
-  cdesc:     {fontSize:14,color:"#4a6070",lineHeight:1.65,margin:"0 0 16px"},
-  offBox:    {background:"#0f1825",border:"1px solid #161e2e",borderRadius:7,padding:"9px 14px",marginBottom:20,fontSize:13},
-  offLbl:    {fontWeight:800,color:"#2a5060",letterSpacing:1,marginRight:6},
-  offTxt:    {color:"#6a8090"},
-  vrow:      {display:"flex",gap:10,marginBottom:12},
-  vb:        {flex:1,padding:"12px 6px",borderRadius:8,border:"1px solid",fontFamily:"'Barlow Condensed',sans-serif",fontSize:14,fontWeight:800,letterSpacing:1,cursor:"pointer",transition:"all .2s"},
-  vba:       {background:"#00d4ff14",borderColor:"#00d4ff44",color:"#00d4ff"},
-  vbb:       {background:"#ff4d4d14",borderColor:"#ff4d4d44",color:"#ff4d4d"},
+  nav:       {display:"flex",gap:4,alignItems:"center"},
+  live:      {fontSize:11,fontWeight:800,letterSpacing:2,color:"#5a6070",display:"flex",alignItems:"center",gap:5},
+  main:      {maxWidth:1100,margin:"0 auto",padding:"44px 24px 80px"},
+  hero:      {textAlign:"center",marginBottom:44,paddingTop:12},
+  heroPill:  {display:"inline-block",fontSize:10,fontWeight:800,letterSpacing:2.5,color:"#3a6070",background:"#0c1820",border:"1px solid #0f2030",borderRadius:20,padding:"5px 14px",marginBottom:18},
+  heroT:     {fontSize:"clamp(52px,10vw,100px)",fontWeight:900,letterSpacing:4,margin:"0 0 10px",background:"linear-gradient(135deg,#e8f0f8 20%,#00d4ff 80%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",lineHeight:1},
+  heroS:     {fontSize:16,color:"#2a4050",letterSpacing:2,marginTop:6},
+  signupBanner:{display:"flex",alignItems:"center",justifyContent:"space-between",background:"#0a1420",border:"1px solid #0f2030",borderRadius:12,padding:"16px 22px",marginBottom:36,flexWrap:"wrap",gap:12},
+  bannerBtn: {background:"#00d4ff",color:"#07090d",border:"none",borderRadius:6,padding:"8px 18px",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:900,letterSpacing:2,cursor:"pointer",flexShrink:0},
+  ldg:       {textAlign:"center",padding:80,color:"#2a4050",fontSize:16,letterSpacing:2},
+  grid:      {display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",gap:22},
+  card:      {background:"#0b1018",border:"1px solid #111820",borderRadius:16,padding:"24px 26px",position:"relative",overflow:"hidden"},
+  hotBadge:  {position:"absolute",top:14,right:14,display:"inline-flex",alignItems:"center",gap:5,background:"#0d0a07",border:"1px solid #ff5a1a44",borderRadius:6,padding:"4px 10px"},
+  hotText:   {fontSize:10,fontWeight:900,letterSpacing:2.5,color:"#ff6633"},
+  meta:      {display:"flex",alignItems:"center",gap:10,marginBottom:13},
+  tag:       {fontSize:10,fontWeight:800,letterSpacing:2,padding:"3px 10px",borderRadius:4,border:"1px solid"},
+  game:      {fontSize:11,color:"#243040",letterSpacing:.5},
+  ctitle:    {fontSize:21,fontWeight:800,margin:"0 0 10px",lineHeight:1.2,color:"#d0dce8"},
+  cdesc:     {fontSize:13,color:"#3a5060",lineHeight:1.7,margin:"0 0 16px"},
+  offBox:    {background:"#080d14",border:"1px solid #0f1820",borderRadius:8,padding:"10px 14px",marginBottom:20,fontSize:12,display:"flex",gap:8,alignItems:"baseline"},
+  offLbl:    {fontWeight:800,color:"#1e3040",letterSpacing:1.5,fontSize:10,flexShrink:0},
+  offTxt:    {color:"#5a7080",lineHeight:1.4},
+  vrow:      {display:"flex",gap:10,marginBottom:14},
+  vb:        {flex:1,padding:"13px 8px",borderRadius:8,border:"1px solid",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:800,letterSpacing:.5,cursor:"pointer",transition:"all .2s"},
+  vba:       {background:"#00d4ff0d",borderColor:"#00d4ff33",color:"#00d4ff"},
+  vbb:       {background:"#ff4d4d0d",borderColor:"#ff4d4d33",color:"#ff5555"},
   res:       {marginBottom:14},
-  rrow:      {display:"flex",alignItems:"center",gap:10,marginBottom:8},
-  rlbl:      {width:120,fontSize:12,fontWeight:700,flexShrink:0,lineHeight:1.2},
-  btrack:    {flex:1,height:8,background:"#0f1825",borderRadius:4,overflow:"hidden"},
-  rpct:      {width:36,textAlign:"right",fontSize:13,fontWeight:800,flexShrink:0},
-  vtot:      {fontSize:11,color:"#2a4050",letterSpacing:1,textAlign:"right",marginTop:4},
-  fullBtn:   {width:"100%",marginTop:10,padding:11,background:"#0f1828",border:"1px solid #1e2840",borderRadius:8,color:"#5060a0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer",transition:"all .2s"},
-  aiBox:     {marginTop:22,background:"#090e18",border:"1px solid #161e38",borderRadius:10,padding:20},
-  aiHdr:     {display:"flex",alignItems:"center",gap:8,marginBottom:12},
-  aiLbl:     {fontSize:12,fontWeight:800,letterSpacing:3,color:"#5060a0"},
-  aiWait:    {color:"#3a4060",fontSize:14,fontStyle:"italic",margin:0},
-  aiTxt:     {fontSize:15,color:"#9ab0c0",lineHeight:1.75,margin:0},
-  back:      {background:"none",border:"1px solid #161e2e",color:"#3a5060",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,padding:"7px 16px",borderRadius:6,cursor:"pointer",marginBottom:28},
-  authBox:   {maxWidth:360,margin:"80px auto",background:"#0c1420",border:"1px solid #161e2e",borderRadius:16,padding:40,textAlign:"center"},
-  modal:     {background:"#0c1420",border:"1px solid #1e2840",borderRadius:16,padding:36,width:"100%",maxWidth:400,position:"relative"},
-  modalClose:{position:"absolute",top:14,right:16,background:"none",border:"none",color:"#3a5060",fontSize:18,cursor:"pointer"},
-  googleBtn: {display:"flex",alignItems:"center",justifyContent:"center",width:"100%",padding:"12px",background:"#fff",borderRadius:8,color:"#1a1a1a",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,fontWeight:700,letterSpacing:1,cursor:"pointer",textDecoration:"none",marginBottom:16},
-  divider:   {display:"flex",alignItems:"center",gap:10,margin:"4px 0 16px"},
-  divTxt:    {color:"#2a4050",fontSize:12,letterSpacing:1,flexShrink:0},
-  tabBtn:    {padding:"10px 18px",background:"#0c1420",border:"1px solid #161e2e",borderRadius:8,color:"#3a5060",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer"},
-  tabOn:     {background:"#00d4ff18",borderColor:"#00d4ff44",color:"#00d4ff"},
-  fbox:      {background:"#0c1420",border:"1px solid #161e2e",borderRadius:14,padding:28},
-  inp:       {width:"100%",background:"#080c14",border:"1px solid #161e2e",borderRadius:8,color:"#c0d0e0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",boxSizing:"border-box"},
-  sel:       {width:"100%",background:"#080c14",border:"1px solid #161e2e",borderRadius:8,color:"#c0d0e0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",cursor:"pointer"},
-  subBtn:    {width:"100%",padding:14,background:"linear-gradient(135deg,#00a8cc,#0088aa)",border:"none",borderRadius:9,color:"#fff",fontFamily:"'Barlow Condensed',sans-serif",fontSize:16,fontWeight:900,letterSpacing:3,cursor:"pointer"},
-  succ:      {background:"#00ff8818",border:"1px solid #00ff8855",color:"#00ff88",borderRadius:8,padding:"12px 16px",marginBottom:20,fontSize:14,fontWeight:700},
-  delBtn:    {background:"#ff1a1a14",border:"1px solid #ff1a1a33",color:"#ff4d4d",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,padding:"6px 12px",borderRadius:6,cursor:"pointer",flexShrink:0},
-  foot:      {textAlign:"center",padding:"32px 20px",fontSize:11,color:"#1a2530",letterSpacing:2,borderTop:"1px solid #0c1218"},
-  statBox:   {background:"#0f1825",border:"1px solid #161e2e",borderRadius:10,padding:"16px 24px",textAlign:"center"},
-  statNum:   {fontSize:32,fontWeight:900,color:"#00d4ff",letterSpacing:2},
-  statLbl:   {fontSize:10,fontWeight:800,letterSpacing:2,color:"#2a4050",marginTop:4},
+  rrow:      {display:"flex",alignItems:"center",gap:10,marginBottom:10},
+  rlbl:      {width:115,fontSize:12,fontWeight:700,flexShrink:0,lineHeight:1.2,transition:"color .2s"},
+  btrack:    {flex:1,height:7,background:"#0a0f18",borderRadius:4,overflow:"hidden"},
+  rpct:      {width:36,textAlign:"right",fontSize:13,fontWeight:800,flexShrink:0,transition:"color .2s"},
+  vtot:      {fontSize:11,color:"#1e2e3e",letterSpacing:1,textAlign:"right",marginTop:6},
+  aiBtn:     {width:"100%",marginTop:12,padding:"11px 16px",background:"#0a0f18",border:"1px solid #141e30",borderRadius:8,color:"#4060a0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer",transition:"all .2s",display:"flex",alignItems:"center",justifyContent:"center"},
+  aiBox:     {marginTop:4,background:"#080d16",border:"1px solid #0f1830",borderRadius:0,borderBottomLeftRadius:16,borderBottomRightRadius:16,padding:"18px 26px 22px"},
+  aiHdr:     {display:"flex",alignItems:"center",gap:8,marginBottom:14},
+  aiIcon:    {fontSize:16},
+  aiLbl:     {fontSize:11,fontWeight:800,letterSpacing:3,color:"#3a4870"},
+  aiWait:    {color:"#2a3860",fontSize:13,fontStyle:"italic",margin:0},
+  aiTxt:     {fontSize:14,color:"#7a96b0",lineHeight:1.8,margin:0},
+  aiCallBtn: {width:"100%",padding:12,background:"#0a0f18",border:"1px solid #141e30",borderRadius:8,color:"#4060a0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer"},
+  back:      {background:"none",border:"1px solid #0f1820",color:"#2a4050",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,padding:"7px 16px",borderRadius:6,cursor:"pointer",marginBottom:28,transition:"all .2s"},
+  authBox:   {maxWidth:360,margin:"80px auto",background:"#0b1018",border:"1px solid #111820",borderRadius:18,padding:40,textAlign:"center"},
+  modal:     {background:"#0b1018",border:"1px solid #141e2e",borderRadius:18,padding:"36px 32px",width:"100%",maxWidth:400,position:"relative"},
+  modalClose:{position:"absolute",top:14,right:16,background:"none",border:"none",color:"#2a3a4a",fontSize:18,cursor:"pointer",padding:4},
+  googleBtn: {display:"flex",alignItems:"center",justifyContent:"center",width:"100%",padding:"12px",background:"#fff",borderRadius:9,color:"#111",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,fontWeight:700,letterSpacing:.5,cursor:"pointer",textDecoration:"none",marginBottom:18,transition:"opacity .15s"},
+  divider:   {display:"flex",alignItems:"center",gap:12,margin:"0 0 18px"},
+  divTxt:    {color:"#1e2e3e",fontSize:12,letterSpacing:1},
+  tabBtn:    {padding:"9px 18px",background:"transparent",border:"1px solid #0f1820",borderRadius:8,color:"#2a4050",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,letterSpacing:1.5,cursor:"pointer",transition:"all .15s"},
+  tabOn:     {background:"#00d4ff0d",borderColor:"#00d4ff33",color:"#00d4ff"},
+  fbox:      {background:"#0b1018",border:"1px solid #111820",borderRadius:14,padding:28},
+  inp:       {width:"100%",background:"#070b12",border:"1px solid #0f1820",borderRadius:8,color:"#b0c4d4",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",boxSizing:"border-box",transition:"border-color .15s"},
+  sel:       {width:"100%",background:"#070b12",border:"1px solid #0f1820",borderRadius:8,color:"#b0c4d4",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",cursor:"pointer"},
+  subBtn:    {width:"100%",padding:14,background:"linear-gradient(135deg,#0099bb,#007a99)",border:"none",borderRadius:9,color:"#fff",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,fontWeight:900,letterSpacing:3,cursor:"pointer",transition:"opacity .15s"},
+  succ:      {background:"#00ff8811",border:"1px solid #00ff8833",color:"#00cc66",borderRadius:8,padding:"11px 16px",marginBottom:20,fontSize:13,fontWeight:700,letterSpacing:.5},
+  delBtn:    {background:"transparent",border:"1px solid #ff1a1a22",color:"#cc3333",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,padding:"6px 12px",borderRadius:6,cursor:"pointer",flexShrink:0,transition:"all .15s"},
+  foot:      {textAlign:"center",padding:"28px 20px",fontSize:11,letterSpacing:2,borderTop:"1px solid #0a0f18"},
+  statBox:   {background:"#080d14",border:"1px solid #0f1820",borderRadius:12,padding:"18px 28px",textAlign:"center",flex:1},
+  statNum:   {fontSize:34,fontWeight:900,color:"#00d4ff",letterSpacing:2,lineHeight:1},
+  statLbl:   {fontSize:10,fontWeight:800,letterSpacing:2,color:"#1e3040",marginTop:6},
 };
