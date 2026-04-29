@@ -54,10 +54,14 @@ export default function App() {
   const [active, setActive]   = useState(null);
   const [adminOk, setAdminOk] = useState(false);
 
-  // ── Secret admin access via #admin in URL ──
+  // ── Secret admin access via #admin2002 in URL ──
   useEffect(() => {
     const checkHash = () => {
-      if (window.location.hash === "#admin") setPage("admin");
+      if (window.location.hash === "#admin2002") {
+        setPage("admin");
+      } else if (window.location.hash !== "#admin2002") {
+        setPage(p => p === "admin" ? "feed" : p);
+      }
     };
     checkHash();
     window.addEventListener("hashchange", checkHash);
@@ -351,5 +355,4 @@ const S = {
   succ:   {background:"#00ff8818",border:"1px solid #00ff8855",color:"#00ff88",borderRadius:8,padding:"12px 16px",marginBottom:20,fontSize:14,fontWeight:700},
   delBtn: {background:"#ff1a1a14",border:"1px solid #ff1a1a33",color:"#ff4d4d",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,padding:"6px 12px",borderRadius:6,cursor:"pointer",flexShrink:0},
   foot:   {textAlign:"center",padding:"32px 20px",fontSize:11,color:"#1a2530",letterSpacing:2,borderTop:"1px solid #0c1218"},
-};
 };
