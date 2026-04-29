@@ -66,10 +66,16 @@ const db = {
   },
 };
 
-const DEMO = [
-  { id: 1, type: "GOAL REVIEW", game: "Oilers vs Canucks · Apr 18", title: "Skate in the crease or not?", description: "McDavid scores the apparent game-winner but replay shows his skate may have grazed the blue paint. Officials reviewed for 4 minutes.", option_a: "✅ GOOD GOAL", option_b: "❌ NO GOAL", official_call: "Goal stands", votes_a: 4821, votes_b: 3104, hot: true },
-  { id: 2, type: "FIGHT VERDICT", game: "Bruins vs Rangers · Apr 20", title: "Who won the Tkachuk vs Kreider bout?", description: "A massive scrap after a dirty hit in the second period. Both fighters landed heavy shots. Refs gave both 5 minutes.", option_a: "🥊 TKACHUK", option_b: "🥊 KREIDER", official_call: "Double minor — both", votes_a: 6230, votes_b: 2890, hot: true },
-  { id: 3, type: "PENALTY CALL", game: "Leafs vs Lightning · Apr 22", title: "Dive or legitimate penalty?", description: "With 90 seconds left and the score tied, a Leafs forward goes down after light contact. Ref immediately whistles tripping.", option_a: "🚨 REAL PENALTY", option_b: "🎭 TOTAL DIVE", official_call: "Tripping — 2 minutes", votes_a: 1980, votes_b: 7441, hot: false },
+const DEMO_VERDICTS = [
+  { id: 1, type: "GOAL REVIEW", game: "Oilers vs Canucks · Apr 18", title: "Skate in the crease or not?", description: "McDavid scores the apparent game-winner but replay shows his skate may have grazed the blue paint. Officials reviewed for 4 minutes.", option_a: "✅ GOOD GOAL", option_b: "❌ NO GOAL", official_call: "Goal stands", votes_a: 4821, votes_b: 3104, hot: true, feed_type: "verdict" },
+  { id: 2, type: "FIGHT VERDICT", game: "Bruins vs Rangers · Apr 20", title: "Who won the Tkachuk vs Kreider bout?", description: "A massive scrap after a dirty hit in the second period. Both fighters landed heavy shots. Refs gave both 5 minutes.", option_a: "🥊 TKACHUK", option_b: "🥊 KREIDER", official_call: "Double minor — both", votes_a: 6230, votes_b: 2890, hot: true, feed_type: "verdict" },
+  { id: 3, type: "PENALTY CALL", game: "Leafs vs Lightning · Apr 22", title: "Dive or legitimate penalty?", description: "With 90 seconds left and the score tied, a Leafs forward goes down after light contact. Ref immediately whistles tripping.", option_a: "🚨 REAL PENALTY", option_b: "🎭 TOTAL DIVE", official_call: "Tripping — 2 minutes", votes_a: 1980, votes_b: 7441, hot: false, feed_type: "verdict" },
+];
+
+const DEMO_PREDICTIONS = [
+  { id: 101, type: "SERIES PREDICTION", game: "Oilers vs Canucks · Series starts May 2", title: "Who takes the series in 7?", description: "Battle of Alberta meets Battle of BC. McDavid vs Pettersson. The Oilers have been on fire but the Canucks swept their first round. Who advances?", option_a: "🛢️ OILERS WIN", option_b: "🐳 CANUCKS WIN", official_call: "Series begins May 2 · 7:00 PM ET", votes_a: 5120, votes_b: 3890, hot: true, feed_type: "prediction", game_date: "May 2, 2026" },
+  { id: 102, type: "AWARD PREDICTION", game: "NHL Awards · Jun 2026", title: "Connor McDavid wins his 5th Hart Trophy?", description: "McDavid has been virtually unstoppable this season — 53 goals, 97 points in 72 games. But Auston Matthews had a historic start to the season. Does the award go back to Edmonton?", option_a: "🏆 YES — MCDAVID", option_b: "❌ SOMEONE ELSE", official_call: "Award voted on by PHWA members · Jun 2026", votes_a: 8440, votes_b: 2210, hot: true, feed_type: "prediction", game_date: "Jun 2026" },
+  { id: 103, type: "GAME PREDICTION", game: "Rangers vs Capitals · Game 1 · May 3", title: "Will this series go 7 games?", description: "The Rangers and Capitals are evenly matched on paper. Both teams have elite goaltending and physical defenses. Is this a sweep or a classic?", option_a: "🎯 GOES 7", option_b: "⚡ OVER IN 5 OR LESS", official_call: "Best-of-7 series begins May 3", votes_a: 4100, votes_b: 2950, hot: false, feed_type: "prediction", game_date: "May 3, 2026" },
 ];
 
 const DEFAULT_ARTICLES = [
@@ -91,14 +97,19 @@ const DEFAULT_PARLAYS = [
 ];
 
 const COLORS = {
-  "GOAL REVIEW":    ["#00d4ff18","#00d4ff","#00d4ff44"],
-  "FIGHT VERDICT":  ["#ff4d4d18","#ff4d4d","#ff4d4d44"],
-  "PENALTY CALL":   ["#ffd70018","#ffd700","#ffd70044"],
-  "3 STARS":        ["#c084fc18","#c084fc","#c084fc44"],
-  "OFFSIDE REVIEW": ["#4ade8018","#4ade80","#4ade8044"],
-  "GENERAL":        ["#fb923c18","#fb923c","#fb923c44"],
+  "GOAL REVIEW":        ["#00d4ff18","#00d4ff","#00d4ff44"],
+  "FIGHT VERDICT":      ["#ff4d4d18","#ff4d4d","#ff4d4d44"],
+  "PENALTY CALL":       ["#ffd70018","#ffd700","#ffd70044"],
+  "3 STARS":            ["#c084fc18","#c084fc","#c084fc44"],
+  "OFFSIDE REVIEW":     ["#4ade8018","#4ade80","#4ade8044"],
+  "GENERAL":            ["#fb923c18","#fb923c","#fb923c44"],
+  "SERIES PREDICTION":  ["#a78bfa18","#a78bfa","#a78bfa44"],
+  "AWARD PREDICTION":   ["#fbbf2418","#fbbf24","#fbbf2444"],
+  "GAME PREDICTION":    ["#34d39918","#34d399","#34d39944"],
+  "PLAYER PROP":        ["#f472b618","#f472b6","#f472b644"],
 };
-const TYPES = Object.keys(COLORS);
+const VERDICT_TYPES = ["GOAL REVIEW","FIGHT VERDICT","PENALTY CALL","3 STARS","OFFSIDE REVIEW","GENERAL"];
+const PREDICTION_TYPES = ["SERIES PREDICTION","AWARD PREDICTION","GAME PREDICTION","PLAYER PROP"];
 
 const CAT_COLORS = {
   "CONTROVERSIAL CALL": "#00d4ff", "FIGHT BREAKDOWN": "#ff4d4d",
@@ -133,6 +144,8 @@ const css = `
   .art-card:hover{border-color:#00d4ff33!important;transform:translateY(-3px);box-shadow:0 12px 40px #00000066}
   .feed-card{transition:border-color .2s ease}
   .feed-card:hover{border-color:#1e3a4a!important}
+  .pred-card{transition:border-color .2s ease}
+  .pred-card:hover{border-color:#2e1a4a!important}
   .parlay-card{transition:all .22s ease;cursor:pointer}
   .parlay-card:hover{border-color:#ffd70044!important;transform:translateY(-2px)}
   .nav-btn{background:none;border:1px solid transparent;color:#3a5060;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .18s ease}
@@ -142,12 +155,19 @@ const css = `
   .vote-btn:hover{transform:translateY(-1px)}
   .gate-modal{animation:gateIn .3s cubic-bezier(.34,1.56,.64,1) both}
   @keyframes gateIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  .section-tab{font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:2px;font-size:15px;cursor:pointer;padding:10px 0;border:none;background:transparent;transition:all .2s ease;position:relative}
+  .section-tab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;border-radius:2px;transition:all .2s ease}
+  .section-tab.tab-verdict{color:#00d4ff}
+  .section-tab.tab-verdict::after{background:#00d4ff}
+  .section-tab.tab-prediction{color:#a78bfa}
+  .section-tab.tab-prediction::after{background:#a78bfa}
+  .section-tab.tab-inactive{color:#2a4050}
+  .section-tab.tab-inactive::after{background:transparent}
   ::-webkit-scrollbar{width:6px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
 `;
 
-// ── Vote Gate Modal ──
 function VoteGateModal({ onClose, onLogin, pendingVote }) {
   const [mode, setMode]   = useState("signup");
   const [email, setEmail] = useState("");
@@ -185,17 +205,11 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
   return (
     <div className="modal-bg" onClick={onClose}>
       <div className="gate-modal" onClick={e => e.stopPropagation()} style={{
-        background: "#080d16",
-        border: "1px solid #0f1e30",
-        borderRadius: 20,
-        width: "100%",
-        maxWidth: 460,
-        overflow: "hidden",
-        position: "relative",
+        background: "#080d16", border: "1px solid #0f1e30", borderRadius: 20,
+        width: "100%", maxWidth: 460, overflow: "hidden", position: "relative",
       }}>
         <div style={{ height: 3, background: "linear-gradient(90deg,#00d4ff,#0066ff,#c084fc)" }} />
         <button onClick={onClose} style={{ position:"absolute",top:14,right:16,background:"none",border:"none",color:"#2a3a4a",fontSize:18,cursor:"pointer",padding:4,zIndex:1 }}>✕</button>
-
         {done ? (
           <div style={{ padding: "44px 36px", textAlign: "center" }}>
             <div style={{ fontSize: 52, marginBottom: 16 }}>📧</div>
@@ -215,7 +229,6 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
               <p style={{ fontSize: 15, color: "#4a6070", letterSpacing: 0.5, marginBottom: 20 }}>
                 {mode === "signup" ? "Free forever. No credit card. Just your take." : "Good to have you back."}
               </p>
-
               {mode === "signup" && (
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 22, textAlign: "left" }}>
                   {perks.map((p, i) => (
@@ -227,7 +240,6 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
                 </div>
               )}
             </div>
-
             <div style={{ padding: "0 32px 28px" }}>
               <a href={auth.googleUrl()} style={{ ...S.googleBtn, marginBottom: 16 }}>
                 <svg width="18" height="18" viewBox="0 0 48 48" style={{ marginRight: 10, flexShrink: 0 }}>
@@ -238,21 +250,17 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
                 </svg>
                 Continue with Google
               </a>
-
               <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "0 0 14px" }}>
                 <div style={{ flex: 1, height: 1, background: "#0f1825" }} />
                 <span style={{ color: "#1e2e3e", fontSize: 13, letterSpacing: 1 }}>or</span>
                 <div style={{ flex: 1, height: 1, background: "#0f1825" }} />
               </div>
-
               <input style={{ ...S.inp, marginBottom: 10 }} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
               <input style={{ ...S.inp, marginBottom: err ? 8 : 16 }} type="password" placeholder={mode === "signup" ? "Create a password (6+ chars)" : "Password"} value={pw} onChange={e => setPw(e.target.value)} onKeyDown={e => e.key === "Enter" && submit()} />
               {err && <p style={{ color: "#ff4d4d", fontSize: 14, marginBottom: 12, letterSpacing: 0.3 }}>{err}</p>}
-
               <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1, marginBottom: 14 }} onClick={submit} disabled={busy}>
                 {busy ? "…" : mode === "signup" ? "CREATE FREE ACCOUNT & VOTE" : "LOG IN & VOTE"}
               </button>
-
               <p style={{ textAlign: "center", fontSize: 15, color: "#4a6070" }}>
                 {mode === "signup" ? "Already have an account? " : "No account? "}
                 <span style={{ color: "#00d4ff", cursor: "pointer", fontWeight: 700 }} onClick={() => { setMode(m => m === "signup" ? "login" : "signup"); setErr(""); }}>
@@ -268,7 +276,8 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
 }
 
 export default function App() {
-  const [page, setPage]         = useState("feed");
+  const [page, setPage]         = useState("verdicts");
+  const [feedTab, setFeedTab]   = useState("verdicts"); // "verdicts" | "predictions"
   const [items, setItems]       = useState([]);
   const [articles, setArticles] = useState(DEFAULT_ARTICLES);
   const [parlays, setParlays]   = useState(DEFAULT_PARLAYS);
@@ -313,21 +322,23 @@ export default function App() {
   useEffect(() => {
     const checkHash = () => {
       if (window.location.hash === "#admin2002") setPage("admin");
-      else setPage(p => p === "admin" ? "feed" : p);
+      else setPage(p => p === "admin" ? "verdicts" : p);
     };
     checkHash();
     window.addEventListener("hashchange", checkHash);
     return () => window.removeEventListener("hashchange", checkHash);
   }, []);
 
-  const goFeed = () => { window.location.hash = ""; setPage("feed"); };
+  const goHome = () => { window.location.hash = ""; setPage("verdicts"); };
 
   const load = useCallback(async () => {
     setLoading(true);
     const data = await db.select("controversies");
-    const list = Array.isArray(data) && data.length ? data : DEMO;
-    setItems(list);
-    setLv(list.reduce((a, c) => ({ ...a, [c.id]: [c.votes_a || 0, c.votes_b || 0] }), {}));
+    // Merge DB data with demo, splitting by feed_type
+    const dbList = Array.isArray(data) && data.length ? data : [];
+    const allItems = dbList.length ? dbList : [...DEMO_VERDICTS, ...DEMO_PREDICTIONS];
+    setItems(allItems);
+    setLv(allItems.reduce((a, c) => ({ ...a, [c.id]: [c.votes_a || 0, c.votes_b || 0] }), {}));
     const arts = await db.select("articles");
     if (Array.isArray(arts) && arts.length) setArticles(arts);
     const pars = await db.select("parlays");
@@ -384,11 +395,7 @@ export default function App() {
   };
 
   const vote = (id, oi) => {
-    if (!user) {
-      setPendingVote({ id, oi });
-      setShowVoteGate(true);
-      return;
-    }
+    if (!user) { setPendingVote({ id, oi }); setShowVoteGate(true); return; }
     if (uv[id] !== undefined) return;
     castVote(id, oi);
   };
@@ -405,13 +412,16 @@ export default function App() {
     if (ai[item.id] || aiLoad[item.id]) return;
     setAiLoad(p => ({ ...p, [item.id]: true }));
     try {
+      const isPrediction = item.feed_type === "prediction";
+      const systemPrompt = isPrediction
+        ? "You are a sharp veteran hockey analyst. Give a bold 2-3 sentence prediction breakdown. Take a clear stance on which side has the better case. End with a one-line verdict in ALL CAPS."
+        : "You are a sharp veteran hockey analyst and referee. Give a decisive 2-3 sentence verdict. Be bold, take a clear stance. End with a one-line verdict in ALL CAPS.";
+      const userPrompt = isPrediction
+        ? `PREDICTION: "${item.title}"\n\n${item.description}\n\nUpcoming: ${item.official_call}\nOptions: "${item.option_a}" vs "${item.option_b}"\n\nGive your prediction analysis.`
+        : `${item.type}: "${item.title}"\n\n${item.description}\n\nOfficial call: ${item.official_call}\nOptions: "${item.option_a}" vs "${item.option_b}"\n\nGive your verdict.`;
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514", max_tokens: 1000,
-          system: "You are a sharp veteran hockey analyst and referee. Give a decisive 2-3 sentence verdict. Be bold, take a clear stance. End with a one-line verdict in ALL CAPS.",
-          messages: [{ role: "user", content: `${item.type}: "${item.title}"\n\n${item.description}\n\nOfficial call: ${item.official_call}\nOptions: "${item.option_a}" vs "${item.option_b}"\n\nGive your verdict.` }],
-        }),
+        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: systemPrompt, messages: [{ role: "user", content: userPrompt }] }),
       });
       const d = await res.json();
       setAi(p => ({ ...p, [item.id]: d.content?.map(b => b.text || "").join("") || "Verdict unavailable." }));
@@ -426,15 +436,20 @@ export default function App() {
   const pct = (id, i) => Math.round(((lv[id]?.[i] || 0) / total(id)) * 100);
   const savedItems = items.filter(c => profile?.saved_ids?.includes(c.id));
 
+  const verdictItems = items.filter(c => !c.feed_type || c.feed_type === "verdict");
+  const predictionItems = items.filter(c => c.feed_type === "prediction");
+
   const handleAddArticle = (a) => setArticles(prev => [a, ...prev]);
   const handleDeleteArticle = (id) => setArticles(prev => prev.filter(a => a.id !== id));
   const handleAddParlay = (p) => setParlays(prev => [p, ...prev]);
   const handleDeleteParlay = (id) => setParlays(prev => prev.filter(p => p.id !== id));
 
-  const navCls = (activePage) => {
-    const pages = Array.isArray(activePage) ? activePage : [activePage];
+  const isHomePage = page === "verdicts" || page === "predictions";
+  const navCls = (targetPage) => {
+    const pages = Array.isArray(targetPage) ? targetPage : [targetPage];
     return "nav-btn" + (pages.includes(page) ? " active" : "");
   };
+  const homeNavCls = () => "nav-btn" + (isHomePage ? " active" : "");
 
   return (
     <div style={S.root}>
@@ -442,12 +457,12 @@ export default function App() {
 
       <header style={S.hdr}>
         <div style={S.hdrI}>
-          <div style={S.logo} onClick={goFeed}>
+          <div style={S.logo} onClick={goHome}>
             <span style={S.logoIcon}>🏒</span>
             <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span>
           </div>
           <nav style={S.nav}>
-            <button className={navCls("feed")} onClick={goFeed}>FEED</button>
+            <button className={homeNavCls()} onClick={goHome}>HOME</button>
             <button className={navCls(["forum", "article"])} onClick={() => setPage("forum")}>FORUM</button>
             <button className={navCls(["parlay", "parlay_detail"])} onClick={() => setPage("parlay")}>PARLAYS</button>
             {user && <button className={navCls("saved")} onClick={() => setPage("saved")}>SAVED</button>}
@@ -476,32 +491,99 @@ export default function App() {
           pendingVote={pendingVote}
         />
       )}
-
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} onLogin={handleLogin} />}
 
-      {page === "feed" && (
+      {/* ── HOME (Verdicts + Predictions) ── */}
+      {isHomePage && (
         <main style={S.main}>
+          {/* Hero */}
           <div style={S.hero}>
             <div style={S.heroPill}>🏒 PLAYOFF SEASON · LIVE VERDICTS</div>
             <h1 style={S.heroT}>YOU'RE THE REF.</h1>
             <p style={S.heroS}>Officials made their call. Now the fans decide.</p>
           </div>
 
-          {loading
-            ? <div style={S.ldg}><span className="pulse">Loading controversies…</span></div>
-            : <div style={S.grid}>{items.map((c, i) => (
-              <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
-                onVote={vote} onDetail={openDetail}
-                saved={profile?.saved_ids?.includes(c.id)}
-                onSave={() => toggleSave(c.id)}
-                loggedIn={!!user}
-                onAuthPrompt={() => setShowVoteGate(true)}
-              />
-            ))}</div>
-          }
+          {/* Tab Bar */}
+          <div style={{ borderBottom: "1px solid #0f1820", marginBottom: 32, display: "flex", gap: 32 }}>
+            <button
+              className={`section-tab ${feedTab === "verdicts" ? "tab-verdict" : "tab-inactive"}`}
+              onClick={() => { setFeedTab("verdicts"); setPage("verdicts"); }}
+            >
+              <span style={{ marginRight: 7 }}>🔴</span> VERDICTS
+              <span style={{
+                marginLeft: 8, fontSize: 11, fontWeight: 800, letterSpacing: 1.5,
+                color: feedTab === "verdicts" ? "#00d4ff" : "#1e3040",
+                background: feedTab === "verdicts" ? "#00d4ff14" : "#0a0f18",
+                border: feedTab === "verdicts" ? "1px solid #00d4ff33" : "1px solid #0f1820",
+                padding: "2px 8px", borderRadius: 4,
+              }}>{verdictItems.length}</span>
+            </button>
+            <button
+              className={`section-tab ${feedTab === "predictions" ? "tab-prediction" : "tab-inactive"}`}
+              onClick={() => { setFeedTab("predictions"); setPage("predictions"); }}
+            >
+              <span style={{ marginRight: 7 }}>🔮</span> PREDICTIONS
+              <span style={{
+                marginLeft: 8, fontSize: 11, fontWeight: 800, letterSpacing: 1.5,
+                color: feedTab === "predictions" ? "#a78bfa" : "#1e3040",
+                background: feedTab === "predictions" ? "#a78bfa14" : "#0a0f18",
+                border: feedTab === "predictions" ? "1px solid #a78bfa33" : "1px solid #0f1820",
+                padding: "2px 8px", borderRadius: 4,
+              }}>{predictionItems.length}</span>
+            </button>
+          </div>
+
+          {/* VERDICTS TAB */}
+          {feedTab === "verdicts" && (
+            <>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#ff4d4d" }} className="blink" />
+                <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: 2, color: "#3a5060" }}>LIVE & RECENT CALLS — WHAT DO YOU THINK?</span>
+              </div>
+              {loading
+                ? <div style={S.ldg}><span className="pulse">Loading controversies…</span></div>
+                : verdictItems.length === 0
+                  ? <EmptyState icon="🏒" title="No verdicts yet." sub="Check back after the next game." />
+                  : <div style={S.grid}>{verdictItems.map((c, i) => (
+                    <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
+                      onVote={vote} onDetail={openDetail}
+                      saved={profile?.saved_ids?.includes(c.id)} onSave={() => toggleSave(c.id)}
+                      loggedIn={!!user} onAuthPrompt={() => setShowVoteGate(true)}
+                    />
+                  ))}</div>
+              }
+            </>
+          )}
+
+          {/* PREDICTIONS TAB */}
+          {feedTab === "predictions" && (
+            <>
+              {/* Prediction header strip */}
+              <div style={{ background: "#0a0812", border: "1px solid #a78bfa22", borderRadius: 12, padding: "16px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 14 }}>
+                <span style={{ fontSize: 22 }}>🔮</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: 2, color: "#a78bfa", marginBottom: 3 }}>PREDICT THE FUTURE</div>
+                  <div style={{ fontSize: 14, color: "#4a4060", lineHeight: 1.5 }}>Vote on upcoming games, series, and awards before they happen. See how your prediction stacks up against the fanbase.</div>
+                </div>
+              </div>
+              {loading
+                ? <div style={S.ldg}><span className="pulse">Loading predictions…</span></div>
+                : predictionItems.length === 0
+                  ? <EmptyState icon="🔮" title="No predictions yet." sub="Check back before the next big game." />
+                  : <div style={S.grid}>{predictionItems.map((c, i) => (
+                    <PredictionCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
+                      onVote={vote} onDetail={openDetail}
+                      saved={profile?.saved_ids?.includes(c.id)} onSave={() => toggleSave(c.id)}
+                      loggedIn={!!user} onAuthPrompt={() => setShowVoteGate(true)}
+                    />
+                  ))}</div>
+              }
+            </>
+          )}
         </main>
       )}
 
+      {/* ── SAVED ── */}
       {page === "saved" && (
         <main style={S.main}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 32 }}>
@@ -509,26 +591,23 @@ export default function App() {
             <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", background: "#00d4ff14", border: "1px solid #00d4ff33", padding: "3px 10px", borderRadius: 4 }}>{savedItems.length}</span>
           </div>
           {savedItems.length === 0
-            ? <div style={{ textAlign: "center", padding: "60px 0", color: "#4a6070" }}>
-              <div style={{ fontSize: 40, marginBottom: 12 }}>🔖</div>
-              <p style={{ fontSize: 18, letterSpacing: 1 }}>No saved verdicts yet.</p>
-              <p style={{ fontSize: 15, marginTop: 6, color: "#3a5060" }}>Vote on a controversy to save it here.</p>
-            </div>
-            : <div style={S.grid}>{savedItems.map((c, i) => (
-              <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
+            ? <EmptyState icon="🔖" title="No saved verdicts yet." sub="Vote on a controversy to save it here." />
+            : <div style={S.grid}>{savedItems.map((c, i) => {
+              const Card = c.feed_type === "prediction" ? PredictionCard : FeedCard;
+              return <Card key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
                 onVote={vote} onDetail={openDetail}
                 saved={true} onSave={() => toggleSave(c.id)}
                 loggedIn={!!user} onAuthPrompt={() => setShowVoteGate(true)}
-              />
-            ))}
-            </div>
+              />;
+            })}</div>
           }
         </main>
       )}
 
+      {/* ── DETAIL ── */}
       {page === "detail" && active && (
         <main style={S.main}>
-          <button style={S.back} onClick={goFeed}>← Back to Feed</button>
+          <button style={S.back} onClick={goHome}>← Back</button>
           <div style={{ maxWidth: 660, margin: "0 auto" }}>
             <div style={{ ...S.card, marginBottom: 0 }}>
               <CardBody item={active} uv={uv[active.id]} lv={lv[active.id] || [0, 0]} pct={pct} total={total} onVote={vote} loggedIn={!!user} onAuthPrompt={() => setShowVoteGate(true)} />
@@ -536,20 +615,18 @@ export default function App() {
             <div style={S.aiBox}>
               <div style={S.aiHdr}>
                 <span style={S.aiIcon}>🤖</span>
-                <span style={S.aiLbl}>AI REF VERDICT</span>
+                <span style={S.aiLbl}>{active.feed_type === "prediction" ? "AI PREDICTION BREAKDOWN" : "AI REF VERDICT"}</span>
                 <span style={{ flex: 1 }} />
                 <span style={{ fontSize: 11, color: "#2a3850", letterSpacing: 1 }}>POWERED BY CLAUDE</span>
               </div>
               {aiLoad[active.id]
                 ? <div style={{ padding: "8px 0" }}>
-                  <p style={S.aiWait} className="pulse">Reviewing the play…</p>
-                  <div style={{ display: "flex", gap: 6, marginTop: 14 }}>
-                    {[1, 2, 3].map(i => <div key={i} style={{ height: 6, flex: 1, background: "#0f1825", borderRadius: 3 }} />)}
-                  </div>
+                  <p style={S.aiWait} className="pulse">{active.feed_type === "prediction" ? "Analyzing the matchup…" : "Reviewing the play…"}</p>
+                  <div style={{ display: "flex", gap: 6, marginTop: 14 }}>{[1,2,3].map(i => <div key={i} style={{ height: 6, flex: 1, background: "#0f1825", borderRadius: 3 }} />)}</div>
                 </div>
                 : ai[active.id]
                   ? <p style={S.aiTxt}>{ai[active.id]}</p>
-                  : <button style={S.aiCallBtn} className="hbtn" onClick={() => getAI(active)}>Ask the AI Ref →</button>
+                  : <button style={S.aiCallBtn} className="hbtn" onClick={() => getAI(active)}>{active.feed_type === "prediction" ? "Get AI Prediction →" : "Ask the AI Ref →"}</button>
               }
             </div>
           </div>
@@ -558,18 +635,13 @@ export default function App() {
 
       {page === "forum" && <ForumPage articles={articles} onOpenArticle={openArticle} />}
       {page === "article" && activeArticle && <ArticlePage article={activeArticle} onBack={() => setPage("forum")} />}
-
       {page === "parlay" && <ParlayPage parlays={parlays} onOpenParlay={openParlay} />}
       {page === "parlay_detail" && activeParlayId && (
-        <ParlayDetailPage
-          parlay={parlays.find(p => p.id === activeParlayId)}
-          onBack={() => setPage("parlay")}
-        />
+        <ParlayDetailPage parlay={parlays.find(p => p.id === activeParlayId)} onBack={() => setPage("parlay")} />
       )}
-
       {page === "profile" && user && (
         <ProfilePage profile={profile} user={user} savedCount={profile?.saved_ids?.length || 0}
-          votedCount={Object.keys(uv).length} onLogout={handleLogout} onBack={goFeed} />
+          votedCount={Object.keys(uv).length} onLogout={handleLogout} onBack={goHome} />
       )}
       {page === "admin" && (
         <AdminPanel authed={adminOk} onAuth={setAdminOk} items={items} lv={lv} onRefresh={load}
@@ -585,6 +657,109 @@ export default function App() {
         <span style={{ color: "#2a3a46", fontSize: 12 }}>Must be 19+. Gambling can be addictive. Play responsibly.</span>
       </footer>
     </div>
+  );
+}
+
+// ── Empty State ──
+function EmptyState({ icon, title, sub }) {
+  return (
+    <div style={{ textAlign: "center", padding: "60px 0", color: "#4a6070" }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>{icon}</div>
+      <p style={{ fontSize: 18, letterSpacing: 1 }}>{title}</p>
+      {sub && <p style={{ fontSize: 15, marginTop: 6, color: "#3a5060" }}>{sub}</p>}
+    </div>
+  );
+}
+
+// ── Feed Card (Verdicts) ──
+function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
+  return (
+    <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
+      {item.hot && (
+        <div style={S.hotBadge}>
+          <span style={{ fontSize: 12 }}>🔥</span>
+          <span style={S.hotText}>HOT</span>
+        </div>
+      )}
+      <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} />
+      <button style={S.aiBtn} className="hbtn" onClick={() => onDetail(item)}>
+        <span style={{ marginRight: 6 }}>🤖</span> Get AI Ref Verdict →
+      </button>
+    </div>
+  );
+}
+
+// ── Prediction Card ──
+function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
+  return (
+    <div style={{ ...S.card, animationDelay: `${idx * .07}s`, borderColor: "#1a1030", background: "#0b0a18" }} className="cfade pred-card">
+      {/* Prediction strip */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #a78bfa, #7c3aed)" }} />
+      {item.hot && (
+        <div style={{ ...S.hotBadge, borderColor: "#a78bfa44", background: "#0d0a18" }}>
+          <span style={{ fontSize: 12 }}>🔥</span>
+          <span style={{ ...S.hotText, color: "#a78bfa" }}>HOT</span>
+        </div>
+      )}
+      {/* Game date badge */}
+      {item.game_date && (
+        <div style={{ position: "absolute", bottom: 68, right: 16, fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#6040a0", background: "#120d20", border: "1px solid #a78bfa22", borderRadius: 4, padding: "3px 8px" }}>
+          📅 {item.game_date}
+        </div>
+      )}
+      <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} isPrediction />
+      <button style={{ ...S.aiBtn, borderColor: "#1e0f40", color: "#6040a0" }} className="hbtn" onClick={() => onDetail(item)}>
+        <span style={{ marginRight: 6 }}>🔮</span> Get AI Prediction →
+      </button>
+    </div>
+  );
+}
+
+// ── Card Body ──
+function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, isPrediction }) {
+  const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
+  const hasVoted = uv !== undefined;
+
+  return (
+    <>
+      <div style={S.meta}>
+        <span style={{ ...S.tag, background: bg, color: tc, borderColor: bc }}>{item.type}</span>
+        <span style={S.game}>{item.game}</span>
+      </div>
+      <h2 style={S.ctitle}>{item.title}</h2>
+      <p style={S.cdesc}>{item.description}</p>
+      <div style={{ ...S.offBox, borderColor: isPrediction ? "#a78bfa22" : "#0f1820", background: isPrediction ? "#0d0a18" : "#080d14" }}>
+        <span style={{ ...S.offLbl, color: isPrediction ? "#3d2060" : "#1e3040" }}>{isPrediction ? "UPCOMING " : "OFFICIAL CALL "}</span>
+        <span style={S.offTxt}>{item.official_call}</span>
+      </div>
+
+      {!hasVoted ? (
+        <div style={S.vrow}>
+          <button className="vote-btn" style={{ ...S.vb, ...(isPrediction ? S.vbPredA : S.vba) }} onClick={() => onVote(item.id, 0)}>{item.option_a}</button>
+          <button className="vote-btn" style={{ ...S.vb, ...(isPrediction ? S.vbPredB : S.vbb) }} onClick={() => onVote(item.id, 1)}>{item.option_b}</button>
+        </div>
+      ) : (
+        <div style={S.res}>
+          {[item.option_a, item.option_b].map((opt, oi) => (
+            <div key={oi} style={S.rrow}>
+              <span style={{ ...S.rlbl, opacity: uv === oi || uv === -1 ? 1 : 0.35, color: uv === oi ? (isPrediction ? (oi === 0 ? "#a78bfa" : "#7c3aed") : (oi === 0 ? "#00d4ff" : "#ff4d4d")) : "#6a8090" }}>{opt}</span>
+              <div style={S.btrack}>
+                <div className="banim" style={{
+                  width: `${pct(item.id, oi)}%`,
+                  background: isPrediction
+                    ? (oi === 0 ? "linear-gradient(90deg,#6d28d9,#a78bfa)" : "linear-gradient(90deg,#4c1d95,#7c3aed)")
+                    : (oi === 0 ? "linear-gradient(90deg,#0099bb,#00d4ff)" : "linear-gradient(90deg,#cc2233,#ff4d4d)"),
+                  opacity: uv === oi || uv === -1 ? 1 : 0.25,
+                  height: "100%", borderRadius: 4,
+                }} />
+              </div>
+              <span style={{ ...S.rpct, color: uv === oi ? (isPrediction ? "#a78bfa" : (oi === 0 ? "#00d4ff" : "#ff4d4d")) : "#2a4050" }}>{pct(item.id, oi)}%</span>
+            </div>
+          ))}
+          <div style={S.vtot}>{total(item.id).toLocaleString()} {isPrediction ? "predictions" : "fan verdicts"}</div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -836,7 +1011,7 @@ function ParlayDetailPage({ parlay, onBack }) {
             <span style={{ fontSize: 11, color: "#2a3850", letterSpacing: 1 }}>POWERED BY CLAUDE</span>
           </div>
           {aiLoading
-            ? <div style={{ padding: "8px 0" }}><p style={S.aiWait} className="pulse">Breaking down the parlay…</p><div style={{ display: "flex", gap: 6, marginTop: 14 }}>{[1, 2, 3].map(i => <div key={i} style={{ height: 6, flex: 1, background: "#0f1825", borderRadius: 3 }} />)}</div></div>
+            ? <div style={{ padding: "8px 0" }}><p style={S.aiWait} className="pulse">Breaking down the parlay…</p><div style={{ display: "flex", gap: 6, marginTop: 14 }}>{[1,2,3].map(i => <div key={i} style={{ height: 6, flex: 1, background: "#0f1825", borderRadius: 3 }} />)}</div></div>
             : aiVerdict
               ? <p style={S.aiTxt}>{aiVerdict}</p>
               : <button style={S.aiCallBtn} className="hbtn" onClick={getAIParlayVerdict}>Get AI Breakdown →</button>
@@ -878,7 +1053,7 @@ function ForumPage({ articles, onOpenArticle }) {
           );
         })}
       </div>
-      {filtered.length === 0 && <div style={{ textAlign: "center", padding: "60px 0", color: "#4a6070" }}><p style={{ fontSize: 18, letterSpacing: 1 }}>No articles in this category yet.</p></div>}
+      {filtered.length === 0 && <EmptyState icon="📰" title="No articles in this category yet." />}
       {featured && (
         <div className="art-card" onClick={() => onOpenArticle(featured)} style={{ background: "#0c1420", border: `1px solid ${CAT_COLORS[featured.category] || "#00d4ff"}22`, borderRadius: 16, marginBottom: 24, overflow: "hidden" }}>
           <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
@@ -1024,70 +1199,6 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
   );
 }
 
-// ── Feed Card ──
-function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
-  return (
-    <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
-      {item.hot && (
-        <div style={S.hotBadge}>
-          <span style={{ fontSize: 12 }}>🔥</span>
-          <span style={S.hotText}>HOT</span>
-        </div>
-      )}
-      <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} />
-      <button style={S.aiBtn} className="hbtn" onClick={() => onDetail(item)}>
-        <span style={{ marginRight: 6 }}>🤖</span> Get AI Ref Verdict →
-      </button>
-    </div>
-  );
-}
-
-// ── Card Body ──
-function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt }) {
-  const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
-  const hasVoted = uv !== undefined;
-
-  return (
-    <>
-      <div style={S.meta}>
-        <span style={{ ...S.tag, background: bg, color: tc, borderColor: bc }}>{item.type}</span>
-        <span style={S.game}>{item.game}</span>
-      </div>
-      <h2 style={S.ctitle}>{item.title}</h2>
-      <p style={S.cdesc}>{item.description}</p>
-      <div style={S.offBox}>
-        <span style={S.offLbl}>OFFICIAL CALL </span>
-        <span style={S.offTxt}>{item.official_call}</span>
-      </div>
-
-      {!hasVoted ? (
-        <div style={S.vrow}>
-          <button className="vote-btn" style={{ ...S.vb, ...S.vba }} onClick={() => onVote(item.id, 0)}>{item.option_a}</button>
-          <button className="vote-btn" style={{ ...S.vb, ...S.vbb }} onClick={() => onVote(item.id, 1)}>{item.option_b}</button>
-        </div>
-      ) : (
-        <div style={S.res}>
-          {[item.option_a, item.option_b].map((opt, oi) => (
-            <div key={oi} style={S.rrow}>
-              <span style={{ ...S.rlbl, opacity: uv === oi || uv === -1 ? 1 : 0.35, color: uv === oi ? (oi === 0 ? "#00d4ff" : "#ff4d4d") : "#6a8090" }}>{opt}</span>
-              <div style={S.btrack}>
-                <div className="banim" style={{
-                  width: `${pct(item.id, oi)}%`,
-                  background: oi === 0 ? "linear-gradient(90deg,#0099bb,#00d4ff)" : "linear-gradient(90deg,#cc2233,#ff4d4d)",
-                  opacity: uv === oi || uv === -1 ? 1 : 0.25,
-                  height: "100%", borderRadius: 4,
-                }} />
-              </div>
-              <span style={{ ...S.rpct, color: uv === oi ? (oi === 0 ? "#00d4ff" : "#ff4d4d") : "#2a4050" }}>{pct(item.id, oi)}%</span>
-            </div>
-          ))}
-          <div style={S.vtot}>{total(item.id).toLocaleString()} fan verdicts</div>
-        </div>
-      )}
-    </>
-  );
-}
-
 // ── Admin Panel ──
 function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, parlays, onAddParlay, onDeleteParlay }) {
   const [pw, setPw]       = useState("");
@@ -1097,7 +1208,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const [artOk, setArtOk] = useState(false);
   const [parOk, setParOk] = useState(false);
   const [busy, setBusy]   = useState(false);
-  const [form, setForm]   = useState({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false });
+  const [form, setForm]   = useState({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false, feed_type: "verdict" });
   const [artForm, setArtForm] = useState({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", hot: false, photo: "" });
 
   const emptyPick = () => ({ game: "", bet: "", line: "", sport: "NHL" });
@@ -1120,7 +1231,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
     setBusy(true);
     await db.insert("controversies", { ...form, votes_a: 0, votes_b: 0 });
     setOk(true); setTimeout(() => setOk(false), 3500);
-    setForm({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false });
+    setForm({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false, feed_type: "verdict" });
     onRefresh(); setBusy(false);
   };
 
@@ -1165,6 +1276,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   );
 
   const tabs = [["post", "POST VERDICT"], ["manage", "MANAGE VERDICTS"], ["forum_post", "POST ARTICLE"], ["forum_manage", "MANAGE ARTICLES"], ["parlay_post", "POST PARLAY"], ["parlay_manage", "MANAGE PARLAYS"]];
+  const allTypes = [...VERDICT_TYPES, ...PREDICTION_TYPES];
 
   return (
     <main style={S.main}>
@@ -1179,8 +1291,23 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
         {tab === "post" && (
           <div style={S.fbox}>
             {ok && <div style={S.succ}>✅ Posted live!</div>}
+            {/* Feed type selector */}
+            <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
+              {["verdict", "prediction"].map(ft => (
+                <button key={ft} onClick={() => {
+                  set("feed_type", ft);
+                  set("type", ft === "verdict" ? "GOAL REVIEW" : "SERIES PREDICTION");
+                }} style={{ flex: 1, padding: "10px", background: form.feed_type === ft ? (ft === "verdict" ? "#00d4ff0d" : "#a78bfa0d") : "transparent", border: `1px solid ${form.feed_type === ft ? (ft === "verdict" ? "#00d4ff44" : "#a78bfa44") : "#0f1820"}`, borderRadius: 8, color: form.feed_type === ft ? (ft === "verdict" ? "#00d4ff" : "#a78bfa") : "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 800, letterSpacing: 2, cursor: "pointer", transition: "all .15s" }}>
+                  {ft === "verdict" ? "🔴 VERDICT" : "🔮 PREDICTION"}
+                </button>
+              ))}
+            </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              <FG label="TYPE"><select style={S.sel} value={form.type} onChange={e => set("type", e.target.value)}>{TYPES.map(t => <option key={t}>{t}</option>)}</select></FG>
+              <FG label="TYPE">
+                <select style={S.sel} value={form.type} onChange={e => set("type", e.target.value)}>
+                  {(form.feed_type === "verdict" ? VERDICT_TYPES : PREDICTION_TYPES).map(t => <option key={t}>{t}</option>)}
+                </select>
+              </FG>
               <FG label="GAME / DATE"><input style={S.inp} placeholder="e.g. Oilers vs Flames · Apr 27" value={form.game} onChange={e => set("game", e.target.value)} /></FG>
             </div>
             <FG label="HEADLINE *"><input style={S.inp} placeholder="e.g. Was that a clean hit?" value={form.title} onChange={e => set("title", e.target.value)} /></FG>
@@ -1189,22 +1316,32 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
               <FG label="OPTION A *"><input style={S.inp} placeholder="e.g. GOOD GOAL" value={form.option_a} onChange={e => set("option_a", e.target.value)} /></FG>
               <FG label="OPTION B *"><input style={S.inp} placeholder="e.g. NO GOAL" value={form.option_b} onChange={e => set("option_b", e.target.value)} /></FG>
             </div>
-            <FG label="OFFICIAL CALL *"><input style={S.inp} placeholder="e.g. Goal stands after review" value={form.official_call} onChange={e => set("official_call", e.target.value)} /></FG>
+            <FG label={form.feed_type === "prediction" ? "UPCOMING EVENT *" : "OFFICIAL CALL *"}>
+              <input style={S.inp} placeholder={form.feed_type === "prediction" ? "e.g. Series begins May 2 · 7:00 PM ET" : "e.g. Goal stands after review"} value={form.official_call} onChange={e => set("official_call", e.target.value)} />
+            </FG>
+            {form.feed_type === "prediction" && (
+              <FG label="GAME DATE (shown on card)">
+                <input style={S.inp} placeholder="e.g. May 2, 2026" value={form.game_date || ""} onChange={e => set("game_date", e.target.value)} />
+              </FG>
+            )}
             <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 22 }}>
               <input type="checkbox" checked={form.hot} onChange={e => set("hot", e.target.checked)} /> 🔥 Mark as HOT
             </label>
-            <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={post} disabled={busy}>{busy ? "POSTING…" : "POST CONTROVERSY"}</button>
+            <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={post} disabled={busy}>{busy ? "POSTING…" : `POST ${form.feed_type === "prediction" ? "PREDICTION" : "VERDICT"}`}</button>
           </div>
         )}
 
         {tab === "manage" && (
           <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
             {items.length === 0
-              ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No controversies yet.</p>
+              ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No items yet.</p>
               : items.map(c => (
                 <div key={c.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", borderBottom: "1px solid #0d1620", gap: 12 }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", marginBottom: 4 }}>{c.type}</div>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
+                      <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: c.feed_type === "prediction" ? "#a78bfa" : "#00d4ff" }}>{c.type}</span>
+                      <span style={{ fontSize: 10, color: c.feed_type === "prediction" ? "#6040a0" : "#2a5060", background: c.feed_type === "prediction" ? "#a78bfa11" : "#00d4ff11", border: `1px solid ${c.feed_type === "prediction" ? "#a78bfa22" : "#00d4ff22"}`, padding: "1px 6px", borderRadius: 3 }}>{c.feed_type === "prediction" ? "PREDICTION" : "VERDICT"}</span>
+                    </div>
                     <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.title}</div>
                     <div style={{ fontSize: 14, color: "#3a5060" }}>{c.option_a}: {lv?.[c.id]?.[0] ?? c.votes_a ?? 0} | {c.option_b}: {lv?.[c.id]?.[1] ?? c.votes_b ?? 0}</div>
                   </div>
@@ -1358,6 +1495,8 @@ const S = {
   vb:        { flex: 1, padding: "14px 8px", borderRadius: 8, border: "1px solid", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 800, letterSpacing: 0.5, cursor: "pointer", transition: "all .2s" },
   vba:       { background: "#00d4ff0d", borderColor: "#00d4ff33", color: "#00d4ff" },
   vbb:       { background: "#ff4d4d0d", borderColor: "#ff4d4d33", color: "#ff5555" },
+  vbPredA:   { background: "#a78bfa0d", borderColor: "#a78bfa44", color: "#a78bfa" },
+  vbPredB:   { background: "#7c3aed0d", borderColor: "#7c3aed44", color: "#9c64fa" },
   res:       { marginBottom: 14 },
   rrow:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 10 },
   rlbl:      { width: 120, fontSize: 14, fontWeight: 700, flexShrink: 0, lineHeight: 1.2, transition: "color .2s" },
