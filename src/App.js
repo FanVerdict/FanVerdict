@@ -166,6 +166,34 @@ const css = `
   ::-webkit-scrollbar{width:6px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
+
+  /* HOT badge: centered top on mobile, normal flow on desktop */
+  .hot-badge-mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+  @media (max-width: 768px) {
+    .hot-badge-mobile {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      white-space: nowrap;
+    }
+    .hot-badge-spacer {
+      display: block;
+      height: 36px;
+    }
+  }
+  @media (min-width: 769px) {
+    .hot-badge-spacer {
+      display: none;
+    }
+  }
 `;
 
 function VoteGateModal({ onClose, onLogin, pendingVote }) {
@@ -661,20 +689,26 @@ function EmptyState({ icon, title, sub }) {
   );
 }
 
-// ── FeedCard — HOT badge moved into flow (no absolute positioning) ──
+// ── FeedCard ──
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
-      {/* HOT badge sits in normal flow at the top */}
       {item.hot && (
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 5,
-          background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6,
-          padding: "4px 10px", marginBottom: 12,
-        }}>
-          <span style={{ fontSize: 12 }}>🔥</span>
-          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" }}>HOT</span>
-        </div>
+        <>
+          {/* spacer pushes content down on mobile so badge doesn't overlap it */}
+          <div className="hot-badge-spacer" />
+          <div
+            className="hot-badge-mobile"
+            style={{
+              background: "#0d0a07",
+              border: "1px solid #ff5a1a44",
+              marginBottom: 12,
+            }}
+          >
+            <span style={{ fontSize: 12 }}>🔥</span>
+            <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" }}>HOT</span>
+          </div>
+        </>
       )}
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} />
       <button style={S.aiBtn} className="hbtn" onClick={() => onDetail(item)}>
@@ -684,24 +718,31 @@ function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, o
   );
 }
 
-// ── PredictionCard — badges in flex row, no absolute positioning ──
+// ── PredictionCard ──
 function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s`, borderColor: "#1a1030", background: "#0b0a18" }} className="cfade pred-card">
       {/* Top accent bar */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #a78bfa, #7c3aed)" }} />
 
-      {/* Badges row — inline flex, wraps safely on narrow screens */}
+      {/* Badges row */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
         {item.hot && (
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 5,
-            background: "#0d0a18", border: "1px solid #a78bfa44", borderRadius: 6,
-            padding: "4px 10px", flexShrink: 0,
-          }}>
-            <span style={{ fontSize: 12 }}>🔥</span>
-            <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#a78bfa" }}>HOT</span>
-          </div>
+          <>
+            {/* spacer pushes content down on mobile so badge doesn't overlap it */}
+            <div className="hot-badge-spacer" style={{ width: "100%" }} />
+            <div
+              className="hot-badge-mobile"
+              style={{
+                background: "#0d0a18",
+                border: "1px solid #a78bfa44",
+                flexShrink: 0,
+              }}
+            >
+              <span style={{ fontSize: 12 }}>🔥</span>
+              <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#a78bfa" }}>HOT</span>
+            </div>
+          </>
         )}
         {item.game_date && (
           <div style={{
