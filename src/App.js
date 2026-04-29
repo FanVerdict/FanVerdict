@@ -661,13 +661,19 @@ function EmptyState({ icon, title, sub }) {
   );
 }
 
+// ── FeedCard — HOT badge moved into flow (no absolute positioning) ──
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
+      {/* HOT badge sits in normal flow at the top */}
       {item.hot && (
-        <div style={S.hotBadge}>
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 5,
+          background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6,
+          padding: "4px 10px", marginBottom: 12,
+        }}>
           <span style={{ fontSize: 12 }}>🔥</span>
-          <span style={S.hotText}>HOT</span>
+          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" }}>HOT</span>
         </div>
       )}
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} />
@@ -678,23 +684,32 @@ function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, o
   );
 }
 
-// ── Prediction Card — FIXED for iOS ──
+// ── PredictionCard — badges in flex row, no absolute positioning ──
 function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s`, borderColor: "#1a1030", background: "#0b0a18" }} className="cfade pred-card">
       {/* Top accent bar */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #a78bfa, #7c3aed)" }} />
 
-      {/* HOT badge + date badge: inline row, no absolute positioning */}
+      {/* Badges row — inline flex, wraps safely on narrow screens */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
         {item.hot && (
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a18", border: "1px solid #a78bfa44", borderRadius: 6, padding: "4px 10px" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 5,
+            background: "#0d0a18", border: "1px solid #a78bfa44", borderRadius: 6,
+            padding: "4px 10px", flexShrink: 0,
+          }}>
             <span style={{ fontSize: 12 }}>🔥</span>
             <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#a78bfa" }}>HOT</span>
           </div>
         )}
         {item.game_date && (
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#6040a0", background: "#120d20", border: "1px solid #a78bfa22", borderRadius: 4, padding: "4px 8px" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 4,
+            fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#6040a0",
+            background: "#120d20", border: "1px solid #a78bfa22", borderRadius: 4,
+            padding: "4px 8px", flexShrink: 0,
+          }}>
             <span>📅</span>
             <span>{item.game_date}</span>
           </div>
@@ -1464,8 +1479,6 @@ const S = {
   ldg:       { textAlign: "center", padding: 80, color: "#3a5060", fontSize: 18, letterSpacing: 2 },
   grid:      { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 },
   card:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 16, padding: "24px 26px", position: "relative", overflow: "hidden" },
-  hotBadge:  { position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6, padding: "4px 10px" },
-  hotText:   { fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" },
   meta:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 13 },
   tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid" },
   game:      { fontSize: 13, color: "#3a5060", letterSpacing: 0.5 },
