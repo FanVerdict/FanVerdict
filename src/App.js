@@ -81,7 +81,6 @@ const DEFAULT_ARTICLES = [
   { id: "a6", category: "PENALTY DEBATE", title: "Embellishment: Hockey's Dirtiest Open Secret", excerpt: "Every fan sees it. Every coach knows it. Players do it on purpose — and the league has been trying to stop it for 30 years. Why does diving keep winning?", author: "FanVerdict Staff", date: "Apr 16, 2026", read_time: "5 min read", hot: false, photo: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&q=80" },
 ];
 
-// ── Parlay Data ──
 const PARLAYS = [
   {
     id: "p1",
@@ -382,9 +381,7 @@ export default function App() {
           <nav style={S.nav}>
             <button className={navCls("feed")} onClick={goFeed}>FEED</button>
             <button className={navCls(["forum","article"])} onClick={()=>setPage("forum")}>FORUM</button>
-            <button className={navCls(["parlay","parlay_detail"])} onClick={()=>setPage("parlay")}>
-              <span style={{color:"#ffd700",marginRight:4}}>💰</span>PARLAYS
-            </button>
+            <button className={navCls(["parlay","parlay_detail"])} onClick={()=>setPage("parlay")}>PARLAYS</button>
             {user && <button className={navCls("saved")} onClick={()=>setPage("saved")}>SAVED</button>}
             {user && (
               <button className={navCls("profile")} onClick={()=>setPage("profile")}>
@@ -418,8 +415,8 @@ export default function App() {
               <div style={{display:"flex",alignItems:"center",gap:10}}>
                 <span style={{fontSize:20}}>🏒</span>
                 <div>
-                  <div style={{fontSize:14,fontWeight:800,color:"#c0d4e0",letterSpacing:1}}>JOIN FANVERDICT</div>
-                  <div style={{fontSize:12,color:"#3a5060"}}>Save verdicts & track your votes</div>
+                  <div style={{fontSize:17,fontWeight:800,color:"#c0d4e0",letterSpacing:1}}>JOIN FANVERDICT</div>
+                  <div style={{fontSize:14,color:"#3a5060"}}>Save verdicts & track your votes</div>
                 </div>
               </div>
               <button style={S.bannerBtn} onClick={()=>setShowAuth(true)}>JOIN FREE →</button>
@@ -1298,9 +1295,9 @@ const S = {
   live:      {fontSize:11,fontWeight:800,letterSpacing:2,color:"#5a6070",display:"flex",alignItems:"center",gap:5},
   main:      {maxWidth:1100,margin:"0 auto",padding:"44px 24px 80px"},
   hero:      {textAlign:"center",marginBottom:44,paddingTop:12},
-  heroPill:  {display:"inline-block",fontSize:10,fontWeight:800,letterSpacing:2.5,color:"#3a6070",background:"#0c1820",border:"1px solid #0f2030",borderRadius:20,padding:"5px 14px",marginBottom:18},
+  heroPill:  {display:"inline-block",fontSize:13,fontWeight:800,letterSpacing:2.5,color:"#3a6070",background:"#0c1820",border:"1px solid #0f2030",borderRadius:20,padding:"5px 14px",marginBottom:18},
   heroT:     {fontSize:"clamp(52px,10vw,100px)",fontWeight:900,letterSpacing:4,margin:"0 0 10px",background:"linear-gradient(135deg,#e8f0f8 20%,#00d4ff 80%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",lineHeight:1},
-  heroS:     {fontSize:16,color:"#2a4050",letterSpacing:2,marginTop:6},
+  heroS:     {fontSize:20,color:"#2a4050",letterSpacing:2,marginTop:6},
   signupBanner:{display:"flex",alignItems:"center",justifyContent:"space-between",background:"#0a1420",border:"1px solid #0f2030",borderRadius:12,padding:"16px 22px",marginBottom:36,flexWrap:"wrap",gap:12},
   bannerBtn: {background:"#00d4ff",color:"#07090d",border:"none",borderRadius:6,padding:"8px 18px",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:900,letterSpacing:2,cursor:"pointer",flexShrink:0},
   ldg:       {textAlign:"center",padding:80,color:"#2a4050",fontSize:16,letterSpacing:2},
