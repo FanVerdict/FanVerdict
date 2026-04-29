@@ -54,6 +54,21 @@ export default function App() {
   const [active, setActive]   = useState(null);
   const [adminOk, setAdminOk] = useState(false);
 
+  // ── Secret admin access via #admin in URL ──
+  useEffect(() => {
+    const checkHash = () => {
+      if (window.location.hash === "#admin") setPage("admin");
+    };
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+    return () => window.removeEventListener("hashchange", checkHash);
+  }, []);
+
+  const goFeed = () => {
+    window.location.hash = "";
+    setPage("feed");
+  };
+
   const load = useCallback(async () => {
     setLoading(true);
     const data = await db.select("controversies");
@@ -101,10 +116,10 @@ export default function App() {
       <style>{css}</style>
       <header style={S.hdr}>
         <div style={S.hdrI}>
-          <div style={S.logo} onClick={() => setPage("feed")}>🏒 <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span></div>
+          <div style={S.logo} onClick={goFeed}>🏒 <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span></div>
+          {/* No admin button visible to fans */}
           <nav style={S.nav}>
-            <button style={{...S.nb,...(page==="feed"?S.na:{})}} onClick={() => setPage("feed")}>FEED</button>
-            <button style={{...S.nb,...(page==="admin"?S.na:{})}} onClick={() => setPage("admin")}>⚙ ADMIN</button>
+            <button style={{...S.nb,...(page==="feed"?S.na:{})}} onClick={goFeed}>FEED</button>
           </nav>
           <div style={S.live}><span className="blink">●</span> LIVE</div>
         </div>
@@ -125,7 +140,7 @@ export default function App() {
 
       {page==="detail" && active && (
         <main style={S.main}>
-          <button style={S.back} onClick={() => setPage("feed")}>← Back</button>
+          <button style={S.back} onClick={goFeed}>← Back</button>
           <div style={{...S.card,maxWidth:660,margin:"0 auto"}}>
             <CardBody item={active} uv={uv[active.id]} lv={lv[active.id]||[0,0]} pct={pct} total={total} onVote={vote}/>
             <div style={S.aiBox}>
@@ -218,7 +233,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh }) {
         <input style={{...S.inp,textAlign:"center",letterSpacing:6}} type="password" placeholder="Password" value={pw} onChange={e=>setPw(e.target.value)} onKeyDown={e=>e.key==="Enter"&&tryAuth()}/>
         {err && <p style={{color:"#ff4d4d",fontSize:13,marginTop:8}}>Wrong password</p>}
         <button style={{...S.subBtn,marginTop:16}} onClick={tryAuth}>ENTER</button>
-        <p style={{fontSize:12,color:"#2a4050",marginTop:14}}>Default: <code>puck2026</code></p>
       </div>
     </main>
   );
@@ -337,4 +351,5 @@ const S = {
   succ:   {background:"#00ff8818",border:"1px solid #00ff8855",color:"#00ff88",borderRadius:8,padding:"12px 16px",marginBottom:20,fontSize:14,fontWeight:700},
   delBtn: {background:"#ff1a1a14",border:"1px solid #ff1a1a33",color:"#ff4d4d",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,padding:"6px 12px",borderRadius:6,cursor:"pointer",flexShrink:0},
   foot:   {textAlign:"center",padding:"32px 20px",fontSize:11,color:"#1a2530",letterSpacing:2,borderTop:"1px solid #0c1218"},
+};
 };
