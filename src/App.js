@@ -66,34 +66,50 @@ const db = {
   },
 };
 
+// Badge system — replaces the old boolean "hot"
+const BADGES = [
+  { value: "none",    label: "None",     emoji: "",   color: "#3a5060", bg: "#0a0f18",  border: "#1e2e3e" },
+  { value: "hot",     label: "🔥 HOT",   emoji: "🔥", color: "#ff6633", bg: "#0d0a07",  border: "#ff5a1a44" },
+  { value: "spicy",   label: "🌶 SPICY", emoji: "🌶", color: "#ff3a6e", bg: "#0d0008",  border: "#ff3a6e44" },
+  { value: "viral",   label: "⚡ VIRAL", emoji: "⚡", color: "#ffd700", bg: "#0d0c00",  border: "#ffd70044" },
+  { value: "rigged",  label: "🚨 RIGGED",emoji: "🚨", color: "#ff4d4d", bg: "#0d0000",  border: "#ff4d4d44" },
+  { value: "lock",    label: "🔒 LOCK",  emoji: "🔒", color: "#4ade80", bg: "#000d06",  border: "#4ade8044" },
+];
+
+const getBadge = (item) => {
+  if (item.badge) return BADGES.find(b => b.value === item.badge) || BADGES[0];
+  if (item.hot) return BADGES[1]; // legacy support
+  return BADGES[0];
+};
+
 const DEMO_VERDICTS = [
-  { id: 1, type: "GOAL REVIEW", game: "Oilers vs Canucks · Apr 18", title: "Skate in the crease or not?", description: "McDavid scores the apparent game-winner but replay shows his skate may have grazed the blue paint. Officials reviewed for 4 minutes.", option_a: "✅ GOOD GOAL", option_b: "❌ NO GOAL", official_call: "Goal stands", votes_a: 4821, votes_b: 3104, hot: true, feed_type: "verdict" },
-  { id: 2, type: "FIGHT VERDICT", game: "Bruins vs Rangers · Apr 20", title: "Who won the Tkachuk vs Kreider bout?", description: "A massive scrap after a dirty hit in the second period. Both fighters landed heavy shots. Refs gave both 5 minutes.", option_a: "🥊 TKACHUK", option_b: "🥊 KREIDER", official_call: "Double minor — both", votes_a: 6230, votes_b: 2890, hot: true, feed_type: "verdict" },
-  { id: 3, type: "PENALTY CALL", game: "Leafs vs Lightning · Apr 22", title: "Dive or legitimate penalty?", description: "With 90 seconds left and the score tied, a Leafs forward goes down after light contact. Ref immediately whistles tripping.", option_a: "🚨 REAL PENALTY", option_b: "🎭 TOTAL DIVE", official_call: "Tripping — 2 minutes", votes_a: 1980, votes_b: 7441, hot: false, feed_type: "verdict" },
+  { id: 1, type: "GOAL REVIEW", game: "Oilers vs Canucks · Apr 18", title: "Skate in the crease or not?", description: "McDavid scores the apparent game-winner but replay shows his skate may have grazed the blue paint. Officials reviewed for 4 minutes.", option_a: "✅ GOOD GOAL", option_b: "❌ NO GOAL", official_call: "Goal stands", votes_a: 4821, votes_b: 3104, badge: "hot", feed_type: "verdict" },
+  { id: 2, type: "FIGHT VERDICT", game: "Bruins vs Rangers · Apr 20", title: "Who won the Tkachuk vs Kreider bout?", description: "A massive scrap after a dirty hit in the second period. Both fighters landed heavy shots. Refs gave both 5 minutes.", option_a: "🥊 TKACHUK", option_b: "🥊 KREIDER", official_call: "Double minor — both", votes_a: 6230, votes_b: 2890, badge: "viral", feed_type: "verdict" },
+  { id: 3, type: "PENALTY CALL", game: "Leafs vs Lightning · Apr 22", title: "Dive or legitimate penalty?", description: "With 90 seconds left and the score tied, a Leafs forward goes down after light contact. Ref immediately whistles tripping.", option_a: "🚨 REAL PENALTY", option_b: "🎭 TOTAL DIVE", official_call: "Tripping — 2 minutes", votes_a: 1980, votes_b: 7441, badge: "rigged", feed_type: "verdict" },
 ];
 
 const DEMO_PREDICTIONS = [
-  { id: 101, type: "SERIES PREDICTION", game: "Oilers vs Canucks · Series starts May 2", title: "Who takes the series in 7?", description: "Battle of Alberta meets Battle of BC. McDavid vs Pettersson. The Oilers have been on fire but the Canucks swept their first round. Who advances?", option_a: "🛢️ OILERS WIN", option_b: "🐳 CANUCKS WIN", official_call: "Series begins May 2 · 7:00 PM ET", votes_a: 5120, votes_b: 3890, hot: true, feed_type: "prediction", game_date: "May 2, 2026" },
-  { id: 102, type: "AWARD PREDICTION", game: "NHL Awards · Jun 2026", title: "Connor McDavid wins his 5th Hart Trophy?", description: "McDavid has been virtually unstoppable this season — 53 goals, 97 points in 72 games. But Auston Matthews had a historic start to the season. Does the award go back to Edmonton?", option_a: "🏆 YES — MCDAVID", option_b: "❌ SOMEONE ELSE", official_call: "Award voted on by PHWA members · Jun 2026", votes_a: 8440, votes_b: 2210, hot: true, feed_type: "prediction", game_date: "Jun 2026" },
-  { id: 103, type: "GAME PREDICTION", game: "Rangers vs Capitals · Game 1 · May 3", title: "Will this series go 7 games?", description: "The Rangers and Capitals are evenly matched on paper. Both teams have elite goaltending and physical defenses. Is this a sweep or a classic?", option_a: "🎯 GOES 7", option_b: "⚡ OVER IN 5 OR LESS", official_call: "Best-of-7 series begins May 3", votes_a: 4100, votes_b: 2950, hot: false, feed_type: "prediction", game_date: "May 3, 2026" },
+  { id: 101, type: "SERIES PREDICTION", game: "Oilers vs Canucks · Series starts May 2", title: "Who takes the series in 7?", description: "Battle of Alberta meets Battle of BC. McDavid vs Pettersson. The Oilers have been on fire but the Canucks swept their first round. Who advances?", option_a: "🛢️ OILERS WIN", option_b: "🐳 CANUCKS WIN", official_call: "Series begins May 2 · 7:00 PM ET", votes_a: 5120, votes_b: 3890, badge: "hot", feed_type: "prediction", game_date: "May 2, 2026" },
+  { id: 102, type: "AWARD PREDICTION", game: "NHL Awards · Jun 2026", title: "Connor McDavid wins his 5th Hart Trophy?", description: "McDavid has been virtually unstoppable this season — 53 goals, 97 points in 72 games. But Auston Matthews had a historic start to the season. Does the award go back to Edmonton?", option_a: "🏆 YES — MCDAVID", option_b: "❌ SOMEONE ELSE", official_call: "Award voted on by PHWA members · Jun 2026", votes_a: 8440, votes_b: 2210, badge: "spicy", feed_type: "prediction", game_date: "Jun 2026" },
+  { id: 103, type: "GAME PREDICTION", game: "Rangers vs Capitals · Game 1 · May 3", title: "Will this series go 7 games?", description: "The Rangers and Capitals are evenly matched on paper. Both teams have elite goaltending and physical defenses. Is this a sweep or a classic?", option_a: "🎯 GOES 7", option_b: "⚡ OVER IN 5 OR LESS", official_call: "Best-of-7 series begins May 3", votes_a: 4100, votes_b: 2950, badge: "none", feed_type: "prediction", game_date: "May 3, 2026" },
 ];
 
 const DEFAULT_ARTICLES = [
-  { id: "a1", category: "CONTROVERSIAL CALL", title: "The Goal That Broke a City: How One Crease Call Ended a Dynasty Run", excerpt: "It was 2019. A city held its breath. The replay ran on loop for days. We break down why the crease rule is still the most debated piece of legislation in hockey history.", author: "FanVerdict Staff", date: "Apr 26, 2026", read_time: "6 min read", hot: true, photo: "https://images.unsplash.com/photo-1515703407324-5f753afd8be8?w=800&q=80" },
-  { id: "a2", category: "FIGHT BREAKDOWN", title: "The Unwritten Code: When Fighting Is Accepted and When It Goes Too Far", excerpt: "Hockey's fighting tradition is as old as the sport itself — but in 2026, where is the line? We interviewed 3 retired enforcers about what separates a clean scrap from a dangerous assault on ice.", author: "Mike Danton", date: "Apr 24, 2026", read_time: "8 min read", hot: true, photo: "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?w=800&q=80" },
-  { id: "a3", category: "OFFSIDE DRAMA", title: "Coach's Challenge Is Ruining the Game — Or Is It Saving It?", excerpt: "Since its introduction, the Coach's Challenge has overturned hundreds of goals and infuriated millions of fans. We crunch the numbers and talk to coaches on both sides.", author: "Sarah Chen", date: "Apr 22, 2026", read_time: "5 min read", hot: false, photo: "https://images.unsplash.com/photo-1568454537842-d933259bb258?w=800&q=80" },
-  { id: "a4", category: "REF WATCH", title: "The Ref Who Missed It All: Inside Hockey's Most Controversial No-Call", excerpt: "Game 7. 12 seconds left. A blatant hook goes uncalled. We tracked down the referee, the coaches, and the players involved — and nobody agrees on what really happened.", author: "FanVerdict Investigates", date: "Apr 20, 2026", read_time: "10 min read", hot: true, photo: "https://images.unsplash.com/photo-1607356050087-9793ed4eee45?w=800&q=80" },
-  { id: "a5", category: "FIGHT BREAKDOWN", title: "Bare-Knuckle Respect: The Etiquette of the Hockey Fight Nobody Talks About", excerpt: "You drop gloves, you fight clean, you answer the bell — or you don't. The unspoken rules of hockey fighting are more complex than any referee's rulebook.", author: "Rick Tanner", date: "Apr 18, 2026", read_time: "7 min read", hot: false, photo: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=800&q=80" },
-  { id: "a6", category: "PENALTY DEBATE", title: "Embellishment: Hockey's Dirtiest Open Secret", excerpt: "Every fan sees it. Every coach knows it. Players do it on purpose — and the league has been trying to stop it for 30 years. Why does diving keep winning?", author: "FanVerdict Staff", date: "Apr 16, 2026", read_time: "5 min read", hot: false, photo: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&q=80" },
+  { id: "a1", category: "CONTROVERSIAL CALL", title: "The Goal That Broke a City: How One Crease Call Ended a Dynasty Run", excerpt: "It was 2019. A city held its breath. The replay ran on loop for days. We break down why the crease rule is still the most debated piece of legislation in hockey history.", author: "FanVerdict Staff", date: "Apr 26, 2026", read_time: "6 min read", badge: "hot", photo: "https://images.unsplash.com/photo-1515703407324-5f753afd8be8?w=800&q=80" },
+  { id: "a2", category: "FIGHT BREAKDOWN", title: "The Unwritten Code: When Fighting Is Accepted and When It Goes Too Far", excerpt: "Hockey's fighting tradition is as old as the sport itself — but in 2026, where is the line? We interviewed 3 retired enforcers about what separates a clean scrap from a dangerous assault on ice.", author: "Mike Danton", date: "Apr 24, 2026", read_time: "8 min read", badge: "viral", photo: "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?w=800&q=80" },
+  { id: "a3", category: "OFFSIDE DRAMA", title: "Coach's Challenge Is Ruining the Game — Or Is It Saving It?", excerpt: "Since its introduction, the Coach's Challenge has overturned hundreds of goals and infuriated millions of fans. We crunch the numbers and talk to coaches on both sides.", author: "Sarah Chen", date: "Apr 22, 2026", read_time: "5 min read", badge: "none", photo: "https://images.unsplash.com/photo-1568454537842-d933259bb258?w=800&q=80" },
+  { id: "a4", category: "REF WATCH", title: "The Ref Who Missed It All: Inside Hockey's Most Controversial No-Call", excerpt: "Game 7. 12 seconds left. A blatant hook goes uncalled. We tracked down the referee, the coaches, and the players involved — and nobody agrees on what really happened.", author: "FanVerdict Investigates", date: "Apr 20, 2026", read_time: "10 min read", badge: "rigged", photo: "https://images.unsplash.com/photo-1607356050087-9793ed4eee45?w=800&q=80" },
+  { id: "a5", category: "FIGHT BREAKDOWN", title: "Bare-Knuckle Respect: The Etiquette of the Hockey Fight Nobody Talks About", excerpt: "You drop gloves, you fight clean, you answer the bell — or you don't. The unspoken rules of hockey fighting are more complex than any referee's rulebook.", author: "Rick Tanner", date: "Apr 18, 2026", read_time: "7 min read", badge: "none", photo: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=800&q=80" },
+  { id: "a6", category: "PENALTY DEBATE", title: "Embellishment: Hockey's Dirtiest Open Secret", excerpt: "Every fan sees it. Every coach knows it. Players do it on purpose — and the league has been trying to stop it for 30 years. Why does diving keep winning?", author: "FanVerdict Staff", date: "Apr 16, 2026", read_time: "5 min read", badge: "spicy", photo: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&q=80" },
 ];
 
 const DEFAULT_PARLAYS = [
-  { id: "p1", label: "GAME 7 CHAOS PARLAY", legs: 4, odds: "+1840", hot: true, description: "Four series go to Game 7 this week. Bet on the chaos.", picks: [{ game: "Oilers vs Canucks", bet: "Oilers ML (Game 7)", line: "-118", sport: "NHL" }, { game: "Bruins vs Panthers", bet: "Panthers ML (Game 7)", line: "+140", sport: "NHL" }, { game: "Rangers vs Capitals", bet: "Rangers ML (Game 7)", line: "-130", sport: "NHL" }, { game: "Stars vs Avs", bet: "Over 5.5 Goals", line: "-115", sport: "NHL" }], payout: "$100 → $1,940" },
-  { id: "p2", label: "McDaVID PROP MONSTER", legs: 3, odds: "+620", hot: true, description: "McDavid is locked in. Parlay his props for a massive night.", picks: [{ game: "Oilers vs Canucks", bet: "McDavid 1+ Point", line: "-160", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "McDavid Anytime Goal Scorer", line: "+135", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "Oilers 1st Period Winner", line: "+105", sport: "NHL PROPS" }], payout: "$100 → $720" },
-  { id: "p3", label: "GOALIE SHUTOUT SPECIAL", legs: 2, odds: "+480", hot: false, description: "Two elite goalies, two dominant defensive matchups. Back the brick walls.", picks: [{ game: "Rangers vs Capitals", bet: "Igor Shesterkin 25+ Saves", line: "-140", sport: "NHL PROPS" }, { game: "Stars vs Avs", bet: "Jake Oettinger 30+ Saves", line: "+175", sport: "NHL PROPS" }], payout: "$100 → $580" },
-  { id: "p4", label: "OVERTIME THRILLER PARLAY", legs: 3, odds: "+1100", hot: true, description: "Playoff hockey is built for overtime. Three games with the look of OT finishes.", picks: [{ game: "Bruins vs Panthers", bet: "Game Goes to OT", line: "+280", sport: "NHL" }, { game: "Leafs vs Lightning", bet: "Game Goes to OT", line: "+260", sport: "NHL" }, { game: "Avs vs Stars", bet: "Over 5.5 Total Goals", line: "-110", sport: "NHL" }], payout: "$100 → $1,200" },
-  { id: "p5", label: "CROSS-SPORT MEGA PARLAY", legs: 5, odds: "+3200", hot: false, description: "High risk, massive reward. Five legs across NHL and NBA playoffs.", picks: [{ game: "Oilers vs Canucks", bet: "Oilers ML", line: "-118", sport: "NHL" }, { game: "Rangers vs Capitals", bet: "Under 5.5 Goals", line: "-105", sport: "NHL" }, { game: "Celtics vs Knicks", bet: "Celtics -6.5", line: "-110", sport: "NBA" }, { game: "Thunder vs Nuggets", bet: "Thunder ML", line: "+115", sport: "NBA" }, { game: "Pacers vs Bucks", bet: "Over 224.5 Points", line: "-112", sport: "NBA" }], payout: "$100 → $3,300" },
-  { id: "p6", label: "PENALTY MINUTE MADNESS", legs: 3, odds: "+740", hot: false, description: "Playoff hockey gets physical. Fade the clean teams, back the hitters.", picks: [{ game: "Bruins vs Panthers", bet: "Both Teams 10+ PIM", line: "+175", sport: "NHL" }, { game: "Stars vs Avs", bet: "Avs Bowen Byram Anytime Point", line: "+200", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "Darnell Nurse 3+ Hits", line: "-120", sport: "NHL PROPS" }], payout: "$100 → $840" },
+  { id: "p1", label: "GAME 7 CHAOS PARLAY", legs: 4, odds: "+1840", badge: "hot", description: "Four series go to Game 7 this week. Bet on the chaos.", picks: [{ game: "Oilers vs Canucks", bet: "Oilers ML (Game 7)", line: "-118", sport: "NHL" }, { game: "Bruins vs Panthers", bet: "Panthers ML (Game 7)", line: "+140", sport: "NHL" }, { game: "Rangers vs Capitals", bet: "Rangers ML (Game 7)", line: "-130", sport: "NHL" }, { game: "Stars vs Avs", bet: "Over 5.5 Goals", line: "-115", sport: "NHL" }], payout: "$100 → $1,940" },
+  { id: "p2", label: "McDaVID PROP MONSTER", legs: 3, odds: "+620", badge: "viral", description: "McDavid is locked in. Parlay his props for a massive night.", picks: [{ game: "Oilers vs Canucks", bet: "McDavid 1+ Point", line: "-160", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "McDavid Anytime Goal Scorer", line: "+135", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "Oilers 1st Period Winner", line: "+105", sport: "NHL PROPS" }], payout: "$100 → $720" },
+  { id: "p3", label: "GOALIE SHUTOUT SPECIAL", legs: 2, odds: "+480", badge: "lock", description: "Two elite goalies, two dominant defensive matchups. Back the brick walls.", picks: [{ game: "Rangers vs Capitals", bet: "Igor Shesterkin 25+ Saves", line: "-140", sport: "NHL PROPS" }, { game: "Stars vs Avs", bet: "Jake Oettinger 30+ Saves", line: "+175", sport: "NHL PROPS" }], payout: "$100 → $580" },
+  { id: "p4", label: "OVERTIME THRILLER PARLAY", legs: 3, odds: "+1100", badge: "spicy", description: "Playoff hockey is built for overtime. Three games with the look of OT finishes.", picks: [{ game: "Bruins vs Panthers", bet: "Game Goes to OT", line: "+280", sport: "NHL" }, { game: "Leafs vs Lightning", bet: "Game Goes to OT", line: "+260", sport: "NHL" }, { game: "Avs vs Stars", bet: "Over 5.5 Total Goals", line: "-110", sport: "NHL" }], payout: "$100 → $1,200" },
+  { id: "p5", label: "CROSS-SPORT MEGA PARLAY", legs: 5, odds: "+3200", badge: "none", description: "High risk, massive reward. Five legs across NHL and NBA playoffs.", picks: [{ game: "Oilers vs Canucks", bet: "Oilers ML", line: "-118", sport: "NHL" }, { game: "Rangers vs Capitals", bet: "Under 5.5 Goals", line: "-105", sport: "NHL" }, { game: "Celtics vs Knicks", bet: "Celtics -6.5", line: "-110", sport: "NBA" }, { game: "Thunder vs Nuggets", bet: "Thunder ML", line: "+115", sport: "NBA" }, { game: "Pacers vs Bucks", bet: "Over 224.5 Points", line: "-112", sport: "NBA" }], payout: "$100 → $3,300" },
+  { id: "p6", label: "PENALTY MINUTE MADNESS", legs: 3, odds: "+740", badge: "rigged", description: "Playoff hockey gets physical. Fade the clean teams, back the hitters.", picks: [{ game: "Bruins vs Panthers", bet: "Both Teams 10+ PIM", line: "+175", sport: "NHL" }, { game: "Stars vs Avs", bet: "Avs Bowen Byram Anytime Point", line: "+200", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "Darnell Nurse 3+ Hits", line: "-120", sport: "NHL PROPS" }], payout: "$100 → $840" },
 ];
 
 const COLORS = {
@@ -163,10 +179,42 @@ const css = `
   .section-tab.tab-prediction::after{background:#a78bfa}
   .section-tab.tab-inactive{color:#2a4050}
   .section-tab.tab-inactive::after{background:transparent}
+  .edit-panel{animation:slideDown .2s ease both}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+  .badge-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:1.5px;cursor:pointer;padding:5px 11px;border-radius:5px;transition:all .15s ease}
+  .badge-btn:hover{filter:brightness(1.2);transform:scale(1.03)}
   ::-webkit-scrollbar{width:6px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
 `;
+
+// ── Badge Picker Component ──
+function BadgePicker({ value, onChange }) {
+  return (
+    <div>
+      <label style={{ display: "block", fontSize: 12, fontWeight: 800, letterSpacing: 2, color: "#243040", marginBottom: 9 }}>BADGE</label>
+      <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+        {BADGES.map(b => {
+          const active = value === b.value;
+          return (
+            <button
+              key={b.value}
+              className="badge-btn"
+              onClick={() => onChange(b.value)}
+              style={{
+                background: active ? b.bg : "transparent",
+                border: `1px solid ${active ? b.border : "#0f1820"}`,
+                color: active ? b.color : "#3a5060",
+              }}
+            >
+              {b.label || "None"}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function VoteGateModal({ onClose, onLogin, pendingVote }) {
   const [mode, setMode]   = useState("signup");
@@ -277,7 +325,7 @@ function VoteGateModal({ onClose, onLogin, pendingVote }) {
 
 export default function App() {
   const [page, setPage]         = useState("verdicts");
-  const [feedTab, setFeedTab]   = useState("verdicts"); // "verdicts" | "predictions"
+  const [feedTab, setFeedTab]   = useState("verdicts");
   const [items, setItems]       = useState([]);
   const [articles, setArticles] = useState(DEFAULT_ARTICLES);
   const [parlays, setParlays]   = useState(DEFAULT_PARLAYS);
@@ -334,7 +382,6 @@ export default function App() {
   const load = useCallback(async () => {
     setLoading(true);
     const data = await db.select("controversies");
-    // Merge DB data with demo, splitting by feed_type
     const dbList = Array.isArray(data) && data.length ? data : [];
     const allItems = dbList.length ? dbList : [...DEMO_VERDICTS, ...DEMO_PREDICTIONS];
     setItems(allItems);
@@ -441,8 +488,11 @@ export default function App() {
 
   const handleAddArticle = (a) => setArticles(prev => [a, ...prev]);
   const handleDeleteArticle = (id) => setArticles(prev => prev.filter(a => a.id !== id));
+  const handleUpdateArticle = (id, patch) => setArticles(prev => prev.map(a => a.id === id ? { ...a, ...patch } : a));
   const handleAddParlay = (p) => setParlays(prev => [p, ...prev]);
   const handleDeleteParlay = (id) => setParlays(prev => prev.filter(p => p.id !== id));
+  const handleUpdateParlay = (id, patch) => setParlays(prev => prev.map(p => p.id === id ? { ...p, ...patch } : p));
+  const handleUpdateItem = (id, patch) => setItems(prev => prev.map(c => c.id === id ? { ...c, ...patch } : c));
 
   const isHomePage = page === "verdicts" || page === "predictions";
   const navCls = (targetPage) => {
@@ -493,47 +543,31 @@ export default function App() {
       )}
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} onLogin={handleLogin} />}
 
-      {/* ── HOME (Verdicts + Predictions) ── */}
       {isHomePage && (
         <main style={S.main}>
-          {/* Hero */}
           <div style={S.hero}>
             <div style={S.heroPill}>🏒 PLAYOFF SEASON · LIVE VERDICTS</div>
             <h1 style={S.heroT}>YOU'RE THE REF.</h1>
             <p style={S.heroS}>Officials made their call. Now the fans decide.</p>
           </div>
 
-          {/* Tab Bar */}
           <div style={{ borderBottom: "1px solid #0f1820", marginBottom: 32, display: "flex", gap: 32 }}>
             <button
               className={`section-tab ${feedTab === "verdicts" ? "tab-verdict" : "tab-inactive"}`}
               onClick={() => { setFeedTab("verdicts"); setPage("verdicts"); }}
             >
               <span style={{ marginRight: 7 }}>🔴</span> VERDICTS
-              <span style={{
-                marginLeft: 8, fontSize: 11, fontWeight: 800, letterSpacing: 1.5,
-                color: feedTab === "verdicts" ? "#00d4ff" : "#1e3040",
-                background: feedTab === "verdicts" ? "#00d4ff14" : "#0a0f18",
-                border: feedTab === "verdicts" ? "1px solid #00d4ff33" : "1px solid #0f1820",
-                padding: "2px 8px", borderRadius: 4,
-              }}>{verdictItems.length}</span>
+              <span style={{ marginLeft: 8, fontSize: 11, fontWeight: 800, letterSpacing: 1.5, color: feedTab === "verdicts" ? "#00d4ff" : "#1e3040", background: feedTab === "verdicts" ? "#00d4ff14" : "#0a0f18", border: feedTab === "verdicts" ? "1px solid #00d4ff33" : "1px solid #0f1820", padding: "2px 8px", borderRadius: 4 }}>{verdictItems.length}</span>
             </button>
             <button
               className={`section-tab ${feedTab === "predictions" ? "tab-prediction" : "tab-inactive"}`}
               onClick={() => { setFeedTab("predictions"); setPage("predictions"); }}
             >
               <span style={{ marginRight: 7 }}>🔮</span> PREDICTIONS
-              <span style={{
-                marginLeft: 8, fontSize: 11, fontWeight: 800, letterSpacing: 1.5,
-                color: feedTab === "predictions" ? "#a78bfa" : "#1e3040",
-                background: feedTab === "predictions" ? "#a78bfa14" : "#0a0f18",
-                border: feedTab === "predictions" ? "1px solid #a78bfa33" : "1px solid #0f1820",
-                padding: "2px 8px", borderRadius: 4,
-              }}>{predictionItems.length}</span>
+              <span style={{ marginLeft: 8, fontSize: 11, fontWeight: 800, letterSpacing: 1.5, color: feedTab === "predictions" ? "#a78bfa" : "#1e3040", background: feedTab === "predictions" ? "#a78bfa14" : "#0a0f18", border: feedTab === "predictions" ? "1px solid #a78bfa33" : "1px solid #0f1820", padding: "2px 8px", borderRadius: 4 }}>{predictionItems.length}</span>
             </button>
           </div>
 
-          {/* VERDICTS TAB */}
           {feedTab === "verdicts" && (
             <>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
@@ -555,10 +589,8 @@ export default function App() {
             </>
           )}
 
-          {/* PREDICTIONS TAB */}
           {feedTab === "predictions" && (
             <>
-              {/* Prediction header strip */}
               <div style={{ background: "#0a0812", border: "1px solid #a78bfa22", borderRadius: 12, padding: "16px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 14 }}>
                 <span style={{ fontSize: 22 }}>🔮</span>
                 <div>
@@ -583,7 +615,6 @@ export default function App() {
         </main>
       )}
 
-      {/* ── SAVED ── */}
       {page === "saved" && (
         <main style={S.main}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 32 }}>
@@ -604,7 +635,6 @@ export default function App() {
         </main>
       )}
 
-      {/* ── DETAIL ── */}
       {page === "detail" && active && (
         <main style={S.main}>
           <button style={S.back} onClick={goHome}>← Back</button>
@@ -645,8 +675,10 @@ export default function App() {
       )}
       {page === "admin" && (
         <AdminPanel authed={adminOk} onAuth={setAdminOk} items={items} lv={lv} onRefresh={load}
-          articles={articles} onAddArticle={handleAddArticle} onDeleteArticle={handleDeleteArticle}
-          parlays={parlays} onAddParlay={handleAddParlay} onDeleteParlay={handleDeleteParlay} />
+          articles={articles} onAddArticle={handleAddArticle} onDeleteArticle={handleDeleteArticle} onUpdateArticle={handleUpdateArticle}
+          parlays={parlays} onAddParlay={handleAddParlay} onDeleteParlay={handleDeleteParlay} onUpdateParlay={handleUpdateParlay}
+          onUpdateItem={handleUpdateItem}
+        />
       )}
 
       <footer style={S.foot}>
@@ -660,7 +692,6 @@ export default function App() {
   );
 }
 
-// ── Empty State ──
 function EmptyState({ icon, title, sub }) {
   return (
     <div style={{ textAlign: "center", padding: "60px 0", color: "#4a6070" }}>
@@ -671,14 +702,14 @@ function EmptyState({ icon, title, sub }) {
   );
 }
 
-// ── Feed Card (Verdicts) ──
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
+  const badge = getBadge(item);
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
-      {item.hot && (
-        <div style={S.hotBadge}>
-          <span style={{ fontSize: 12 }}>🔥</span>
-          <span style={S.hotText}>HOT</span>
+      {badge.value !== "none" && (
+        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px" }}>
+          <span style={{ fontSize: 12 }}>{badge.emoji}</span>
+          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
         </div>
       )}
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} />
@@ -689,19 +720,17 @@ function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, o
   );
 }
 
-// ── Prediction Card ──
 function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
+  const badge = getBadge(item);
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s`, borderColor: "#1a1030", background: "#0b0a18" }} className="cfade pred-card">
-      {/* Prediction strip */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #a78bfa, #7c3aed)" }} />
-      {item.hot && (
-        <div style={{ ...S.hotBadge, borderColor: "#a78bfa44", background: "#0d0a18" }}>
-          <span style={{ fontSize: 12 }}>🔥</span>
-          <span style={{ ...S.hotText, color: "#a78bfa" }}>HOT</span>
+      {badge.value !== "none" && (
+        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px" }}>
+          <span style={{ fontSize: 12 }}>{badge.emoji}</span>
+          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
         </div>
       )}
-      {/* Game date badge */}
       {item.game_date && (
         <div style={{ position: "absolute", bottom: 68, right: 16, fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#6040a0", background: "#120d20", border: "1px solid #a78bfa22", borderRadius: 4, padding: "3px 8px" }}>
           📅 {item.game_date}
@@ -715,7 +744,6 @@ function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, logge
   );
 }
 
-// ── Card Body ──
 function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, isPrediction }) {
   const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
   const hasVoted = uv !== undefined;
@@ -763,7 +791,6 @@ function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, is
   );
 }
 
-// ── Auth Modal ──
 function AuthModal({ onClose, onLogin }) {
   const [mode, setMode]   = useState("login");
   const [email, setEmail] = useState("");
@@ -845,13 +872,12 @@ function AuthModal({ onClose, onLogin }) {
   );
 }
 
-// ── Parlay Page ──
 function ParlayPage({ parlays, onOpenParlay }) {
   const [filter, setFilter] = useState("ALL");
   const filters = ["ALL", "2 LEGS", "3 LEGS", "4+ LEGS", "🔥 HOT"];
   const filtered = parlays.filter(p => {
     if (filter === "ALL") return true;
-    if (filter === "🔥 HOT") return p.hot;
+    if (filter === "🔥 HOT") return p.badge === "hot" || p.hot;
     if (filter === "2 LEGS") return p.legs === 2;
     if (filter === "3 LEGS") return p.legs === 3;
     if (filter === "4+ LEGS") return p.legs >= 4;
@@ -889,21 +915,21 @@ function ParlayPage({ parlays, onOpenParlay }) {
   );
 }
 
-// ── Parlay Card ──
 function ParlayCard({ parlay, idx, onOpen }) {
   const isPos = parlay.odds.startsWith("+");
+  const badge = getBadge(parlay);
   return (
     <div className="cfade parlay-card" style={{ background: "#0b1018", border: "1px solid #161e2e", borderRadius: 16, padding: "22px 24px", position: "relative", overflow: "hidden", animationDelay: `${idx * .07}s`, cursor: "pointer" }} onClick={onOpen}>
-      {parlay.hot && (
-        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6, padding: "4px 10px" }}>
-          <span style={{ fontSize: 12 }}>🔥</span>
-          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" }}>HOT</span>
+      {badge.value !== "none" && (
+        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px" }}>
+          <span style={{ fontSize: 12 }}>{badge.emoji}</span>
+          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
         </div>
       )}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
         <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 9px", borderRadius: 4 }}>💰 {parlay.legs}-LEG PARLAY</span>
       </div>
-      <h2 style={{ fontSize: 19, fontWeight: 900, letterSpacing: 1.5, color: "#dce6f0", marginBottom: 8, lineHeight: 1.2, paddingRight: parlay.hot ? 60 : 0 }}>{parlay.label}</h2>
+      <h2 style={{ fontSize: 19, fontWeight: 900, letterSpacing: 1.5, color: "#dce6f0", marginBottom: 8, lineHeight: 1.2, paddingRight: badge.value !== "none" ? 60 : 0 }}>{parlay.label}</h2>
       <p style={{ fontSize: 15, color: "#4a6070", lineHeight: 1.6, marginBottom: 18 }}>{parlay.description}</p>
       <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 18 }}>
         <div style={{ fontSize: 28, fontWeight: 900, color: isPos ? "#4ade80" : "#ff4d4d", letterSpacing: 1, lineHeight: 1 }}>{parlay.odds}</div>
@@ -929,11 +955,11 @@ function ParlayCard({ parlay, idx, onOpen }) {
   );
 }
 
-// ── Parlay Detail Page ──
 function ParlayDetailPage({ parlay, onBack }) {
   const [aiVerdict, setAiVerdict] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const isPos = parlay.odds.startsWith("+");
+  const badge = getBadge(parlay);
 
   const getAIParlayVerdict = async () => {
     if (aiVerdict || aiLoading) return;
@@ -963,7 +989,7 @@ function ParlayDetailPage({ parlay, onBack }) {
         <div style={{ background: "#0b1018", border: "1px solid #1a2030", borderRadius: 16, padding: "28px 30px", marginBottom: 4 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
             <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 10px", borderRadius: 4 }}>💰 {parlay.legs}-LEG PARLAY</span>
-            {parlay.hot && <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ff6633", background: "#ff663314", border: "1px solid #ff663333", padding: "3px 10px", borderRadius: 4 }}>🔥 HOT</span>}
+            {badge.value !== "none" && <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: badge.color, background: badge.bg, border: `1px solid ${badge.border}`, padding: "3px 10px", borderRadius: 4 }}>{badge.label}</span>}
           </div>
           <h1 style={{ fontSize: "clamp(22px,4vw,34px)", fontWeight: 900, letterSpacing: 2, color: "#dce6f0", marginBottom: 10, lineHeight: 1.15 }}>{parlay.label}</h1>
           <p style={{ fontSize: 16, color: "#4a6070", lineHeight: 1.7, marginBottom: 24 }}>{parlay.description}</p>
@@ -1027,7 +1053,6 @@ function ParlayDetailPage({ parlay, onBack }) {
   );
 }
 
-// ── Forum Page ──
 function ForumPage({ articles, onOpenArticle }) {
   const [filter, setFilter] = useState("ALL");
   const categories = ["ALL", ...ARTICLE_CATEGORIES];
@@ -1059,9 +1084,11 @@ function ForumPage({ articles, onOpenArticle }) {
           <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
             <img src={featured.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .4s ease" }} onError={e => e.target.style.display = "none"} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent 15%,#0c142090 60%,#0c1420 100%)" }} />
-            <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8 }}>
-              {featured.hot && <span style={{ fontSize: 11, fontWeight: 800, color: "#ff7040", background: "#07090dcc", border: "1px solid #ff5a1a55", padding: "4px 10px", borderRadius: 20, letterSpacing: 1 }}>🔥 HOT</span>}
-            </div>
+            {(() => { const b = getBadge(featured); return b.value !== "none" && (
+              <div style={{ position: "absolute", top: 16, right: 16 }}>
+                <span style={{ fontSize: 11, fontWeight: 800, color: b.color, background: "#07090dcc", border: `1px solid ${b.border}`, padding: "4px 10px", borderRadius: 20, letterSpacing: 1 }}>{b.label}</span>
+              </div>
+            ); })()}
             <div style={{ position: "absolute", bottom: 18, left: 22 }}>
               <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: CAT_COLORS[featured.category] || "#00d4ff", background: "#07090dcc", border: `1px solid ${CAT_COLORS[featured.category] || "#00d4ff"}44`, padding: "4px 12px", borderRadius: 20 }}>{featured.category}</span>
             </div>
@@ -1083,14 +1110,17 @@ function ForumPage({ articles, onOpenArticle }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(290px,1fr))", gap: 18 }}>
           {rest.map(a => {
             const col = CAT_COLORS[a.category] || "#00d4ff";
+            const b = getBadge(a);
             return (
               <div key={a.id} className="art-card" onClick={() => onOpenArticle(a)} style={{ background: "#0c1420", border: "1px solid #121a24", borderRadius: 14, overflow: "hidden" }}>
                 <div style={{ position: "relative", height: 160, overflow: "hidden" }}>
                   <img src={a.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent 25%,#0c1420dd 100%)" }} />
-                  <div style={{ position: "absolute", top: 10, right: 10 }}>
-                    {a.hot && <span style={{ fontSize: 10, fontWeight: 800, color: "#ff7040", background: "#07090dcc", border: "1px solid #ff5a1a44", padding: "3px 8px", borderRadius: 20, letterSpacing: 1 }}>🔥 HOT</span>}
-                  </div>
+                  {b.value !== "none" && (
+                    <div style={{ position: "absolute", top: 10, right: 10 }}>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: b.color, background: "#07090dcc", border: `1px solid ${b.border}`, padding: "3px 8px", borderRadius: 20, letterSpacing: 1 }}>{b.label}</span>
+                    </div>
+                  )}
                   <div style={{ position: "absolute", bottom: 10, left: 12 }}>
                     <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: col, background: "#07090dcc", border: `1px solid ${col}44`, padding: "3px 9px", borderRadius: 20 }}>{a.category}</span>
                   </div>
@@ -1111,11 +1141,11 @@ function ForumPage({ articles, onOpenArticle }) {
   );
 }
 
-// ── Article Page ──
 function ArticlePage({ article, onBack }) {
   const [aiContent, setAiContent] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const color = CAT_COLORS[article.category] || "#00d4ff";
+  const badge = getBadge(article);
 
   const generateArticle = async () => {
     if (aiContent || aiLoading) return;
@@ -1144,9 +1174,11 @@ function ArticlePage({ article, onBack }) {
         <div style={{ borderRadius: 16, overflow: "hidden", marginBottom: 30, position: "relative", height: 300 }}>
           <img src={article.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent 20%,#07090d88 55%,#07090d 100%)" }} />
-          <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8 }}>
-            {article.hot && <span style={{ fontSize: 11, fontWeight: 800, color: "#ff7040", background: "#07090dcc", border: "1px solid #ff5a1a55", padding: "4px 10px", borderRadius: 20, letterSpacing: 1 }}>🔥 HOT</span>}
-          </div>
+          {badge.value !== "none" && (
+            <div style={{ position: "absolute", top: 16, right: 16 }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: badge.color, background: "#07090dcc", border: `1px solid ${badge.border}`, padding: "4px 10px", borderRadius: 20, letterSpacing: 1 }}>{badge.label}</span>
+            </div>
+          )}
           <div style={{ position: "absolute", bottom: 20, left: 24 }}>
             <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color, background: "#07090dcc", border: `1px solid ${color}44`, padding: "4px 12px", borderRadius: 20 }}>{article.category}</span>
           </div>
@@ -1175,7 +1207,6 @@ function ArticlePage({ article, onBack }) {
   );
 }
 
-// ── Profile Page ──
 function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }) {
   return (
     <main style={S.main}>
@@ -1200,29 +1231,41 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
 }
 
 // ── Admin Panel ──
-function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, parlays, onAddParlay, onDeleteParlay }) {
-  const [pw, setPw]       = useState("");
-  const [err, setErr]     = useState(false);
-  const [tab, setTab]     = useState("post");
-  const [ok, setOk]       = useState(false);
-  const [artOk, setArtOk] = useState(false);
-  const [parOk, setParOk] = useState(false);
-  const [busy, setBusy]   = useState(false);
-  const [form, setForm]   = useState({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false, feed_type: "verdict" });
-  const [artForm, setArtForm] = useState({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", hot: false, photo: "" });
+function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, onUpdateArticle, parlays, onAddParlay, onDeleteParlay, onUpdateParlay, onUpdateItem }) {
+  const [pw, setPw]         = useState("");
+  const [err, setErr]       = useState(false);
+  const [tab, setTab]       = useState("post");
+  const [ok, setOk]         = useState(false);
+  const [artOk, setArtOk]   = useState(false);
+  const [parOk, setParOk]   = useState(false);
+  const [busy, setBusy]     = useState(false);
+  const [editingId, setEditingId]   = useState(null); // for verdicts
+  const [editingArt, setEditingArt] = useState(null); // for articles
+  const [editingPar, setEditingPar] = useState(null); // for parlays
+  const [saveOk, setSaveOk]         = useState(null); // id of recently saved
+
+  const [form, setForm] = useState({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", badge: "none", feed_type: "verdict", game_date: "" });
+  const [artForm, setArtForm] = useState({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", badge: "none", photo: "" });
 
   const emptyPick = () => ({ game: "", bet: "", line: "", sport: "NHL" });
-  const [parForm, setParForm] = useState({ label: "", odds: "", description: "", hot: false, payout: "", picks: [emptyPick(), emptyPick()] });
+  const [parForm, setParForm] = useState({ label: "", odds: "", description: "", badge: "none", payout: "", picks: [emptyPick(), emptyPick()] });
+
+  // Inline edit state
+  const [editForm, setEditForm]     = useState({});
+  const [editArtForm, setEditArtForm] = useState({});
+  const [editParForm, setEditParForm] = useState({});
 
   const set    = (k, v) => setForm(p => ({ ...p, [k]: v }));
   const setArt = (k, v) => setArtForm(p => ({ ...p, [k]: v }));
   const setPar = (k, v) => setParForm(p => ({ ...p, [k]: v }));
 
-  const updatePick = (idx, k, v) => {
-    setParForm(p => { const picks = [...p.picks]; picks[idx] = { ...picks[idx], [k]: v }; return { ...p, picks }; });
-  };
-  const addPick = () => setParForm(p => ({ ...p, picks: [...p.picks, emptyPick()] }));
+  const updatePick = (idx, k, v) => setParForm(p => { const picks = [...p.picks]; picks[idx] = { ...picks[idx], [k]: v }; return { ...p, picks }; });
+  const addPick    = () => setParForm(p => ({ ...p, picks: [...p.picks, emptyPick()] }));
   const removePick = (idx) => setParForm(p => ({ ...p, picks: p.picks.filter((_, i) => i !== idx) }));
+
+  const updateEditPick = (idx, k, v) => setEditParForm(p => { const picks = [...(p.picks || [])]; picks[idx] = { ...picks[idx], [k]: v }; return { ...p, picks }; });
+  const addEditPick    = () => setEditParForm(p => ({ ...p, picks: [...(p.picks || []), emptyPick()] }));
+  const removeEditPick = (idx) => setEditParForm(p => ({ ...p, picks: (p.picks || []).filter((_, i) => i !== idx) }));
 
   const tryAuth = () => { if (pw === ADMIN_PASSWORD) { onAuth(true); setErr(false); } else setErr(true); };
 
@@ -1231,7 +1274,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
     setBusy(true);
     await db.insert("controversies", { ...form, votes_a: 0, votes_b: 0 });
     setOk(true); setTimeout(() => setOk(false), 3500);
-    setForm({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false, feed_type: "verdict" });
+    setForm({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", badge: "none", feed_type: "verdict", game_date: "" });
     onRefresh(); setBusy(false);
   };
 
@@ -1242,7 +1285,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
     await db.insert("articles", newArt);
     onAddArticle(newArt);
     setArtOk(true); setTimeout(() => setArtOk(false), 3500);
-    setArtForm({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", hot: false, photo: "" });
+    setArtForm({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", badge: "none", photo: "" });
     setBusy(false);
   };
 
@@ -1251,17 +1294,54 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
     const validPicks = parForm.picks.filter(p => p.game && p.bet && p.line);
     if (validPicks.length < 2) return alert("Add at least 2 complete picks.");
     setBusy(true);
-    const newParlay = { id: "par_" + Date.now(), label: parForm.label, legs: validPicks.length, odds: parForm.odds, hot: parForm.hot, description: parForm.description, payout: parForm.payout, picks: validPicks };
+    const newParlay = { id: "par_" + Date.now(), label: parForm.label, legs: validPicks.length, odds: parForm.odds, badge: parForm.badge, description: parForm.description, payout: parForm.payout, picks: validPicks };
     await db.insert("parlays", newParlay);
     onAddParlay(newParlay);
     setParOk(true); setTimeout(() => setParOk(false), 3500);
-    setParForm({ label: "", odds: "", description: "", hot: false, payout: "", picks: [emptyPick(), emptyPick()] });
+    setParForm({ label: "", odds: "", description: "", badge: "none", payout: "", picks: [emptyPick(), emptyPick()] });
     setBusy(false);
   };
 
-  const remove = async (id) => { if (!window.confirm("Delete this controversy?")) return; await db.del("controversies", id); onRefresh(); };
+  const remove       = async (id) => { if (!window.confirm("Delete this controversy?")) return; await db.del("controversies", id); onRefresh(); };
   const removeArticle = async (id) => { if (!window.confirm("Delete this article?")) return; await db.del("articles", id); onDeleteArticle(id); };
-  const removeParlay = async (id) => { if (!window.confirm("Delete this parlay?")) return; await db.del("parlays", id); onDeleteParlay(id); };
+  const removeParlay  = async (id) => { if (!window.confirm("Delete this parlay?")) return; await db.del("parlays", id); onDeleteParlay(id); };
+
+  // Inline edit handlers
+  const startEdit = (item) => { setEditingId(item.id); setEditForm({ ...item }); };
+  const cancelEdit = () => { setEditingId(null); setEditForm({}); };
+  const saveEdit = async () => {
+    setBusy(true);
+    await db.update("controversies", editingId, editForm);
+    onUpdateItem(editingId, editForm);
+    setSaveOk(editingId); setTimeout(() => setSaveOk(null), 2500);
+    setEditingId(null); setEditForm({});
+    setBusy(false);
+  };
+
+  const startEditArt = (art) => { setEditingArt(art.id); setEditArtForm({ ...art }); };
+  const cancelEditArt = () => { setEditingArt(null); setEditArtForm({}); };
+  const saveEditArt = async () => {
+    setBusy(true);
+    await db.update("articles", editingArt, editArtForm);
+    onUpdateArticle(editingArt, editArtForm);
+    setSaveOk(editingArt); setTimeout(() => setSaveOk(null), 2500);
+    setEditingArt(null); setEditArtForm({});
+    setBusy(false);
+  };
+
+  const startEditPar = (par) => { setEditingPar(par.id); setEditParForm({ ...par, picks: par.picks ? [...par.picks.map(p => ({ ...p }))] : [emptyPick(), emptyPick()] }); };
+  const cancelEditPar = () => { setEditingPar(null); setEditParForm({}); };
+  const saveEditPar = async () => {
+    const validPicks = (editParForm.picks || []).filter(p => p.game && p.bet && p.line);
+    if (validPicks.length < 2) return alert("Need at least 2 complete picks.");
+    setBusy(true);
+    const patch = { ...editParForm, legs: validPicks.length, picks: validPicks };
+    await db.update("parlays", editingPar, patch);
+    onUpdateParlay(editingPar, patch);
+    setSaveOk(editingPar); setTimeout(() => setSaveOk(null), 2500);
+    setEditingPar(null); setEditParForm({});
+    setBusy(false);
+  };
 
   if (!authed) return (
     <main style={S.main}>
@@ -1276,11 +1356,10 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   );
 
   const tabs = [["post", "POST VERDICT"], ["manage", "MANAGE VERDICTS"], ["forum_post", "POST ARTICLE"], ["forum_manage", "MANAGE ARTICLES"], ["parlay_post", "POST PARLAY"], ["parlay_manage", "MANAGE PARLAYS"]];
-  const allTypes = [...VERDICT_TYPES, ...PREDICTION_TYPES];
 
   return (
     <main style={S.main}>
-      <div style={{ maxWidth: 740, margin: "0 auto" }}>
+      <div style={{ maxWidth: 800, margin: "0 auto" }}>
         <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: 3, marginBottom: 28, color: "#dce6f0" }}>⚙ ADMIN PANEL</h2>
         <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
           {tabs.map(([t, l]) => (
@@ -1288,16 +1367,13 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           ))}
         </div>
 
+        {/* ── POST VERDICT ── */}
         {tab === "post" && (
           <div style={S.fbox}>
             {ok && <div style={S.succ}>✅ Posted live!</div>}
-            {/* Feed type selector */}
             <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
               {["verdict", "prediction"].map(ft => (
-                <button key={ft} onClick={() => {
-                  set("feed_type", ft);
-                  set("type", ft === "verdict" ? "GOAL REVIEW" : "SERIES PREDICTION");
-                }} style={{ flex: 1, padding: "10px", background: form.feed_type === ft ? (ft === "verdict" ? "#00d4ff0d" : "#a78bfa0d") : "transparent", border: `1px solid ${form.feed_type === ft ? (ft === "verdict" ? "#00d4ff44" : "#a78bfa44") : "#0f1820"}`, borderRadius: 8, color: form.feed_type === ft ? (ft === "verdict" ? "#00d4ff" : "#a78bfa") : "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 800, letterSpacing: 2, cursor: "pointer", transition: "all .15s" }}>
+                <button key={ft} onClick={() => { set("feed_type", ft); set("type", ft === "verdict" ? "GOAL REVIEW" : "SERIES PREDICTION"); }} style={{ flex: 1, padding: "10px", background: form.feed_type === ft ? (ft === "verdict" ? "#00d4ff0d" : "#a78bfa0d") : "transparent", border: `1px solid ${form.feed_type === ft ? (ft === "verdict" ? "#00d4ff44" : "#a78bfa44") : "#0f1820"}`, borderRadius: 8, color: form.feed_type === ft ? (ft === "verdict" ? "#00d4ff" : "#a78bfa") : "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 14, fontWeight: 800, letterSpacing: 2, cursor: "pointer", transition: "all .15s" }}>
                   {ft === "verdict" ? "🔴 VERDICT" : "🔮 PREDICTION"}
                 </button>
               ))}
@@ -1324,34 +1400,73 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                 <input style={S.inp} placeholder="e.g. May 2, 2026" value={form.game_date || ""} onChange={e => set("game_date", e.target.value)} />
               </FG>
             )}
-            <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 22 }}>
-              <input type="checkbox" checked={form.hot} onChange={e => set("hot", e.target.checked)} /> 🔥 Mark as HOT
-            </label>
+            <div style={{ marginBottom: 22 }}>
+              <BadgePicker value={form.badge} onChange={v => set("badge", v)} />
+            </div>
             <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={post} disabled={busy}>{busy ? "POSTING…" : `POST ${form.feed_type === "prediction" ? "PREDICTION" : "VERDICT"}`}</button>
           </div>
         )}
 
+        {/* ── MANAGE VERDICTS ── */}
         {tab === "manage" && (
           <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
             {items.length === 0
               ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No items yet.</p>
               : items.map(c => (
-                <div key={c.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", borderBottom: "1px solid #0d1620", gap: 12 }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
-                      <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: c.feed_type === "prediction" ? "#a78bfa" : "#00d4ff" }}>{c.type}</span>
-                      <span style={{ fontSize: 10, color: c.feed_type === "prediction" ? "#6040a0" : "#2a5060", background: c.feed_type === "prediction" ? "#a78bfa11" : "#00d4ff11", border: `1px solid ${c.feed_type === "prediction" ? "#a78bfa22" : "#00d4ff22"}`, padding: "1px 6px", borderRadius: 3 }}>{c.feed_type === "prediction" ? "PREDICTION" : "VERDICT"}</span>
+                <div key={c.id} style={{ borderBottom: "1px solid #0d1620" }}>
+                  {/* Row header */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", gap: 12 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
+                        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: c.feed_type === "prediction" ? "#a78bfa" : "#00d4ff" }}>{c.type}</span>
+                        <span style={{ fontSize: 10, color: c.feed_type === "prediction" ? "#6040a0" : "#2a5060", background: c.feed_type === "prediction" ? "#a78bfa11" : "#00d4ff11", border: `1px solid ${c.feed_type === "prediction" ? "#a78bfa22" : "#00d4ff22"}`, padding: "1px 6px", borderRadius: 3 }}>{c.feed_type === "prediction" ? "PREDICTION" : "VERDICT"}</span>
+                        {(() => { const b = getBadge(c); return b.value !== "none" ? <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: b.color, background: b.bg, border: `1px solid ${b.border}`, padding: "1px 7px", borderRadius: 3 }}>{b.label}</span> : null; })()}
+                      </div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.title}</div>
+                      <div style={{ fontSize: 13, color: "#3a5060" }}>{c.option_a}: {lv?.[c.id]?.[0] ?? c.votes_a ?? 0} | {c.option_b}: {lv?.[c.id]?.[1] ?? c.votes_b ?? 0}</div>
                     </div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.title}</div>
-                    <div style={{ fontSize: 14, color: "#3a5060" }}>{c.option_a}: {lv?.[c.id]?.[0] ?? c.votes_a ?? 0} | {c.option_b}: {lv?.[c.id]?.[1] ?? c.votes_b ?? 0}</div>
+                    <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                      {saveOk === c.id && <span style={{ fontSize: 13, color: "#4ade80", alignSelf: "center" }}>✓ Saved</span>}
+                      <button style={{ ...S.editBtn }} onClick={() => editingId === c.id ? cancelEdit() : startEdit(c)}>
+                        {editingId === c.id ? "✕ Cancel" : "✏ Edit"}
+                      </button>
+                      <button style={S.delBtn} onClick={() => remove(c.id)}>🗑</button>
+                    </div>
                   </div>
-                  <button style={S.delBtn} onClick={() => remove(c.id)}>🗑 Delete</button>
+                  {/* Inline edit panel */}
+                  {editingId === c.id && (
+                    <div className="edit-panel" style={{ background: "#070b12", borderTop: "1px solid #0f1a2a", padding: "20px 22px 24px" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                        <FG label="TYPE">
+                          <select style={S.sel} value={editForm.type || ""} onChange={e => setEditForm(p => ({ ...p, type: e.target.value }))}>
+                            {[...VERDICT_TYPES, ...PREDICTION_TYPES].map(t => <option key={t}>{t}</option>)}
+                          </select>
+                        </FG>
+                        <FG label="GAME / DATE"><input style={S.inp} value={editForm.game || ""} onChange={e => setEditForm(p => ({ ...p, game: e.target.value }))} /></FG>
+                      </div>
+                      <FG label="HEADLINE"><input style={S.inp} value={editForm.title || ""} onChange={e => setEditForm(p => ({ ...p, title: e.target.value }))} /></FG>
+                      <FG label="DESCRIPTION"><textarea style={{ ...S.inp, minHeight: 80, resize: "vertical", lineHeight: 1.6 }} value={editForm.description || ""} onChange={e => setEditForm(p => ({ ...p, description: e.target.value }))} /></FG>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                        <FG label="OPTION A"><input style={S.inp} value={editForm.option_a || ""} onChange={e => setEditForm(p => ({ ...p, option_a: e.target.value }))} /></FG>
+                        <FG label="OPTION B"><input style={S.inp} value={editForm.option_b || ""} onChange={e => setEditForm(p => ({ ...p, option_b: e.target.value }))} /></FG>
+                      </div>
+                      <FG label="OFFICIAL CALL / UPCOMING"><input style={S.inp} value={editForm.official_call || ""} onChange={e => setEditForm(p => ({ ...p, official_call: e.target.value }))} /></FG>
+                      {editForm.feed_type === "prediction" && (
+                        <FG label="GAME DATE"><input style={S.inp} value={editForm.game_date || ""} onChange={e => setEditForm(p => ({ ...p, game_date: e.target.value }))} /></FG>
+                      )}
+                      <div style={{ marginBottom: 18 }}>
+                        <BadgePicker value={editForm.badge || (editForm.hot ? "hot" : "none")} onChange={v => setEditForm(p => ({ ...p, badge: v }))} />
+                      </div>
+                      <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={saveEdit} disabled={busy}>{busy ? "SAVING…" : "SAVE CHANGES"}</button>
+                    </div>
+                  )}
                 </div>
               ))
             }
           </div>
         )}
 
+        {/* ── POST ARTICLE ── */}
         {tab === "forum_post" && (
           <div style={S.fbox}>
             {artOk && <div style={S.succ}>✅ Article published to the Forum!</div>}
@@ -1365,9 +1480,9 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
               <FG label="READ TIME"><input style={S.inp} placeholder="5 min read" value={artForm.read_time} onChange={e => setArt("read_time", e.target.value)} /></FG>
               <FG label="PHOTO URL"><input style={S.inp} placeholder="https://images.unsplash.com/..." value={artForm.photo} onChange={e => setArt("photo", e.target.value)} /></FG>
             </div>
-            <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 16 }}>
-              <input type="checkbox" checked={artForm.hot} onChange={e => setArt("hot", e.target.checked)} /> 🔥 Mark as HOT
-            </label>
+            <div style={{ marginBottom: 18 }}>
+              <BadgePicker value={artForm.badge} onChange={v => setArt("badge", v)} />
+            </div>
             <div style={{ background: "#070b12", border: "1px solid #0f1825", borderRadius: 8, padding: "11px 14px", marginBottom: 18, fontSize: 14, color: "#3a5060", letterSpacing: 0.3 }}>
               💡 AI writes the full article body automatically when readers open it.
             </div>
@@ -1375,24 +1490,59 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           </div>
         )}
 
+        {/* ── MANAGE ARTICLES ── */}
         {tab === "forum_manage" && (
           <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
             {articles.length === 0
               ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No articles yet.</p>
               : articles.map(a => (
-                <div key={a.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", borderBottom: "1px solid #0d1620", gap: 12 }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: CAT_COLORS[a.category] || "#00d4ff", marginBottom: 4 }}>{a.category}</div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.title}</div>
-                    <div style={{ fontSize: 14, color: "#3a5060" }}>{a.author} · {a.date}{a.hot ? " · 🔥" : ""}</div>
+                <div key={a.id} style={{ borderBottom: "1px solid #0d1620" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", gap: 12 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
+                        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: CAT_COLORS[a.category] || "#00d4ff" }}>{a.category}</span>
+                        {(() => { const b = getBadge(a); return b.value !== "none" ? <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: b.color, background: b.bg, border: `1px solid ${b.border}`, padding: "1px 7px", borderRadius: 3 }}>{b.label}</span> : null; })()}
+                      </div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.title}</div>
+                      <div style={{ fontSize: 13, color: "#3a5060" }}>{a.author} · {a.date}</div>
+                    </div>
+                    <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                      {saveOk === a.id && <span style={{ fontSize: 13, color: "#4ade80", alignSelf: "center" }}>✓ Saved</span>}
+                      <button style={S.editBtn} onClick={() => editingArt === a.id ? cancelEditArt() : startEditArt(a)}>
+                        {editingArt === a.id ? "✕ Cancel" : "✏ Edit"}
+                      </button>
+                      <button style={S.delBtn} onClick={() => removeArticle(a.id)}>🗑</button>
+                    </div>
                   </div>
-                  <button style={S.delBtn} onClick={() => removeArticle(a.id)}>🗑 Delete</button>
+                  {editingArt === a.id && (
+                    <div className="edit-panel" style={{ background: "#070b12", borderTop: "1px solid #0f1a2a", padding: "20px 22px 24px" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                        <FG label="CATEGORY">
+                          <select style={S.sel} value={editArtForm.category || ""} onChange={e => setEditArtForm(p => ({ ...p, category: e.target.value }))}>
+                            {ARTICLE_CATEGORIES.map(c => <option key={c}>{c}</option>)}
+                          </select>
+                        </FG>
+                        <FG label="AUTHOR"><input style={S.inp} value={editArtForm.author || ""} onChange={e => setEditArtForm(p => ({ ...p, author: e.target.value }))} /></FG>
+                      </div>
+                      <FG label="TITLE"><input style={S.inp} value={editArtForm.title || ""} onChange={e => setEditArtForm(p => ({ ...p, title: e.target.value }))} /></FG>
+                      <FG label="EXCERPT"><textarea style={{ ...S.inp, minHeight: 80, resize: "vertical", lineHeight: 1.6 }} value={editArtForm.excerpt || ""} onChange={e => setEditArtForm(p => ({ ...p, excerpt: e.target.value }))} /></FG>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                        <FG label="READ TIME"><input style={S.inp} value={editArtForm.read_time || ""} onChange={e => setEditArtForm(p => ({ ...p, read_time: e.target.value }))} /></FG>
+                        <FG label="PHOTO URL"><input style={S.inp} value={editArtForm.photo || ""} onChange={e => setEditArtForm(p => ({ ...p, photo: e.target.value }))} /></FG>
+                      </div>
+                      <div style={{ marginBottom: 18 }}>
+                        <BadgePicker value={editArtForm.badge || (editArtForm.hot ? "hot" : "none")} onChange={v => setEditArtForm(p => ({ ...p, badge: v }))} />
+                      </div>
+                      <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={saveEditArt} disabled={busy}>{busy ? "SAVING…" : "SAVE CHANGES"}</button>
+                    </div>
+                  )}
                 </div>
               ))
             }
           </div>
         )}
 
+        {/* ── POST PARLAY ── */}
         {tab === "parlay_post" && (
           <div style={S.fbox}>
             {parOk && <div style={S.succ}>✅ Parlay posted to the board!</div>}
@@ -1402,9 +1552,9 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
             </div>
             <FG label="DESCRIPTION *"><textarea style={{ ...S.inp, minHeight: 80, resize: "vertical", lineHeight: 1.6 }} placeholder="Short hook for the parlay…" value={parForm.description} onChange={e => setPar("description", e.target.value)} /></FG>
             <FG label="PAYOUT *"><input style={S.inp} placeholder="e.g. $100 → $1,940" value={parForm.payout} onChange={e => setPar("payout", e.target.value)} /></FG>
-            <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 22 }}>
-              <input type="checkbox" checked={parForm.hot} onChange={e => setPar("hot", e.target.checked)} /> 🔥 Mark as HOT
-            </label>
+            <div style={{ marginBottom: 22 }}>
+              <BadgePicker value={parForm.badge} onChange={v => setPar("badge", v)} />
+            </div>
             <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: 2.5, color: "#1e3040", marginBottom: 14 }}>PICKS (min 2)</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
               {parForm.picks.map((pick, idx) => (
@@ -1431,21 +1581,66 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           </div>
         )}
 
+        {/* ── MANAGE PARLAYS ── */}
         {tab === "parlay_manage" && (
           <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
             {parlays.length === 0
               ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No parlays yet.</p>
               : parlays.map(p => (
-                <div key={p.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", borderBottom: "1px solid #0d1620", gap: 12 }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                      <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ffd700" }}>💰 {p.legs}-LEG</span>
-                      {p.hot && <span style={{ fontSize: 11, color: "#ff6633" }}>🔥 HOT</span>}
+                <div key={p.id} style={{ borderBottom: "1px solid #0d1620" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", gap: 12 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ffd700" }}>💰 {p.legs}-LEG</span>
+                        {(() => { const b = getBadge(p); return b.value !== "none" ? <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: b.color, background: b.bg, border: `1px solid ${b.border}`, padding: "1px 7px", borderRadius: 3 }}>{b.label}</span> : null; })()}
+                      </div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.label}</div>
+                      <div style={{ fontSize: 13, color: "#3a5060" }}>{p.odds} · {p.payout}</div>
                     </div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.label}</div>
-                    <div style={{ fontSize: 14, color: "#3a5060" }}>{p.odds} · {p.payout}</div>
+                    <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                      {saveOk === p.id && <span style={{ fontSize: 13, color: "#4ade80", alignSelf: "center" }}>✓ Saved</span>}
+                      <button style={S.editBtn} onClick={() => editingPar === p.id ? cancelEditPar() : startEditPar(p)}>
+                        {editingPar === p.id ? "✕ Cancel" : "✏ Edit"}
+                      </button>
+                      <button style={S.delBtn} onClick={() => removeParlay(p.id)}>🗑</button>
+                    </div>
                   </div>
-                  <button style={S.delBtn} onClick={() => removeParlay(p.id)}>🗑 Delete</button>
+                  {editingPar === p.id && (
+                    <div className="edit-panel" style={{ background: "#070b12", borderTop: "1px solid #0f1a2a", padding: "20px 22px 24px" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                        <FG label="PARLAY LABEL"><input style={S.inp} value={editParForm.label || ""} onChange={e => setEditParForm(f => ({ ...f, label: e.target.value }))} /></FG>
+                        <FG label="ODDS"><input style={S.inp} value={editParForm.odds || ""} onChange={e => setEditParForm(f => ({ ...f, odds: e.target.value }))} /></FG>
+                      </div>
+                      <FG label="DESCRIPTION"><textarea style={{ ...S.inp, minHeight: 70, resize: "vertical", lineHeight: 1.6 }} value={editParForm.description || ""} onChange={e => setEditParForm(f => ({ ...f, description: e.target.value }))} /></FG>
+                      <FG label="PAYOUT"><input style={S.inp} value={editParForm.payout || ""} onChange={e => setEditParForm(f => ({ ...f, payout: e.target.value }))} /></FG>
+                      <div style={{ marginBottom: 18 }}>
+                        <BadgePicker value={editParForm.badge || (editParForm.hot ? "hot" : "none")} onChange={v => setEditParForm(f => ({ ...f, badge: v }))} />
+                      </div>
+                      <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: 2.5, color: "#1e3040", marginBottom: 12 }}>PICKS</div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 12 }}>
+                        {(editParForm.picks || []).map((pick, idx) => (
+                          <div key={idx} style={{ background: "#0a0f18", border: "1px solid #111820", borderRadius: 9, padding: "12px 14px" }}>
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+                              <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ffd700" }}>LEG {idx + 1}</span>
+                              {(editParForm.picks || []).length > 2 && (
+                                <button onClick={() => removeEditPick(idx)} style={{ background: "transparent", border: "1px solid #ff1a1a22", color: "#cc3333", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 12, fontWeight: 700, padding: "3px 10px", borderRadius: 5, cursor: "pointer" }}>✕</button>
+                              )}
+                            </div>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+                              <FG label="GAME"><input style={S.inp} value={pick.game || ""} onChange={e => updateEditPick(idx, "game", e.target.value)} /></FG>
+                              <FG label="SPORT"><select style={S.sel} value={pick.sport || "NHL"} onChange={e => updateEditPick(idx, "sport", e.target.value)}>{SPORT_OPTIONS.map(s => <option key={s}>{s}</option>)}</select></FG>
+                            </div>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 8 }}>
+                              <FG label="BET"><input style={S.inp} value={pick.bet || ""} onChange={e => updateEditPick(idx, "bet", e.target.value)} /></FG>
+                              <FG label="LINE"><input style={{ ...S.inp, width: 85 }} value={pick.line || ""} onChange={e => updateEditPick(idx, "line", e.target.value)} /></FG>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <button onClick={addEditPick} style={{ width: "100%", padding: "9px", background: "transparent", border: "1px dashed #1e3040", borderRadius: 7, color: "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 1, cursor: "pointer", marginBottom: 18 }}>+ ADD LEG</button>
+                      <button style={{ ...S.subBtn, background: "linear-gradient(135deg,#9a7a00,#c09800)", opacity: busy ? 0.6 : 1 }} onClick={saveEditPar} disabled={busy}>{busy ? "SAVING…" : "SAVE CHANGES"}</button>
+                    </div>
+                  )}
                 </div>
               ))
             }
@@ -1457,7 +1652,7 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
 }
 
 const FG = ({ label, children }) => (
-  <div style={{ marginBottom: 18 }}>
+  <div style={{ marginBottom: 14 }}>
     <label style={{ display: "block", fontSize: 12, fontWeight: 800, letterSpacing: 2, color: "#243040", marginBottom: 7 }}>{label}</label>
     {children}
   </div>
@@ -1481,8 +1676,6 @@ const S = {
   ldg:       { textAlign: "center", padding: 80, color: "#3a5060", fontSize: 18, letterSpacing: 2 },
   grid:      { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 },
   card:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 16, padding: "24px 26px", position: "relative", overflow: "hidden" },
-  hotBadge:  { position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6, padding: "4px 10px" },
-  hotText:   { fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" },
   meta:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 13 },
   tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid" },
   game:      { fontSize: 13, color: "#3a5060", letterSpacing: 0.5 },
@@ -1525,6 +1718,7 @@ const S = {
   sel:       { width: "100%", background: "#070b12", border: "1px solid #0f1820", borderRadius: 8, color: "#b0c4d4", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, padding: "11px 14px", cursor: "pointer" },
   subBtn:    { width: "100%", padding: 14, background: "linear-gradient(135deg,#0099bb,#007a99)", border: "none", borderRadius: 9, color: "#fff", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, fontWeight: 900, letterSpacing: 3, cursor: "pointer", transition: "opacity .15s" },
   succ:      { background: "#00ff8811", border: "1px solid #00ff8833", color: "#00cc66", borderRadius: 8, padding: "11px 16px", marginBottom: 20, fontSize: 14, fontWeight: 700, letterSpacing: 0.5 },
+  editBtn:   { background: "transparent", border: "1px solid #00d4ff22", color: "#00d4ff77", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, padding: "6px 12px", borderRadius: 6, cursor: "pointer", flexShrink: 0, transition: "all .15s" },
   delBtn:    { background: "transparent", border: "1px solid #ff1a1a22", color: "#cc3333", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, padding: "6px 12px", borderRadius: 6, cursor: "pointer", flexShrink: 0, transition: "all .15s" },
   foot:      { textAlign: "center", padding: "28px 20px", fontSize: 12, letterSpacing: 2, borderTop: "1px solid #0a0f18" },
   statBox:   { background: "#080d14", border: "1px solid #0f1820", borderRadius: 12, padding: "18px 28px", textAlign: "center", flex: 1 },
