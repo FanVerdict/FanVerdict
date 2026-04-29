@@ -1530,4 +1530,4 @@ const S = {
   statBox:   { background: "#080d14", border: "1px solid #0f1820", borderRadius: 12, padding: "18px 28px", textAlign: "center", flex: 1 },
   statNum:   { fontSize: 34, fontWeight: 900, color: "#00d4ff", letterSpacing: 2, lineHeight: 1 },
   statLbl:   { fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#1e3040", marginTop: 6 },
-};https://keala.notion.site/FITFO-Mastermind-30031e7d32128099aa14cea513189284
+};
