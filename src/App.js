@@ -82,92 +82,12 @@ const DEFAULT_ARTICLES = [
 ];
 
 const DEFAULT_PARLAYS = [
-  {
-    id: "p1",
-    label: "GAME 7 CHAOS PARLAY",
-    legs: 4,
-    odds: "+1840",
-    hot: true,
-    description: "Four series go to Game 7 this week. Bet on the chaos.",
-    picks: [
-      { game: "Oilers vs Canucks", bet: "Oilers ML (Game 7)", line: "-118", sport: "NHL" },
-      { game: "Bruins vs Panthers", bet: "Panthers ML (Game 7)", line: "+140", sport: "NHL" },
-      { game: "Rangers vs Capitals", bet: "Rangers ML (Game 7)", line: "-130", sport: "NHL" },
-      { game: "Stars vs Avs", bet: "Over 5.5 Goals", line: "-115", sport: "NHL" },
-    ],
-    payout: "$100 → $1,940",
-  },
-  {
-    id: "p2",
-    label: "McDaVID PROP MONSTER",
-    legs: 3,
-    odds: "+620",
-    hot: true,
-    description: "McDavid is locked in. Parlay his props for a massive night.",
-    picks: [
-      { game: "Oilers vs Canucks", bet: "McDavid 1+ Point", line: "-160", sport: "NHL PROPS" },
-      { game: "Oilers vs Canucks", bet: "McDavid Anytime Goal Scorer", line: "+135", sport: "NHL PROPS" },
-      { game: "Oilers vs Canucks", bet: "Oilers 1st Period Winner", line: "+105", sport: "NHL PROPS" },
-    ],
-    payout: "$100 → $720",
-  },
-  {
-    id: "p3",
-    label: "GOALIE SHUTOUT SPECIAL",
-    legs: 2,
-    odds: "+480",
-    hot: false,
-    description: "Two elite goalies, two dominant defensive matchups. Back the brick walls.",
-    picks: [
-      { game: "Rangers vs Capitals", bet: "Igor Shesterkin 25+ Saves", line: "-140", sport: "NHL PROPS" },
-      { game: "Stars vs Avs", bet: "Jake Oettinger 30+ Saves", line: "+175", sport: "NHL PROPS" },
-    ],
-    payout: "$100 → $580",
-  },
-  {
-    id: "p4",
-    label: "OVERTIME THRILLER PARLAY",
-    legs: 3,
-    odds: "+1100",
-    hot: true,
-    description: "Playoff hockey is built for overtime. Three games with the look of OT finishes.",
-    picks: [
-      { game: "Bruins vs Panthers", bet: "Game Goes to OT", line: "+280", sport: "NHL" },
-      { game: "Leafs vs Lightning", bet: "Game Goes to OT", line: "+260", sport: "NHL" },
-      { game: "Avs vs Stars", bet: "Over 5.5 Total Goals", line: "-110", sport: "NHL" },
-    ],
-    payout: "$100 → $1,200",
-  },
-  {
-    id: "p5",
-    label: "CROSS-SPORT MEGA PARLAY",
-    legs: 5,
-    odds: "+3200",
-    hot: false,
-    description: "High risk, massive reward. Five legs across NHL and NBA playoffs.",
-    picks: [
-      { game: "Oilers vs Canucks", bet: "Oilers ML", line: "-118", sport: "NHL" },
-      { game: "Rangers vs Capitals", bet: "Under 5.5 Goals", line: "-105", sport: "NHL" },
-      { game: "Celtics vs Knicks", bet: "Celtics -6.5", line: "-110", sport: "NBA" },
-      { game: "Thunder vs Nuggets", bet: "Thunder ML", line: "+115", sport: "NBA" },
-      { game: "Pacers vs Bucks", bet: "Over 224.5 Points", line: "-112", sport: "NBA" },
-    ],
-    payout: "$100 → $3,300",
-  },
-  {
-    id: "p6",
-    label: "PENALTY MINUTE MADNESS",
-    legs: 3,
-    odds: "+740",
-    hot: false,
-    description: "Playoff hockey gets physical. Fade the clean teams, back the hitters.",
-    picks: [
-      { game: "Bruins vs Panthers", bet: "Both Teams 10+ PIM", line: "+175", sport: "NHL" },
-      { game: "Stars vs Avs", bet: "Avs Bowen Byram Anytime Point", line: "+200", sport: "NHL PROPS" },
-      { game: "Oilers vs Canucks", bet: "Darnell Nurse 3+ Hits", line: "-120", sport: "NHL PROPS" },
-    ],
-    payout: "$100 → $840",
-  },
+  { id: "p1", label: "GAME 7 CHAOS PARLAY", legs: 4, odds: "+1840", hot: true, description: "Four series go to Game 7 this week. Bet on the chaos.", picks: [{ game: "Oilers vs Canucks", bet: "Oilers ML (Game 7)", line: "-118", sport: "NHL" }, { game: "Bruins vs Panthers", bet: "Panthers ML (Game 7)", line: "+140", sport: "NHL" }, { game: "Rangers vs Capitals", bet: "Rangers ML (Game 7)", line: "-130", sport: "NHL" }, { game: "Stars vs Avs", bet: "Over 5.5 Goals", line: "-115", sport: "NHL" }], payout: "$100 → $1,940" },
+  { id: "p2", label: "McDaVID PROP MONSTER", legs: 3, odds: "+620", hot: true, description: "McDavid is locked in. Parlay his props for a massive night.", picks: [{ game: "Oilers vs Canucks", bet: "McDavid 1+ Point", line: "-160", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "McDavid Anytime Goal Scorer", line: "+135", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "Oilers 1st Period Winner", line: "+105", sport: "NHL PROPS" }], payout: "$100 → $720" },
+  { id: "p3", label: "GOALIE SHUTOUT SPECIAL", legs: 2, odds: "+480", hot: false, description: "Two elite goalies, two dominant defensive matchups. Back the brick walls.", picks: [{ game: "Rangers vs Capitals", bet: "Igor Shesterkin 25+ Saves", line: "-140", sport: "NHL PROPS" }, { game: "Stars vs Avs", bet: "Jake Oettinger 30+ Saves", line: "+175", sport: "NHL PROPS" }], payout: "$100 → $580" },
+  { id: "p4", label: "OVERTIME THRILLER PARLAY", legs: 3, odds: "+1100", hot: true, description: "Playoff hockey is built for overtime. Three games with the look of OT finishes.", picks: [{ game: "Bruins vs Panthers", bet: "Game Goes to OT", line: "+280", sport: "NHL" }, { game: "Leafs vs Lightning", bet: "Game Goes to OT", line: "+260", sport: "NHL" }, { game: "Avs vs Stars", bet: "Over 5.5 Total Goals", line: "-110", sport: "NHL" }], payout: "$100 → $1,200" },
+  { id: "p5", label: "CROSS-SPORT MEGA PARLAY", legs: 5, odds: "+3200", hot: false, description: "High risk, massive reward. Five legs across NHL and NBA playoffs.", picks: [{ game: "Oilers vs Canucks", bet: "Oilers ML", line: "-118", sport: "NHL" }, { game: "Rangers vs Capitals", bet: "Under 5.5 Goals", line: "-105", sport: "NHL" }, { game: "Celtics vs Knicks", bet: "Celtics -6.5", line: "-110", sport: "NBA" }, { game: "Thunder vs Nuggets", bet: "Thunder ML", line: "+115", sport: "NBA" }, { game: "Pacers vs Bucks", bet: "Over 224.5 Points", line: "-112", sport: "NBA" }], payout: "$100 → $3,300" },
+  { id: "p6", label: "PENALTY MINUTE MADNESS", legs: 3, odds: "+740", hot: false, description: "Playoff hockey gets physical. Fade the clean teams, back the hitters.", picks: [{ game: "Bruins vs Panthers", bet: "Both Teams 10+ PIM", line: "+175", sport: "NHL" }, { game: "Stars vs Avs", bet: "Avs Bowen Byram Anytime Point", line: "+200", sport: "NHL PROPS" }, { game: "Oilers vs Canucks", bet: "Darnell Nurse 3+ Hits", line: "-120", sport: "NHL PROPS" }], payout: "$100 → $840" },
 ];
 
 const COLORS = {
@@ -208,7 +128,7 @@ const css = `
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
   .pulse{animation:pulse 1.6s ease infinite;display:inline-block}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-  .modal-bg{position:fixed;inset:0;background:#000000dd;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+  .modal-bg{position:fixed;inset:0;background:#000000ee;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
   .art-card{transition:all .22s ease;cursor:pointer}
   .art-card:hover{border-color:#00d4ff33!important;transform:translateY(-3px);box-shadow:0 12px 40px #00000066}
   .feed-card{transition:border-color .2s ease}
@@ -220,11 +140,141 @@ const css = `
   .nav-btn.active{color:#00d4ff;border-color:#00d4ff44;background:#00d4ff0d}
   .vote-btn{transition:all .2s ease}
   .vote-btn:hover{transform:translateY(-1px)}
+  .vote-gate-btn{position:relative;overflow:hidden;transition:all .2s ease}
+  .vote-gate-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+  .vote-gate-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.06) 100%)}
+  .gate-modal{animation:gateIn .3s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes gateIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
   scrollbar-width:thin;scrollbar-color:#1e2840 transparent}
   ::-webkit-scrollbar{width:6px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
 `;
+
+// ── Vote Gate Modal ──
+function VoteGateModal({ onClose, onLogin, pendingVote }) {
+  const [mode, setMode]   = useState("signup");
+  const [email, setEmail] = useState("");
+  const [pw, setPw]       = useState("");
+  const [err, setErr]     = useState("");
+  const [busy, setBusy]   = useState(false);
+  const [done, setDone]   = useState(false);
+
+  const perks = [
+    { icon: "🗳️", text: "Cast votes on every controversial call" },
+    { icon: "📊", text: "See real-time fan verdict breakdowns" },
+    { icon: "🤖", text: "Unlock AI ref verdicts on every play" },
+    { icon: "🔖", text: "Save & track your verdicts all season" },
+  ];
+
+  const submit = async () => {
+    if (!email || !pw) return setErr("Fill in both fields.");
+    if (pw.length < 6) return setErr("Password must be 6+ characters.");
+    setBusy(true); setErr("");
+    if (mode === "signup") {
+      const res = await auth.signUp(email, pw);
+      if (res.error) { setErr(res.error.message || "Sign up failed."); setBusy(false); return; }
+      setDone(true);
+    } else {
+      const res = await auth.signIn(email, pw);
+      if (res.error || !res.access_token) { setErr(res.error?.message || "Login failed."); setBusy(false); return; }
+      localStorage.setItem("fv_token", res.access_token);
+      if (res.refresh_token) localStorage.setItem("fv_refresh", res.refresh_token);
+      const u = await auth.getUser(res.access_token);
+      onLogin(res.access_token, u);
+    }
+    setBusy(false);
+  };
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="gate-modal" onClick={e => e.stopPropagation()} style={{
+        background: "#080d16",
+        border: "1px solid #0f1e30",
+        borderRadius: 20,
+        width: "100%",
+        maxWidth: 460,
+        overflow: "hidden",
+        position: "relative",
+      }}>
+        {/* Top accent bar */}
+        <div style={{ height: 3, background: "linear-gradient(90deg,#00d4ff,#0066ff,#c084fc)" }} />
+
+        <button onClick={onClose} style={{ position:"absolute",top:14,right:16,background:"none",border:"none",color:"#2a3a4a",fontSize:18,cursor:"pointer",padding:4,zIndex:1 }}>✕</button>
+
+        {done ? (
+          <div style={{ padding: "44px 36px", textAlign: "center" }}>
+            <div style={{ fontSize: 52, marginBottom: 16 }}>📧</div>
+            <h2 style={{ fontSize: 24, fontWeight: 900, letterSpacing: 3, color: "#dce6f0", marginBottom: 12 }}>CHECK YOUR EMAIL</h2>
+            <p style={{ color: "#4a6070", fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>
+              Confirmation sent to <strong style={{ color: "#00d4ff" }}>{email}</strong>.<br />Click the link then come back to cast your vote.
+            </p>
+            <button style={{ ...S.subBtn, background: "#0c1420", border: "1px solid #1e2840", color: "#5a7080" }} onClick={onClose}>← BACK TO FEED</button>
+          </div>
+        ) : (
+          <>
+            {/* Hero section */}
+            <div style={{ padding: "28px 32px 0", textAlign: "center" }}>
+              <div style={{ fontSize: 36, marginBottom: 8 }}>🏒</div>
+              <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: 2, color: "#dce6f0", marginBottom: 6, lineHeight: 1.1 }}>
+                {mode === "signup" ? "JOIN TO CAST YOUR VOTE" : "LOG IN TO VOTE"}
+              </h2>
+              <p style={{ fontSize: 13, color: "#3a5060", letterSpacing: 0.5, marginBottom: 20 }}>
+                {mode === "signup" ? "Free forever. No credit card. Just your take." : "Good to have you back."}
+              </p>
+
+              {/* Perks — only on signup */}
+              {mode === "signup" && (
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 22, textAlign: "left" }}>
+                  {perks.map((p, i) => (
+                    <div key={i} style={{ background: "#0a1018", border: "1px solid #0f1a28", borderRadius: 10, padding: "10px 12px", display: "flex", alignItems: "flex-start", gap: 8 }}>
+                      <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>{p.icon}</span>
+                      <span style={{ fontSize: 12, color: "#5a7080", lineHeight: 1.4 }}>{p.text}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Form */}
+            <div style={{ padding: "0 32px 28px" }}>
+              <a href={auth.googleUrl()} style={{ ...S.googleBtn, marginBottom: 16 }}>
+                <svg width="18" height="18" viewBox="0 0 48 48" style={{ marginRight: 10, flexShrink: 0 }}>
+                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                </svg>
+                Continue with Google
+              </a>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "0 0 14px" }}>
+                <div style={{ flex: 1, height: 1, background: "#0f1825" }} />
+                <span style={{ color: "#1e2e3e", fontSize: 12, letterSpacing: 1 }}>or</span>
+                <div style={{ flex: 1, height: 1, background: "#0f1825" }} />
+              </div>
+
+              <input style={{ ...S.inp, marginBottom: 10 }} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
+              <input style={{ ...S.inp, marginBottom: err ? 8 : 16 }} type="password" placeholder={mode === "signup" ? "Create a password (6+ chars)" : "Password"} value={pw} onChange={e => setPw(e.target.value)} onKeyDown={e => e.key === "Enter" && submit()} />
+              {err && <p style={{ color: "#ff4d4d", fontSize: 12, marginBottom: 12, letterSpacing: 0.3 }}>{err}</p>}
+
+              <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1, marginBottom: 14 }} onClick={submit} disabled={busy}>
+                {busy ? "…" : mode === "signup" ? "CREATE FREE ACCOUNT & VOTE" : "LOG IN & VOTE"}
+              </button>
+
+              <p style={{ textAlign: "center", fontSize: 13, color: "#3a5060" }}>
+                {mode === "signup" ? "Already have an account? " : "No account? "}
+                <span style={{ color: "#00d4ff", cursor: "pointer", fontWeight: 700 }} onClick={() => { setMode(m => m === "signup" ? "login" : "signup"); setErr(""); }}>
+                  {mode === "signup" ? "Log in" : "Sign up free"}
+                </span>
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   const [page, setPage]         = useState("feed");
@@ -244,6 +294,8 @@ export default function App() {
   const [user, setUser]         = useState(null);
   const [profile, setProfile]   = useState(null);
   const [showAuth, setShowAuth] = useState(false);
+  const [showVoteGate, setShowVoteGate] = useState(false);
+  const [pendingVote, setPendingVote]   = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -284,7 +336,7 @@ export default function App() {
     const data = await db.select("controversies");
     const list = Array.isArray(data) && data.length ? data : DEMO;
     setItems(list);
-    setLv(list.reduce((a, c) => ({ ...a, [c.id]: [c.votes_a||0, c.votes_b||0] }), {}));
+    setLv(list.reduce((a, c) => ({ ...a, [c.id]: [c.votes_a || 0, c.votes_b || 0] }), {}));
     const arts = await db.select("articles");
     if (Array.isArray(arts) && arts.length) setArticles(arts);
     const pars = await db.select("parlays");
@@ -309,6 +361,13 @@ export default function App() {
       setProfile({ display_name: displayName, avatar_url: null, saved_ids: [] });
     }
     setShowAuth(false);
+    setShowVoteGate(false);
+    // If there was a pending vote, cast it now
+    if (pendingVote) {
+      const { id, oi } = pendingVote;
+      setPendingVote(null);
+      setTimeout(() => castVote(id, oi, t, u), 300);
+    }
   };
 
   const handleLogout = async () => {
@@ -318,21 +377,35 @@ export default function App() {
     setToken(null); setUser(null); setProfile(null); setUv({});
   };
 
-  const vote = async (id, oi) => {
+  const castVote = async (id, oi, tok, usr) => {
+    const t = tok || token;
+    const u = usr || user;
     if (uv[id] !== undefined) return;
     setUv(p => ({ ...p, [id]: oi }));
-    setLv(p => { const v = [...(p[id]||[0,0])]; v[oi]++; return { ...p, [id]: v }; });
+    setLv(p => { const v = [...(p[id] || [0, 0])]; v[oi]++; return { ...p, [id]: v }; });
     const item = items.find(c => c.id === id);
-    if (item) await db.update("controversies", id, { [oi===0?"votes_a":"votes_b"]: (item[oi===0?"votes_a":"votes_b"]||0)+1 });
-    if (token && user && profile) {
-      const newSaved = [...(profile.saved_ids || []), id];
-      setProfile(p => ({ ...p, saved_ids: newSaved }));
-      await db.updateProfile(token, user.id, { saved_ids: newSaved });
+    if (item) await db.update("controversies", id, { [oi === 0 ? "votes_a" : "votes_b"]: (item[oi === 0 ? "votes_a" : "votes_b"] || 0) + 1 });
+    if (t && u) {
+      const prof = profile || {};
+      const newSaved = [...(prof.saved_ids || []), id];
+      setProfile(p => ({ ...(p || {}), saved_ids: newSaved }));
+      await db.updateProfile(t, u.id, { saved_ids: newSaved });
     }
   };
 
+  // Gate: must be logged in to vote
+  const vote = (id, oi) => {
+    if (!user) {
+      setPendingVote({ id, oi });
+      setShowVoteGate(true);
+      return;
+    }
+    if (uv[id] !== undefined) return;
+    castVote(id, oi);
+  };
+
   const toggleSave = async (id) => {
-    if (!user) { setShowAuth(true); return; }
+    if (!user) { setShowVoteGate(true); return; }
     const saved = profile?.saved_ids || [];
     const newSaved = saved.includes(id) ? saved.filter(x => x !== id) : [...saved, id];
     setProfile(p => ({ ...p, saved_ids: newSaved }));
@@ -352,7 +425,7 @@ export default function App() {
         }),
       });
       const d = await res.json();
-      setAi(p => ({ ...p, [item.id]: d.content?.map(b => b.text||"").join("")||"Verdict unavailable." }));
+      setAi(p => ({ ...p, [item.id]: d.content?.map(b => b.text || "").join("") || "Verdict unavailable." }));
     } catch { setAi(p => ({ ...p, [item.id]: "AI ref timed out — try again." })); }
     setAiLoad(p => ({ ...p, [item.id]: false }));
   };
@@ -360,8 +433,8 @@ export default function App() {
   const openDetail = (item) => { setActive(item); setPage("detail"); getAI(item); };
   const openArticle = (article) => { setActiveArticle(article); setPage("article"); };
   const openParlay = (id) => { setActiveParlayId(id); setPage("parlay_detail"); };
-  const total = (id) => Math.max((lv[id]?.[0]||0)+(lv[id]?.[1]||0), 1);
-  const pct   = (id, i) => Math.round(((lv[id]?.[i]||0)/total(id))*100);
+  const total = (id) => Math.max((lv[id]?.[0] || 0) + (lv[id]?.[1] || 0), 1);
+  const pct = (id, i) => Math.round(((lv[id]?.[i] || 0) / total(id)) * 100);
   const savedItems = items.filter(c => profile?.saved_ids?.includes(c.id));
 
   const handleAddArticle = (a) => setArticles(prev => [a, ...prev]);
@@ -386,108 +459,138 @@ export default function App() {
           </div>
           <nav style={S.nav}>
             <button className={navCls("feed")} onClick={goFeed}>FEED</button>
-            <button className={navCls(["forum","article"])} onClick={()=>setPage("forum")}>FORUM</button>
-            <button className={navCls(["parlay","parlay_detail"])} onClick={()=>setPage("parlay")}>PARLAYS</button>
-            {user && <button className={navCls("saved")} onClick={()=>setPage("saved")}>SAVED</button>}
+            <button className={navCls(["forum", "article"])} onClick={() => setPage("forum")}>FORUM</button>
+            <button className={navCls(["parlay", "parlay_detail"])} onClick={() => setPage("parlay")}>PARLAYS</button>
+            {user && <button className={navCls("saved")} onClick={() => setPage("saved")}>SAVED</button>}
             {user && (
-              <button className={navCls("profile")} onClick={()=>setPage("profile")}>
+              <button className={navCls("profile")} onClick={() => setPage("profile")}>
                 {profile?.avatar_url
-                  ? <img src={profile.avatar_url} style={{width:20,height:20,borderRadius:"50%",verticalAlign:"middle",marginRight:4,border:"1px solid #00d4ff44"}} alt="avatar"/>
-                  : <span style={{marginRight:4}}>👤</span>}
+                  ? <img src={profile.avatar_url} style={{ width: 20, height: 20, borderRadius: "50%", verticalAlign: "middle", marginRight: 4, border: "1px solid #00d4ff44" }} alt="avatar" />
+                  : <span style={{ marginRight: 4 }}>👤</span>}
                 {profile?.display_name?.split(" ")[0] || "ME"}
               </button>
             )}
             {!user && (
-              <button className={"nav-btn" + (showAuth ? " active" : "")} onClick={()=>setShowAuth(true)}>
+              <button className="nav-btn" style={{ background: "#00d4ff14", borderColor: "#00d4ff33", color: "#00d4ff" }} onClick={() => setShowAuth(true)}>
                 LOG IN
               </button>
             )}
           </nav>
-          <div style={S.live}><span className="blink" style={{color:"#ff4d4d"}}>●</span> LIVE</div>
+          <div style={S.live}><span className="blink" style={{ color: "#ff4d4d" }}>●</span> LIVE</div>
         </div>
       </header>
 
-      {showAuth && <AuthModal onClose={()=>setShowAuth(false)} onLogin={handleLogin}/>}
+      {/* Vote gate modal */}
+      {showVoteGate && (
+        <VoteGateModal
+          onClose={() => { setShowVoteGate(false); setPendingVote(null); }}
+          onLogin={handleLogin}
+          pendingVote={pendingVote}
+        />
+      )}
 
-      {page==="feed" && (
+      {/* Regular auth modal */}
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} onLogin={handleLogin} />}
+
+      {page === "feed" && (
         <main style={S.main}>
           <div style={S.hero}>
             <div style={S.heroPill}>🏒 PLAYOFF SEASON · LIVE VERDICTS</div>
             <h1 style={S.heroT}>YOU'RE THE REF.</h1>
             <p style={S.heroS}>Officials made their call. Now the fans decide.</p>
           </div>
+
+          {/* Teaser banner for logged-out users */}
           {!user && (
-            <div style={S.signupBanner}>
-              <div style={{display:"flex",alignItems:"center",gap:10}}>
-                <span style={{fontSize:20}}>🏒</span>
+            <div style={{
+              background: "linear-gradient(135deg,#08111c,#0a1824)",
+              border: "1px solid #00d4ff22",
+              borderRadius: 14,
+              padding: "20px 24px",
+              marginBottom: 36,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 16,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ fontSize: 28 }}>🗳️</div>
                 <div>
-                  <div style={{fontSize:17,fontWeight:800,color:"#c0d4e0",letterSpacing:1}}>JOIN FANVERDICT</div>
-                  <div style={{fontSize:14,color:"#3a5060"}}>Save verdicts & track your votes</div>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: "#c0d4e0", letterSpacing: 1, marginBottom: 3 }}>
+                    SIGN UP FREE TO CAST YOUR VERDICT
+                  </div>
+                  <div style={{ fontSize: 13, color: "#2a4050" }}>
+                    Vote on every call · See live results · Save your verdicts · Unlock AI Ref
+                  </div>
                 </div>
               </div>
-              <button style={S.bannerBtn} onClick={()=>setShowAuth(true)}>JOIN FREE →</button>
+              <button style={{ ...S.subBtn, width: "auto", padding: "10px 24px", fontSize: 14, letterSpacing: 2, flexShrink: 0 }} onClick={() => setShowVoteGate(true)}>
+                JOIN FREE →
+              </button>
             </div>
           )}
+
           {loading
             ? <div style={S.ldg}><span className="pulse">Loading controversies…</span></div>
-            : <div style={S.grid}>{items.map((c,i) => (
-                <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id]||[0,0]} pct={pct} total={total}
-                  onVote={vote} onDetail={openDetail}
-                  saved={profile?.saved_ids?.includes(c.id)}
-                  onSave={()=>toggleSave(c.id)}
-                  loggedIn={!!user}
-                  onAuthPrompt={()=>setShowAuth(true)}
-                />
-              ))}</div>
+            : <div style={S.grid}>{items.map((c, i) => (
+              <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
+                onVote={vote} onDetail={openDetail}
+                saved={profile?.saved_ids?.includes(c.id)}
+                onSave={() => toggleSave(c.id)}
+                loggedIn={!!user}
+                onAuthPrompt={() => setShowVoteGate(true)}
+              />
+            ))}</div>
           }
         </main>
       )}
 
-      {page==="saved" && (
+      {page === "saved" && (
         <main style={S.main}>
-          <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:32}}>
-            <h2 style={{fontSize:28,fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>SAVED VERDICTS</h2>
-            <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:"#00d4ff",background:"#00d4ff14",border:"1px solid #00d4ff33",padding:"3px 10px",borderRadius:4}}>{savedItems.length}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 32 }}>
+            <h2 style={{ fontSize: 28, fontWeight: 900, letterSpacing: 3, color: "#dce6f0" }}>SAVED VERDICTS</h2>
+            <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", background: "#00d4ff14", border: "1px solid #00d4ff33", padding: "3px 10px", borderRadius: 4 }}>{savedItems.length}</span>
           </div>
           {savedItems.length === 0
-            ? <div style={{textAlign:"center",padding:"60px 0",color:"#2a3a4a"}}>
-                <div style={{fontSize:40,marginBottom:12}}>🔖</div>
-                <p style={{fontSize:16,letterSpacing:1}}>No saved verdicts yet.</p>
-                <p style={{fontSize:13,marginTop:6,color:"#1a2a36"}}>Vote on a controversy to save it here.</p>
-              </div>
-            : <div style={S.grid}>{savedItems.map((c,i) => (
-                <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id]||[0,0]} pct={pct} total={total}
-                  onVote={vote} onDetail={openDetail}
-                  saved={true} onSave={()=>toggleSave(c.id)}
-                  loggedIn={!!user} onAuthPrompt={()=>setShowAuth(true)}
-                />
-              ))}
+            ? <div style={{ textAlign: "center", padding: "60px 0", color: "#2a3a4a" }}>
+              <div style={{ fontSize: 40, marginBottom: 12 }}>🔖</div>
+              <p style={{ fontSize: 16, letterSpacing: 1 }}>No saved verdicts yet.</p>
+              <p style={{ fontSize: 13, marginTop: 6, color: "#1a2a36" }}>Vote on a controversy to save it here.</p>
+            </div>
+            : <div style={S.grid}>{savedItems.map((c, i) => (
+              <FeedCard key={c.id} item={c} idx={i} uv={uv[c.id]} lv={lv[c.id] || [0, 0]} pct={pct} total={total}
+                onVote={vote} onDetail={openDetail}
+                saved={true} onSave={() => toggleSave(c.id)}
+                loggedIn={!!user} onAuthPrompt={() => setShowVoteGate(true)}
+              />
+            ))}
             </div>
           }
         </main>
       )}
 
-      {page==="detail" && active && (
+      {page === "detail" && active && (
         <main style={S.main}>
           <button style={S.back} onClick={goFeed}>← Back to Feed</button>
-          <div style={{maxWidth:660,margin:"0 auto"}}>
-            <div style={{...S.card,marginBottom:0}}>
-              <CardBody item={active} uv={uv[active.id]} lv={lv[active.id]||[0,0]} pct={pct} total={total} onVote={vote}/>
+          <div style={{ maxWidth: 660, margin: "0 auto" }}>
+            <div style={{ ...S.card, marginBottom: 0 }}>
+              <CardBody item={active} uv={uv[active.id]} lv={lv[active.id] || [0, 0]} pct={pct} total={total} onVote={vote} loggedIn={!!user} onAuthPrompt={() => setShowVoteGate(true)} />
             </div>
             <div style={S.aiBox}>
               <div style={S.aiHdr}>
                 <span style={S.aiIcon}>🤖</span>
                 <span style={S.aiLbl}>AI REF VERDICT</span>
-                <span style={{flex:1}}/>
-                <span style={{fontSize:10,color:"#2a3850",letterSpacing:1}}>POWERED BY CLAUDE</span>
+                <span style={{ flex: 1 }} />
+                <span style={{ fontSize: 10, color: "#2a3850", letterSpacing: 1 }}>POWERED BY CLAUDE</span>
               </div>
               {aiLoad[active.id]
-                ? <div style={{padding:"8px 0"}}>
-                    <p style={S.aiWait} className="pulse">Reviewing the play…</p>
-                    <div style={{display:"flex",gap:6,marginTop:14}}>
-                      {[1,2,3].map(i=><div key={i} style={{height:6,flex:1,background:"#0f1825",borderRadius:3}}/>)}
-                    </div>
+                ? <div style={{ padding: "8px 0" }}>
+                  <p style={S.aiWait} className="pulse">Reviewing the play…</p>
+                  <div style={{ display: "flex", gap: 6, marginTop: 14 }}>
+                    {[1, 2, 3].map(i => <div key={i} style={{ height: 6, flex: 1, background: "#0f1825", borderRadius: 3 }} />)}
                   </div>
+                </div>
                 : ai[active.id]
                   ? <p style={S.aiTxt}>{ai[active.id]}</p>
                   : <button style={S.aiCallBtn} className="hbtn" onClick={() => getAI(active)}>Ask the AI Ref →</button>
@@ -497,39 +600,39 @@ export default function App() {
         </main>
       )}
 
-      {page==="forum" && <ForumPage articles={articles} onOpenArticle={openArticle}/>}
-      {page==="article" && activeArticle && <ArticlePage article={activeArticle} onBack={()=>setPage("forum")}/>}
+      {page === "forum" && <ForumPage articles={articles} onOpenArticle={openArticle} />}
+      {page === "article" && activeArticle && <ArticlePage article={activeArticle} onBack={() => setPage("forum")} />}
 
-      {page==="parlay" && <ParlayPage parlays={parlays} onOpenParlay={openParlay}/>}
-      {page==="parlay_detail" && activeParlayId && (
+      {page === "parlay" && <ParlayPage parlays={parlays} onOpenParlay={openParlay} />}
+      {page === "parlay_detail" && activeParlayId && (
         <ParlayDetailPage
-          parlay={parlays.find(p=>p.id===activeParlayId)}
-          onBack={()=>setPage("parlay")}
+          parlay={parlays.find(p => p.id === activeParlayId)}
+          onBack={() => setPage("parlay")}
         />
       )}
 
-      {page==="profile" && user && (
-        <ProfilePage profile={profile} user={user} savedCount={profile?.saved_ids?.length||0}
-          votedCount={Object.keys(uv).length} onLogout={handleLogout} onBack={goFeed}/>
+      {page === "profile" && user && (
+        <ProfilePage profile={profile} user={user} savedCount={profile?.saved_ids?.length || 0}
+          votedCount={Object.keys(uv).length} onLogout={handleLogout} onBack={goFeed} />
       )}
-      {page==="admin" && (
+      {page === "admin" && (
         <AdminPanel authed={adminOk} onAuth={setAdminOk} items={items} lv={lv} onRefresh={load}
           articles={articles} onAddArticle={handleAddArticle} onDeleteArticle={handleDeleteArticle}
-          parlays={parlays} onAddParlay={handleAddParlay} onDeleteParlay={handleDeleteParlay}/>
+          parlays={parlays} onAddParlay={handleAddParlay} onDeleteParlay={handleDeleteParlay} />
       )}
 
       <footer style={S.foot}>
-        <span style={{color:"#1a2a36"}}>FanVerdict © 2026</span>
-        <span style={{color:"#0f1820",margin:"0 12px"}}>·</span>
-        <span style={{color:"#1a2a36"}}>Built for hockey fans</span>
-        <span style={{color:"#0f1820",margin:"0 12px"}}>·</span>
-        <span style={{color:"#1a2836",fontSize:10}}>Must be 19+. Gambling can be addictive. Play responsibly.</span>
+        <span style={{ color: "#1a2a36" }}>FanVerdict © 2026</span>
+        <span style={{ color: "#0f1820", margin: "0 12px" }}>·</span>
+        <span style={{ color: "#1a2a36" }}>Built for hockey fans</span>
+        <span style={{ color: "#0f1820", margin: "0 12px" }}>·</span>
+        <span style={{ color: "#1a2836", fontSize: 10 }}>Must be 19+. Gambling can be addictive. Play responsibly.</span>
       </footer>
     </div>
   );
 }
 
-// ── Auth Modal ──
+// ── Auth Modal (header login button) ──
 function AuthModal({ onClose, onLogin }) {
   const [mode, setMode]   = useState("login");
   const [email, setEmail] = useState("");
@@ -558,28 +661,28 @@ function AuthModal({ onClose, onLogin }) {
 
   return (
     <div className="modal-bg" onClick={onClose}>
-      <div style={S.modal} onClick={e=>e.stopPropagation()}>
+      <div style={S.modal} onClick={e => e.stopPropagation()}>
         <button style={S.modalClose} onClick={onClose}>✕</button>
         {done ? (
-          <div style={{textAlign:"center",padding:"20px 0"}}>
-            <div style={{fontSize:48,marginBottom:16}}>📧</div>
-            <h2 style={{fontSize:22,fontWeight:900,letterSpacing:3,color:"#dce6f0",marginBottom:12}}>CHECK YOUR EMAIL</h2>
-            <p style={{color:"#4a6070",fontSize:14,lineHeight:1.7,marginBottom:24}}>
-              We sent a confirmation link to <strong style={{color:"#00d4ff"}}>{email}</strong>.<br/>Click it to activate your account.
+          <div style={{ textAlign: "center", padding: "20px 0" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>📧</div>
+            <h2 style={{ fontSize: 22, fontWeight: 900, letterSpacing: 3, color: "#dce6f0", marginBottom: 12 }}>CHECK YOUR EMAIL</h2>
+            <p style={{ color: "#4a6070", fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>
+              We sent a confirmation link to <strong style={{ color: "#00d4ff" }}>{email}</strong>.<br />Click it to activate your account.
             </p>
-            <button style={{...S.subBtn,background:"#0c1420",border:"1px solid #1e2840",color:"#5a7080"}} onClick={onClose}>← BACK TO SITE</button>
+            <button style={{ ...S.subBtn, background: "#0c1420", border: "1px solid #1e2840", color: "#5a7080" }} onClick={onClose}>← BACK TO SITE</button>
           </div>
         ) : (
           <>
-            <div style={{fontSize:38,textAlign:"center",marginBottom:6}}>🏒</div>
-            <h2 style={{fontSize:22,fontWeight:900,letterSpacing:3,color:"#dce6f0",textAlign:"center",marginBottom:6}}>
-              {mode==="login" ? "WELCOME BACK" : "JOIN FANVERDICT"}
+            <div style={{ fontSize: 38, textAlign: "center", marginBottom: 6 }}>🏒</div>
+            <h2 style={{ fontSize: 22, fontWeight: 900, letterSpacing: 3, color: "#dce6f0", textAlign: "center", marginBottom: 6 }}>
+              {mode === "login" ? "WELCOME BACK" : "JOIN FANVERDICT"}
             </h2>
-            <p style={{textAlign:"center",fontSize:13,color:"#3a5060",marginBottom:24,letterSpacing:.5}}>
-              {mode==="login" ? "Good to see you again." : "The fans are waiting for your verdict."}
+            <p style={{ textAlign: "center", fontSize: 13, color: "#3a5060", marginBottom: 24, letterSpacing: 0.5 }}>
+              {mode === "login" ? "Good to see you again." : "The fans are waiting for your verdict."}
             </p>
             <a href={auth.googleUrl()} style={S.googleBtn}>
-              <svg width="18" height="18" viewBox="0 0 48 48" style={{marginRight:10,flexShrink:0}}>
+              <svg width="18" height="18" viewBox="0 0 48 48" style={{ marginRight: 10, flexShrink: 0 }}>
                 <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
                 <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
                 <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
@@ -588,20 +691,20 @@ function AuthModal({ onClose, onLogin }) {
               Continue with Google
             </a>
             <div style={S.divider}>
-              <div style={{flex:1,height:1,background:"#0f1825"}}/>
+              <div style={{ flex: 1, height: 1, background: "#0f1825" }} />
               <span style={S.divTxt}>or</span>
-              <div style={{flex:1,height:1,background:"#0f1825"}}/>
+              <div style={{ flex: 1, height: 1, background: "#0f1825" }} />
             </div>
-            <input style={{...S.inp,marginBottom:10}} type="email" placeholder="Email address" value={email} onChange={e=>setEmail(e.target.value)}/>
-            <input style={{...S.inp,marginBottom:err?8:18}} type="password" placeholder="Password" value={pw} onChange={e=>setPw(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()}/>
-            {err && <p style={{color:"#ff4d4d",fontSize:12,marginBottom:12,letterSpacing:.3}}>{err}</p>}
-            <button style={{...S.subBtn,opacity:busy?.6:1}} onClick={submit} disabled={busy}>
-              {busy ? "…" : mode==="login" ? "LOG IN" : "CREATE ACCOUNT"}
+            <input style={{ ...S.inp, marginBottom: 10 }} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
+            <input style={{ ...S.inp, marginBottom: err ? 8 : 18 }} type="password" placeholder="Password" value={pw} onChange={e => setPw(e.target.value)} onKeyDown={e => e.key === "Enter" && submit()} />
+            {err && <p style={{ color: "#ff4d4d", fontSize: 12, marginBottom: 12, letterSpacing: 0.3 }}>{err}</p>}
+            <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={submit} disabled={busy}>
+              {busy ? "…" : mode === "login" ? "LOG IN" : "CREATE ACCOUNT"}
             </button>
-            <p style={{textAlign:"center",fontSize:13,color:"#3a5060",marginTop:16}}>
-              {mode==="login" ? "No account? " : "Already have one? "}
-              <span style={{color:"#00d4ff",cursor:"pointer",fontWeight:700}} onClick={()=>{setMode(m=>m==="login"?"signup":"login");setErr("");}}>
-                {mode==="login" ? "Sign up free" : "Log in"}
+            <p style={{ textAlign: "center", fontSize: 13, color: "#3a5060", marginTop: 16 }}>
+              {mode === "login" ? "No account? " : "Already have one? "}
+              <span style={{ color: "#00d4ff", cursor: "pointer", fontWeight: 700 }} onClick={() => { setMode(m => m === "login" ? "signup" : "login"); setErr(""); }}>
+                {mode === "login" ? "Sign up free" : "Log in"}
               </span>
             </p>
           </>
@@ -626,41 +729,29 @@ function ParlayPage({ parlays, onOpenParlay }) {
 
   return (
     <main style={S.main}>
-      <div style={{marginBottom:32}}>
-        <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:8,flexWrap:"wrap"}}>
-          <h1 style={{fontSize:"clamp(28px,5vw,52px)",fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>PARLAY</h1>
-          <span style={{fontSize:"clamp(28px,5vw,52px)",fontWeight:900,letterSpacing:3,color:"#ffd700"}}>BOARD</span>
-          <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ffd700",background:"#ffd70014",border:"1px solid #ffd70033",padding:"3px 10px",borderRadius:4,alignSelf:"center"}}>LIVE ODDS</span>
+      <div style={{ marginBottom: 32 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 8, flexWrap: "wrap" }}>
+          <h1 style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 900, letterSpacing: 3, color: "#dce6f0" }}>PARLAY</h1>
+          <span style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 900, letterSpacing: 3, color: "#ffd700" }}>BOARD</span>
+          <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 10px", borderRadius: 4, alignSelf: "center" }}>LIVE ODDS</span>
         </div>
-        <p style={{color:"#2a4050",fontSize:14,letterSpacing:1}}>Curated parlays built for playoff hockey fans. Real lines. Real risk. Real payout.</p>
+        <p style={{ color: "#2a4050", fontSize: 14, letterSpacing: 1 }}>Curated parlays built for playoff hockey fans. Real lines. Real risk. Real payout.</p>
       </div>
-
-      <div style={{background:"#0a0d10",border:"1px solid #ffd70022",borderRadius:10,padding:"12px 18px",marginBottom:28,display:"flex",alignItems:"center",gap:10}}>
-        <span style={{fontSize:13,color:"#ffd70066"}}>⚠</span>
-        <span style={{fontSize:12,color:"#3a4050",letterSpacing:.3}}>Odds are for informational purposes only. Must be 19+ to bet. Gambling involves risk. Play responsibly.</span>
+      <div style={{ background: "#0a0d10", border: "1px solid #ffd70022", borderRadius: 10, padding: "12px 18px", marginBottom: 28, display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ fontSize: 13, color: "#ffd70066" }}>⚠</span>
+        <span style={{ fontSize: 12, color: "#3a4050", letterSpacing: 0.3 }}>Odds are for informational purposes only. Must be 19+ to bet. Gambling involves risk. Play responsibly.</span>
       </div>
-
-      <div style={{display:"flex",gap:8,marginBottom:28,flexWrap:"wrap"}}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
         {filters.map(f => {
           const active = filter === f;
           return (
-            <button key={f} onClick={()=>setFilter(f)} style={{
-              padding:"5px 14px",
-              background: active ? "#ffd70014" : "transparent",
-              border: `1px solid ${active ? "#ffd70055" : "#161e2e"}`,
-              borderRadius:20,
-              color: active ? "#ffd700" : "#3a5060",
-              fontFamily:"'Barlow Condensed',sans-serif",
-              fontSize:11,fontWeight:800,letterSpacing:1.5,cursor:"pointer",
-              transition:"all .15s ease",
-            }}>{f}</button>
+            <button key={f} onClick={() => setFilter(f)} style={{ padding: "5px 14px", background: active ? "#ffd70014" : "transparent", border: `1px solid ${active ? "#ffd70055" : "#161e2e"}`, borderRadius: 20, color: active ? "#ffd700" : "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 11, fontWeight: 800, letterSpacing: 1.5, cursor: "pointer", transition: "all .15s ease" }}>{f}</button>
           );
         })}
       </div>
-
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",gap:22}}>
-        {filtered.map((parlay,i) => (
-          <ParlayCard key={parlay.id} parlay={parlay} idx={i} onOpen={()=>onOpenParlay(parlay.id)}/>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 }}>
+        {filtered.map((parlay, i) => (
+          <ParlayCard key={parlay.id} parlay={parlay} idx={i} onOpen={() => onOpenParlay(parlay.id)} />
         ))}
       </div>
     </main>
@@ -671,67 +762,37 @@ function ParlayPage({ parlays, onOpenParlay }) {
 function ParlayCard({ parlay, idx, onOpen }) {
   const isPos = parlay.odds.startsWith("+");
   return (
-    <div
-      className="cfade parlay-card"
-      style={{
-        background:"#0b1018",
-        border:"1px solid #161e2e",
-        borderRadius:16,
-        padding:"22px 24px",
-        position:"relative",
-        overflow:"hidden",
-        animationDelay:`${idx*.07}s`,
-        cursor:"pointer",
-      }}
-      onClick={onOpen}
-    >
+    <div className="cfade parlay-card" style={{ background: "#0b1018", border: "1px solid #161e2e", borderRadius: 16, padding: "22px 24px", position: "relative", overflow: "hidden", animationDelay: `${idx * .07}s`, cursor: "pointer" }} onClick={onOpen}>
       {parlay.hot && (
-        <div style={{position:"absolute",top:14,right:14,display:"inline-flex",alignItems:"center",gap:5,background:"#0d0a07",border:"1px solid #ff5a1a44",borderRadius:6,padding:"4px 10px"}}>
-          <span style={{fontSize:11}}>🔥</span>
-          <span style={{fontSize:10,fontWeight:900,letterSpacing:2.5,color:"#ff6633"}}>HOT</span>
+        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6, padding: "4px 10px" }}>
+          <span style={{ fontSize: 11 }}>🔥</span>
+          <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" }}>HOT</span>
         </div>
       )}
-
-      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-        <span style={{
-          fontSize:9,fontWeight:800,letterSpacing:2,
-          color:"#ffd700",
-          background:"#ffd70014",
-          border:"1px solid #ffd70033",
-          padding:"3px 9px",borderRadius:4,
-        }}>💰 {parlay.legs}-LEG PARLAY</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+        <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 9px", borderRadius: 4 }}>💰 {parlay.legs}-LEG PARLAY</span>
       </div>
-
-      <h2 style={{fontSize:19,fontWeight:900,letterSpacing:1.5,color:"#dce6f0",marginBottom:8,lineHeight:1.2,paddingRight:parlay.hot?60:0}}>{parlay.label}</h2>
-      <p style={{fontSize:13,color:"#3a5060",lineHeight:1.6,marginBottom:18}}>{parlay.description}</p>
-
-      <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:18}}>
-        <div style={{
-          fontSize:28,fontWeight:900,
-          color: isPos ? "#4ade80" : "#ff4d4d",
-          letterSpacing:1,
-          lineHeight:1,
-        }}>{parlay.odds}</div>
-        <div style={{flex:1}}>
-          <div style={{fontSize:10,color:"#2a4050",letterSpacing:1,marginBottom:2}}>AMERICAN ODDS</div>
-          <div style={{fontSize:12,color:"#ffd700",fontWeight:700}}>{parlay.payout}</div>
+      <h2 style={{ fontSize: 19, fontWeight: 900, letterSpacing: 1.5, color: "#dce6f0", marginBottom: 8, lineHeight: 1.2, paddingRight: parlay.hot ? 60 : 0 }}>{parlay.label}</h2>
+      <p style={{ fontSize: 13, color: "#3a5060", lineHeight: 1.6, marginBottom: 18 }}>{parlay.description}</p>
+      <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 18 }}>
+        <div style={{ fontSize: 28, fontWeight: 900, color: isPos ? "#4ade80" : "#ff4d4d", letterSpacing: 1, lineHeight: 1 }}>{parlay.odds}</div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 10, color: "#2a4050", letterSpacing: 1, marginBottom: 2 }}>AMERICAN ODDS</div>
+          <div style={{ fontSize: 12, color: "#ffd700", fontWeight: 700 }}>{parlay.payout}</div>
         </div>
       </div>
-
-      <div style={{borderTop:"1px solid #0f1820",paddingTop:14,display:"flex",flexDirection:"column",gap:7}}>
-        {parlay.picks.slice(0,2).map((pick,i) => {
-          const [bg,tc] = SPORT_COLORS[pick.sport]||SPORT_COLORS["NHL"];
+      <div style={{ borderTop: "1px solid #0f1820", paddingTop: 14, display: "flex", flexDirection: "column", gap: 7 }}>
+        {parlay.picks.slice(0, 2).map((pick, i) => {
+          const [bg, tc] = SPORT_COLORS[pick.sport] || SPORT_COLORS["NHL"];
           return (
-            <div key={i} style={{display:"flex",alignItems:"center",gap:8}}>
-              <span style={{fontSize:9,fontWeight:800,letterSpacing:1,color:tc,background:bg,border:`1px solid ${tc}44`,padding:"2px 7px",borderRadius:3,flexShrink:0,whiteSpace:"nowrap"}}>{pick.sport}</span>
-              <span style={{fontSize:12,color:"#5a7080",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}}>{pick.bet}</span>
-              <span style={{fontSize:12,fontWeight:700,color:"#3a5060",flexShrink:0}}>{pick.line}</span>
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: 1, color: tc, background: bg, border: `1px solid ${tc}44`, padding: "2px 7px", borderRadius: 3, flexShrink: 0, whiteSpace: "nowrap" }}>{pick.sport}</span>
+              <span style={{ fontSize: 12, color: "#5a7080", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{pick.bet}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: "#3a5060", flexShrink: 0 }}>{pick.line}</span>
             </div>
           );
         })}
-        {parlay.picks.length > 2 && (
-          <div style={{fontSize:11,color:"#1e3040",letterSpacing:.5,paddingTop:2}}>+{parlay.picks.length-2} more leg{parlay.picks.length-2>1?"s":""} → tap to view</div>
-        )}
+        {parlay.picks.length > 2 && <div style={{ fontSize: 11, color: "#1e3040", letterSpacing: 0.5, paddingTop: 2 }}>+{parlay.picks.length - 2} more leg{parlay.picks.length - 2 > 1 ? "s" : ""} → tap to view</div>}
       </div>
     </div>
   );
@@ -747,17 +808,17 @@ function ParlayDetailPage({ parlay, onBack }) {
     if (aiVerdict || aiLoading) return;
     setAiLoading(true);
     try {
-      const picksText = parlay.picks.map((p,i) => `${i+1}. ${p.game} — ${p.bet} (${p.line})`).join("\n");
+      const picksText = parlay.picks.map((p, i) => `${i + 1}. ${p.game} — ${p.bet} (${p.line})`).join("\n");
       const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST", headers:{"Content-Type":"application/json"},
+        method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model:"claude-sonnet-4-20250514", max_tokens:1000,
-          system:"You are a sharp sports betting analyst who specializes in NHL parlays. Give a punchy, confident 3-4 sentence breakdown of this parlay's potential. Mention the riskiest leg and the strongest leg. End with a bold one-line take in ALL CAPS.",
-          messages:[{role:"user",content:`Parlay: ${parlay.label}\nOdds: ${parlay.odds}\nPayout: ${parlay.payout}\n\nLegs:\n${picksText}\n\nGive your analyst breakdown.`}],
+          model: "claude-sonnet-4-20250514", max_tokens: 1000,
+          system: "You are a sharp sports betting analyst who specializes in NHL parlays. Give a punchy, confident 3-4 sentence breakdown of this parlay's potential. Mention the riskiest leg and the strongest leg. End with a bold one-line take in ALL CAPS.",
+          messages: [{ role: "user", content: `Parlay: ${parlay.label}\nOdds: ${parlay.odds}\nPayout: ${parlay.payout}\n\nLegs:\n${picksText}\n\nGive your analyst breakdown.` }],
         }),
       });
       const d = await res.json();
-      setAiVerdict(d.content?.map(b=>b.text||"").join("")||"Verdict unavailable.");
+      setAiVerdict(d.content?.map(b => b.text || "").join("") || "Verdict unavailable.");
     } catch { setAiVerdict("AI analyst timed out — try again."); }
     setAiLoading(false);
   };
@@ -767,93 +828,67 @@ function ParlayDetailPage({ parlay, onBack }) {
   return (
     <main style={S.main}>
       <button style={S.back} onClick={onBack}>← Back to Parlays</button>
-      <div style={{maxWidth:680,margin:"0 auto"}}>
-
-        <div style={{background:"#0b1018",border:"1px solid #1a2030",borderRadius:16,padding:"28px 30px",marginBottom:4}}>
-          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
-            <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ffd700",background:"#ffd70014",border:"1px solid #ffd70033",padding:"3px 10px",borderRadius:4}}>💰 {parlay.legs}-LEG PARLAY</span>
-            {parlay.hot && <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ff6633",background:"#ff663314",border:"1px solid #ff663333",padding:"3px 10px",borderRadius:4}}>🔥 HOT</span>}
+      <div style={{ maxWidth: 680, margin: "0 auto" }}>
+        <div style={{ background: "#0b1018", border: "1px solid #1a2030", borderRadius: 16, padding: "28px 30px", marginBottom: 4 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+            <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 10px", borderRadius: 4 }}>💰 {parlay.legs}-LEG PARLAY</span>
+            {parlay.hot && <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#ff6633", background: "#ff663314", border: "1px solid #ff663333", padding: "3px 10px", borderRadius: 4 }}>🔥 HOT</span>}
           </div>
-
-          <h1 style={{fontSize:"clamp(22px,4vw,34px)",fontWeight:900,letterSpacing:2,color:"#dce6f0",marginBottom:10,lineHeight:1.15}}>{parlay.label}</h1>
-          <p style={{fontSize:14,color:"#3a5060",lineHeight:1.7,marginBottom:24}}>{parlay.description}</p>
-
-          <div style={{display:"flex",gap:16,marginBottom:28,flexWrap:"wrap"}}>
-            <div style={{background:"#070c12",border:"1px solid #0f1820",borderRadius:10,padding:"16px 22px",flex:1,minWidth:140}}>
-              <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#2a4050",marginBottom:6}}>TOTAL ODDS</div>
-              <div style={{fontSize:36,fontWeight:900,color:isPos?"#4ade80":"#ff4d4d",letterSpacing:1,lineHeight:1}}>{parlay.odds}</div>
+          <h1 style={{ fontSize: "clamp(22px,4vw,34px)", fontWeight: 900, letterSpacing: 2, color: "#dce6f0", marginBottom: 10, lineHeight: 1.15 }}>{parlay.label}</h1>
+          <p style={{ fontSize: 14, color: "#3a5060", lineHeight: 1.7, marginBottom: 24 }}>{parlay.description}</p>
+          <div style={{ display: "flex", gap: 16, marginBottom: 28, flexWrap: "wrap" }}>
+            <div style={{ background: "#070c12", border: "1px solid #0f1820", borderRadius: 10, padding: "16px 22px", flex: 1, minWidth: 140 }}>
+              <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#2a4050", marginBottom: 6 }}>TOTAL ODDS</div>
+              <div style={{ fontSize: 36, fontWeight: 900, color: isPos ? "#4ade80" : "#ff4d4d", letterSpacing: 1, lineHeight: 1 }}>{parlay.odds}</div>
             </div>
-            <div style={{background:"#070c12",border:"1px solid #0f1820",borderRadius:10,padding:"16px 22px",flex:1,minWidth:140}}>
-              <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#2a4050",marginBottom:6}}>$100 PAYS</div>
-              <div style={{fontSize:28,fontWeight:900,color:"#ffd700",letterSpacing:1,lineHeight:1}}>{parlay.payout.split("→")[1]?.trim()}</div>
+            <div style={{ background: "#070c12", border: "1px solid #0f1820", borderRadius: 10, padding: "16px 22px", flex: 1, minWidth: 140 }}>
+              <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#2a4050", marginBottom: 6 }}>$100 PAYS</div>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "#ffd700", letterSpacing: 1, lineHeight: 1 }}>{parlay.payout.split("→")[1]?.trim()}</div>
             </div>
-            <div style={{background:"#070c12",border:"1px solid #0f1820",borderRadius:10,padding:"16px 22px",flex:1,minWidth:100}}>
-              <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#2a4050",marginBottom:6}}>LEGS</div>
-              <div style={{fontSize:36,fontWeight:900,color:"#c084fc",letterSpacing:1,lineHeight:1}}>{parlay.legs}</div>
+            <div style={{ background: "#070c12", border: "1px solid #0f1820", borderRadius: 10, padding: "16px 22px", flex: 1, minWidth: 100 }}>
+              <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#2a4050", marginBottom: 6 }}>LEGS</div>
+              <div style={{ fontSize: 36, fontWeight: 900, color: "#c084fc", letterSpacing: 1, lineHeight: 1 }}>{parlay.legs}</div>
             </div>
           </div>
-
-          <div style={{fontSize:11,fontWeight:800,letterSpacing:2.5,color:"#1e3040",marginBottom:14}}>ALL PICKS</div>
-          <div style={{display:"flex",flexDirection:"column",gap:10}}>
-            {parlay.picks.map((pick,i) => {
-              const [bg,tc,bc] = SPORT_COLORS[pick.sport]||SPORT_COLORS["NHL"];
+          <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2.5, color: "#1e3040", marginBottom: 14 }}>ALL PICKS</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {parlay.picks.map((pick, i) => {
+              const [bg, tc, bc] = SPORT_COLORS[pick.sport] || SPORT_COLORS["NHL"];
               const lineNum = parseFloat(pick.line);
               const lineColor = lineNum > 0 ? "#4ade80" : lineNum < -150 ? "#ff6b6b" : "#ffd700";
               return (
-                <div key={i} style={{
-                  background:"#070b12",
-                  border:`1px solid #111820`,
-                  borderLeft:`3px solid ${tc}`,
-                  borderRadius:8,
-                  padding:"14px 18px",
-                  display:"flex",
-                  alignItems:"center",
-                  gap:12,
-                  flexWrap:"wrap",
-                }}>
-                  <div style={{
-                    width:24,height:24,borderRadius:"50%",
-                    background:bg,border:`1px solid ${bc}`,
-                    display:"flex",alignItems:"center",justifyContent:"center",
-                    fontSize:11,fontWeight:900,color:tc,flexShrink:0,
-                  }}>{i+1}</div>
-                  <div style={{flex:1,minWidth:180}}>
-                    <div style={{fontSize:11,color:"#2a4050",letterSpacing:.5,marginBottom:3}}>{pick.game}</div>
-                    <div style={{fontSize:15,fontWeight:700,color:"#c0d0e0"}}>{pick.bet}</div>
+                <div key={i} style={{ background: "#070b12", border: "1px solid #111820", borderLeft: `3px solid ${tc}`, borderRadius: 8, padding: "14px 18px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+                  <div style={{ width: 24, height: 24, borderRadius: "50%", background: bg, border: `1px solid ${bc}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 900, color: tc, flexShrink: 0 }}>{i + 1}</div>
+                  <div style={{ flex: 1, minWidth: 180 }}>
+                    <div style={{ fontSize: 11, color: "#2a4050", letterSpacing: 0.5, marginBottom: 3 }}>{pick.game}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "#c0d0e0" }}>{pick.bet}</div>
                   </div>
-                  <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
-                    <span style={{fontSize:9,fontWeight:800,letterSpacing:1.5,color:tc,background:bg,border:`1px solid ${bc}`,padding:"3px 8px",borderRadius:3}}>{pick.sport}</span>
-                    <span style={{fontSize:16,fontWeight:900,color:lineColor}}>{pick.line}</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                    <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: 1.5, color: tc, background: bg, border: `1px solid ${bc}`, padding: "3px 8px", borderRadius: 3 }}>{pick.sport}</span>
+                    <span style={{ fontSize: 16, fontWeight: 900, color: lineColor }}>{pick.line}</span>
                   </div>
                 </div>
               );
             })}
           </div>
         </div>
-
         <div style={S.aiBox}>
           <div style={S.aiHdr}>
             <span style={S.aiIcon}>🤖</span>
             <span style={S.aiLbl}>AI ANALYST BREAKDOWN</span>
-            <span style={{flex:1}}/>
-            <span style={{fontSize:10,color:"#2a3850",letterSpacing:1}}>POWERED BY CLAUDE</span>
+            <span style={{ flex: 1 }} />
+            <span style={{ fontSize: 10, color: "#2a3850", letterSpacing: 1 }}>POWERED BY CLAUDE</span>
           </div>
           {aiLoading
-            ? <div style={{padding:"8px 0"}}>
-                <p style={S.aiWait} className="pulse">Breaking down the parlay…</p>
-                <div style={{display:"flex",gap:6,marginTop:14}}>
-                  {[1,2,3].map(i=><div key={i} style={{height:6,flex:1,background:"#0f1825",borderRadius:3}}/>)}
-                </div>
-              </div>
+            ? <div style={{ padding: "8px 0" }}><p style={S.aiWait} className="pulse">Breaking down the parlay…</p><div style={{ display: "flex", gap: 6, marginTop: 14 }}>{[1, 2, 3].map(i => <div key={i} style={{ height: 6, flex: 1, background: "#0f1825", borderRadius: 3 }} />)}</div></div>
             : aiVerdict
               ? <p style={S.aiTxt}>{aiVerdict}</p>
               : <button style={S.aiCallBtn} className="hbtn" onClick={getAIParlayVerdict}>Get AI Breakdown →</button>
           }
         </div>
-
-        <div style={{marginTop:16,background:"#070a0e",border:"1px solid #0f1418",borderRadius:8,padding:"12px 16px"}}>
-          <p style={{fontSize:11,color:"#1e2a36",lineHeight:1.7,letterSpacing:.2}}>
-            ⚠️ <strong style={{color:"#2a3a46"}}>Disclaimer:</strong> Odds shown are for entertainment and informational purposes only. FanVerdict does not facilitate gambling transactions. Lines may differ from your sportsbook. Must be 19+ (18+ in some jurisdictions). If gambling is a problem for you, call 1-800-522-4700 (North America).
+        <div style={{ marginTop: 16, background: "#070a0e", border: "1px solid #0f1418", borderRadius: 8, padding: "12px 16px" }}>
+          <p style={{ fontSize: 11, color: "#1e2a36", lineHeight: 1.7, letterSpacing: 0.2 }}>
+            ⚠️ <strong style={{ color: "#2a3a46" }}>Disclaimer:</strong> Odds shown are for entertainment and informational purposes only. FanVerdict does not facilitate gambling transactions. Lines may differ from your sportsbook. Must be 19+ (18+ in some jurisdictions). If gambling is a problem for you, call 1-800-522-4700 (North America).
           </p>
         </div>
       </div>
@@ -871,86 +906,68 @@ function ForumPage({ articles, onOpenArticle }) {
 
   return (
     <main style={S.main}>
-      <div style={{marginBottom:32}}>
-        <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:8}}>
-          <h1 style={{fontSize:"clamp(28px,5vw,52px)",fontWeight:900,letterSpacing:3,color:"#dce6f0"}}>THE LOCKER ROOM</h1>
-          <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#00d4ff",background:"#00d4ff14",border:"1px solid #00d4ff33",padding:"3px 10px",borderRadius:4,alignSelf:"center"}}>FORUM</span>
+      <div style={{ marginBottom: 32 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 8 }}>
+          <h1 style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 900, letterSpacing: 3, color: "#dce6f0" }}>THE LOCKER ROOM</h1>
+          <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", background: "#00d4ff14", border: "1px solid #00d4ff33", padding: "3px 10px", borderRadius: 4, alignSelf: "center" }}>FORUM</span>
         </div>
-        <p style={{color:"#2a4050",fontSize:14,letterSpacing:1}}>Controversial calls. Epic fights. The debates that never die.</p>
+        <p style={{ color: "#2a4050", fontSize: 14, letterSpacing: 1 }}>Controversial calls. Epic fights. The debates that never die.</p>
       </div>
-      <div style={{display:"flex",gap:8,marginBottom:28,flexWrap:"wrap"}}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
         {categories.map(cat => {
           const col = CAT_COLORS[cat] || "#00d4ff";
           const active = filter === cat;
           return (
-            <button key={cat} onClick={()=>setFilter(cat)} style={{
-              padding:"5px 14px",
-              background: active ? col+"1a" : "transparent",
-              border: `1px solid ${active ? col+"66" : "#161e2e"}`,
-              borderRadius:20,
-              color: active ? col : "#3a5060",
-              fontFamily:"'Barlow Condensed',sans-serif",
-              fontSize:11, fontWeight:800, letterSpacing:1.5, cursor:"pointer",
-              transition:"all .15s ease",
-            }}>{cat}</button>
+            <button key={cat} onClick={() => setFilter(cat)} style={{ padding: "5px 14px", background: active ? col + "1a" : "transparent", border: `1px solid ${active ? col + "66" : "#161e2e"}`, borderRadius: 20, color: active ? col : "#3a5060", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 11, fontWeight: 800, letterSpacing: 1.5, cursor: "pointer", transition: "all .15s ease" }}>{cat}</button>
           );
         })}
       </div>
-      {filtered.length===0 && (
-        <div style={{textAlign:"center",padding:"60px 0",color:"#2a3a4a"}}>
-          <p style={{fontSize:16,letterSpacing:1}}>No articles in this category yet.</p>
-        </div>
-      )}
+      {filtered.length === 0 && <div style={{ textAlign: "center", padding: "60px 0", color: "#2a3a4a" }}><p style={{ fontSize: 16, letterSpacing: 1 }}>No articles in this category yet.</p></div>}
       {featured && (
-        <div className="art-card" onClick={()=>onOpenArticle(featured)} style={{
-          background:"#0c1420",
-          border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}22`,
-          borderRadius:16, marginBottom:24, overflow:"hidden",
-        }}>
-          <div style={{position:"relative",height:240,overflow:"hidden"}}>
-            <img src={featured.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .4s ease"}} onError={e=>e.target.style.display="none"}/>
-            <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 15%,#0c142090 60%,#0c1420 100%)"}}/>
-            <div style={{position:"absolute",top:16,right:16,display:"flex",gap:8}}>
-              {featured.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#07090dcc",border:"1px solid #ff5a1a55",padding:"4px 10px",borderRadius:20,letterSpacing:1}}>🔥 HOT</span>}
+        <div className="art-card" onClick={() => onOpenArticle(featured)} style={{ background: "#0c1420", border: `1px solid ${CAT_COLORS[featured.category] || "#00d4ff"}22`, borderRadius: 16, marginBottom: 24, overflow: "hidden" }}>
+          <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
+            <img src={featured.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .4s ease" }} onError={e => e.target.style.display = "none"} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent 15%,#0c142090 60%,#0c1420 100%)" }} />
+            <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8 }}>
+              {featured.hot && <span style={{ fontSize: 10, fontWeight: 800, color: "#ff7040", background: "#07090dcc", border: "1px solid #ff5a1a55", padding: "4px 10px", borderRadius: 20, letterSpacing: 1 }}>🔥 HOT</span>}
             </div>
-            <div style={{position:"absolute",bottom:18,left:22}}>
-              <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:CAT_COLORS[featured.category]||"#00d4ff",background:"#07090dcc",border:`1px solid ${CAT_COLORS[featured.category]||"#00d4ff"}44`,padding:"4px 12px",borderRadius:20}}>{featured.category}</span>
+            <div style={{ position: "absolute", bottom: 18, left: 22 }}>
+              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: CAT_COLORS[featured.category] || "#00d4ff", background: "#07090dcc", border: `1px solid ${CAT_COLORS[featured.category] || "#00d4ff"}44`, padding: "4px 12px", borderRadius: 20 }}>{featured.category}</span>
             </div>
           </div>
-          <div style={{padding:"22px 26px 24px"}}>
-            <h2 style={{fontSize:"clamp(18px,2.5vw,26px)",fontWeight:900,lineHeight:1.2,color:"#dce6f0",marginBottom:10}}>{featured.title}</h2>
-            <p style={{fontSize:13,color:"#4a6070",lineHeight:1.75,marginBottom:16}}>{featured.excerpt}</p>
-            <div style={{display:"flex",gap:12,fontSize:11,color:"#243040",alignItems:"center"}}>
-              <span style={{color:"#3a5060"}}>By {featured.author}</span>
-              <span style={{color:"#1a2a36"}}>·</span>
+          <div style={{ padding: "22px 26px 24px" }}>
+            <h2 style={{ fontSize: "clamp(18px,2.5vw,26px)", fontWeight: 900, lineHeight: 1.2, color: "#dce6f0", marginBottom: 10 }}>{featured.title}</h2>
+            <p style={{ fontSize: 13, color: "#4a6070", lineHeight: 1.75, marginBottom: 16 }}>{featured.excerpt}</p>
+            <div style={{ display: "flex", gap: 12, fontSize: 11, color: "#243040", alignItems: "center" }}>
+              <span style={{ color: "#3a5060" }}>By {featured.author}</span>
+              <span style={{ color: "#1a2a36" }}>·</span>
               <span>{featured.date}</span>
-              <span style={{color:"#1a2a36"}}>·</span>
+              <span style={{ color: "#1a2a36" }}>·</span>
               <span>{featured.read_time}</span>
             </div>
           </div>
         </div>
       )}
       {rest.length > 0 && (
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(290px,1fr))",gap:18}}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(290px,1fr))", gap: 18 }}>
           {rest.map(a => {
-            const col = CAT_COLORS[a.category]||"#00d4ff";
+            const col = CAT_COLORS[a.category] || "#00d4ff";
             return (
-              <div key={a.id} className="art-card" onClick={()=>onOpenArticle(a)}
-                style={{background:"#0c1420",border:"1px solid #121a24",borderRadius:14,overflow:"hidden"}}>
-                <div style={{position:"relative",height:160,overflow:"hidden"}}>
-                  <img src={a.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
-                  <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 25%,#0c1420dd 100%)"}}/>
-                  <div style={{position:"absolute",top:10,right:10}}>
-                    {a.hot && <span style={{fontSize:9,fontWeight:800,color:"#ff7040",background:"#07090dcc",border:"1px solid #ff5a1a44",padding:"3px 8px",borderRadius:20,letterSpacing:1}}>🔥 HOT</span>}
+              <div key={a.id} className="art-card" onClick={() => onOpenArticle(a)} style={{ background: "#0c1420", border: "1px solid #121a24", borderRadius: 14, overflow: "hidden" }}>
+                <div style={{ position: "relative", height: 160, overflow: "hidden" }}>
+                  <img src={a.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent 25%,#0c1420dd 100%)" }} />
+                  <div style={{ position: "absolute", top: 10, right: 10 }}>
+                    {a.hot && <span style={{ fontSize: 9, fontWeight: 800, color: "#ff7040", background: "#07090dcc", border: "1px solid #ff5a1a44", padding: "3px 8px", borderRadius: 20, letterSpacing: 1 }}>🔥 HOT</span>}
                   </div>
-                  <div style={{position:"absolute",bottom:10,left:12}}>
-                    <span style={{fontSize:9,fontWeight:800,letterSpacing:1.5,color:col,background:"#07090dcc",border:`1px solid ${col}44`,padding:"3px 9px",borderRadius:20}}>{a.category}</span>
+                  <div style={{ position: "absolute", bottom: 10, left: 12 }}>
+                    <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: 1.5, color: col, background: "#07090dcc", border: `1px solid ${col}44`, padding: "3px 9px", borderRadius: 20 }}>{a.category}</span>
                   </div>
                 </div>
-                <div style={{padding:"16px 18px 18px"}}>
-                  <h3 style={{fontSize:16,fontWeight:800,lineHeight:1.25,color:"#dce6f0",marginBottom:8}}>{a.title}</h3>
-                  <p style={{fontSize:12,color:"#3a5060",lineHeight:1.65,marginBottom:12,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{a.excerpt}</p>
-                  <div style={{display:"flex",justifyContent:"space-between",fontSize:11,color:"#1e3040"}}>
+                <div style={{ padding: "16px 18px 18px" }}>
+                  <h3 style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.25, color: "#dce6f0", marginBottom: 8 }}>{a.title}</h3>
+                  <p style={{ fontSize: 12, color: "#3a5060", lineHeight: 1.65, marginBottom: 12, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{a.excerpt}</p>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#1e3040" }}>
                     <span>{a.author}</span><span>{a.read_time}</span>
                   </div>
                 </div>
@@ -967,22 +984,22 @@ function ForumPage({ articles, onOpenArticle }) {
 function ArticlePage({ article, onBack }) {
   const [aiContent, setAiContent] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const color = CAT_COLORS[article.category]||"#00d4ff";
+  const color = CAT_COLORS[article.category] || "#00d4ff";
 
   const generateArticle = async () => {
     if (aiContent || aiLoading) return;
     setAiLoading(true);
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST", headers:{"Content-Type":"application/json"},
+        method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model:"claude-sonnet-4-20250514", max_tokens:1000,
-          system:"You are a sharp, opinionated hockey journalist. Write vivid, punchy sports writing. Take strong stances. Short paragraphs. No fluff.",
-          messages:[{role:"user",content:`Write a full ~400 word editorial based on:\n\nTitle: ${article.title}\nCategory: ${article.category}\nPremise: ${article.excerpt}\n\nEngaging, controversial, take a clear stance.`}],
+          model: "claude-sonnet-4-20250514", max_tokens: 1000,
+          system: "You are a sharp, opinionated hockey journalist. Write vivid, punchy sports writing. Take strong stances. Short paragraphs. No fluff.",
+          messages: [{ role: "user", content: `Write a full ~400 word editorial based on:\n\nTitle: ${article.title}\nCategory: ${article.category}\nPremise: ${article.excerpt}\n\nEngaging, controversial, take a clear stance.` }],
         }),
       });
       const d = await res.json();
-      setAiContent(d.content?.map(b=>b.text||"").join("")||"");
+      setAiContent(d.content?.map(b => b.text || "").join("") || "");
     } catch { setAiContent("Article generation failed — try again."); }
     setAiLoading(false);
   };
@@ -992,36 +1009,33 @@ function ArticlePage({ article, onBack }) {
   return (
     <main style={S.main}>
       <button style={S.back} onClick={onBack}>← Back to Forum</button>
-      <div style={{maxWidth:700,margin:"0 auto"}}>
-        <div style={{borderRadius:16,overflow:"hidden",marginBottom:30,position:"relative",height:300}}>
-          <img src={article.photo} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
-          <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,transparent 20%,#07090d88 55%,#07090d 100%)"}}/>
-          <div style={{position:"absolute",top:16,right:16,display:"flex",gap:8}}>
-            {article.hot && <span style={{fontSize:10,fontWeight:800,color:"#ff7040",background:"#07090dcc",border:"1px solid #ff5a1a55",padding:"4px 10px",borderRadius:20,letterSpacing:1}}>🔥 HOT</span>}
+      <div style={{ maxWidth: 700, margin: "0 auto" }}>
+        <div style={{ borderRadius: 16, overflow: "hidden", marginBottom: 30, position: "relative", height: 300 }}>
+          <img src={article.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent 20%,#07090d88 55%,#07090d 100%)" }} />
+          <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8 }}>
+            {article.hot && <span style={{ fontSize: 10, fontWeight: 800, color: "#ff7040", background: "#07090dcc", border: "1px solid #ff5a1a55", padding: "4px 10px", borderRadius: 20, letterSpacing: 1 }}>🔥 HOT</span>}
           </div>
-          <div style={{position:"absolute",bottom:20,left:24}}>
-            <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color,background:"#07090dcc",border:`1px solid ${color}44`,padding:"4px 12px",borderRadius:20}}>{article.category}</span>
+          <div style={{ position: "absolute", bottom: 20, left: 24 }}>
+            <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color, background: "#07090dcc", border: `1px solid ${color}44`, padding: "4px 12px", borderRadius: 20 }}>{article.category}</span>
           </div>
         </div>
-        <h1 style={{fontSize:"clamp(22px,4vw,38px)",fontWeight:900,lineHeight:1.15,color:"#dce6f0",marginBottom:14}}>{article.title}</h1>
-        <div style={{display:"flex",gap:12,fontSize:12,color:"#243040",marginBottom:28,flexWrap:"wrap",alignItems:"center"}}>
-          <span style={{color:"#3a5060"}}>By {article.author}</span>
-          <span style={{color:"#1a2a36"}}>·</span>
+        <h1 style={{ fontSize: "clamp(22px,4vw,38px)", fontWeight: 900, lineHeight: 1.15, color: "#dce6f0", marginBottom: 14 }}>{article.title}</h1>
+        <div style={{ display: "flex", gap: 12, fontSize: 12, color: "#243040", marginBottom: 28, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ color: "#3a5060" }}>By {article.author}</span>
+          <span style={{ color: "#1a2a36" }}>·</span>
           <span>{article.date}</span>
-          <span style={{color:"#1a2a36"}}>·</span>
+          <span style={{ color: "#1a2a36" }}>·</span>
           <span>{article.read_time}</span>
         </div>
-        <div style={{borderLeft:`3px solid ${color}44`,paddingLeft:20,marginBottom:28}}>
-          <p style={{fontSize:16,color:"#6a8090",lineHeight:1.85,fontStyle:"italic"}}>{article.excerpt}</p>
+        <div style={{ borderLeft: `3px solid ${color}44`, paddingLeft: 20, marginBottom: 28 }}>
+          <p style={{ fontSize: 16, color: "#6a8090", lineHeight: 1.85, fontStyle: "italic" }}>{article.excerpt}</p>
         </div>
-        <div style={{background:"#090e18",border:"1px solid #111828",borderRadius:14,padding:28,minHeight:200}}>
+        <div style={{ background: "#090e18", border: "1px solid #111828", borderRadius: 14, padding: 28, minHeight: 200 }}>
           {aiLoading
-            ? <div>
-                <p className="pulse" style={{color:"#3a4060",fontSize:14,fontStyle:"italic",marginBottom:16}}>Writing the full story…</p>
-                {[100,85,92,70].map((w,i)=><div key={i} style={{height:10,width:`${w}%`,background:"#0f1825",borderRadius:3,marginBottom:10}}/>)}
-              </div>
+            ? <div><p className="pulse" style={{ color: "#3a4060", fontSize: 14, fontStyle: "italic", marginBottom: 16 }}>Writing the full story…</p>{[100, 85, 92, 70].map((w, i) => <div key={i} style={{ height: 10, width: `${w}%`, background: "#0f1825", borderRadius: 3, marginBottom: 10 }} />)}</div>
             : aiContent
-              ? <div style={{fontSize:14,color:"#8a9eb0",lineHeight:1.95,whiteSpace:"pre-wrap"}}>{aiContent}</div>
+              ? <div style={{ fontSize: 14, color: "#8a9eb0", lineHeight: 1.95, whiteSpace: "pre-wrap" }}>{aiContent}</div>
               : <button style={S.aiCallBtn} className="hbtn" onClick={generateArticle}>Load Full Article →</button>
           }
         </div>
@@ -1035,25 +1049,19 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
   return (
     <main style={S.main}>
       <button style={S.back} onClick={onBack}>← Back</button>
-      <div style={{maxWidth:460,margin:"0 auto"}}>
-        <div style={{...S.card,textAlign:"center",padding:"40px 36px"}}>
+      <div style={{ maxWidth: 460, margin: "0 auto" }}>
+        <div style={{ ...S.card, textAlign: "center", padding: "40px 36px" }}>
           {profile?.avatar_url
-            ? <img src={profile.avatar_url} style={{width:76,height:76,borderRadius:"50%",margin:"0 auto 18px",display:"block",border:"2px solid #00d4ff33"}} alt="avatar"/>
-            : <div style={{width:76,height:76,borderRadius:"50%",background:"#00d4ff0d",border:"2px solid #00d4ff22",margin:"0 auto 18px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:30}}>👤</div>
+            ? <img src={profile.avatar_url} style={{ width: 76, height: 76, borderRadius: "50%", margin: "0 auto 18px", display: "block", border: "2px solid #00d4ff33" }} alt="avatar" />
+            : <div style={{ width: 76, height: 76, borderRadius: "50%", background: "#00d4ff0d", border: "2px solid #00d4ff22", margin: "0 auto 18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>
           }
-          <h2 style={{fontSize:26,fontWeight:900,letterSpacing:2,color:"#dce6f0",marginBottom:4}}>{profile?.display_name||"Fan"}</h2>
-          <p style={{fontSize:13,color:"#2a4050",marginBottom:30,letterSpacing:.3}}>{user?.email}</p>
-          <div style={{display:"flex",gap:14,justifyContent:"center",marginBottom:32}}>
-            <div style={S.statBox}>
-              <div style={S.statNum}>{votedCount}</div>
-              <div style={S.statLbl}>VOTES CAST</div>
-            </div>
-            <div style={S.statBox}>
-              <div style={S.statNum}>{savedCount}</div>
-              <div style={S.statLbl}>SAVED</div>
-            </div>
+          <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: 2, color: "#dce6f0", marginBottom: 4 }}>{profile?.display_name || "Fan"}</h2>
+          <p style={{ fontSize: 13, color: "#2a4050", marginBottom: 30, letterSpacing: 0.3 }}>{user?.email}</p>
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", marginBottom: 32 }}>
+            <div style={S.statBox}><div style={S.statNum}>{votedCount}</div><div style={S.statLbl}>VOTES CAST</div></div>
+            <div style={S.statBox}><div style={S.statNum}>{savedCount}</div><div style={S.statLbl}>SAVED</div></div>
           </div>
-          <button style={{...S.subBtn,background:"transparent",border:"1px solid #ff1a1a33",color:"#ff4d4d"}} onClick={onLogout}>LOG OUT</button>
+          <button style={{ ...S.subBtn, background: "transparent", border: "1px solid #ff1a1a33", color: "#ff4d4d" }} onClick={onLogout}>LOG OUT</button>
         </div>
       </div>
     </main>
@@ -1061,30 +1069,32 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
 }
 
 // ── Feed Card ──
-function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail }) {
+function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   return (
-    <div style={{...S.card,animationDelay:`${idx*.07}s`}} className="cfade feed-card">
+    <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
       {item.hot && (
         <div style={S.hotBadge}>
-          <span style={{fontSize:11}}>🔥</span>
+          <span style={{ fontSize: 11 }}>🔥</span>
           <span style={S.hotText}>HOT</span>
         </div>
       )}
-      <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote}/>
+      <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} />
       <button style={S.aiBtn} className="hbtn" onClick={() => onDetail(item)}>
-        <span style={{marginRight:6}}>🤖</span> Get AI Ref Verdict →
+        <span style={{ marginRight: 6 }}>🤖</span> Get AI Ref Verdict →
       </button>
     </div>
   );
 }
 
 // ── Card Body ──
-function CardBody({ item, uv, lv, pct, total, onVote }) {
-  const [bg,tc,bc] = COLORS[item.type]||COLORS["GENERAL"];
+function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt }) {
+  const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
+  const hasVoted = uv !== undefined;
+
   return (
     <>
       <div style={S.meta}>
-        <span style={{...S.tag,background:bg,color:tc,borderColor:bc}}>{item.type}</span>
+        <span style={{ ...S.tag, background: bg, color: tc, borderColor: bc }}>{item.type}</span>
         <span style={S.game}>{item.game}</span>
       </div>
       <h2 style={S.ctitle}>{item.title}</h2>
@@ -1093,306 +1103,298 @@ function CardBody({ item, uv, lv, pct, total, onVote }) {
         <span style={S.offLbl}>OFFICIAL CALL </span>
         <span style={S.offTxt}>{item.official_call}</span>
       </div>
-      {uv===undefined
-        ? <div style={S.vrow}>
-            <button style={{...S.vb,...S.vba}} className="vote-btn" onClick={()=>onVote(item.id,0)}>{item.option_a}</button>
-            <button style={{...S.vb,...S.vbb}} className="vote-btn" onClick={()=>onVote(item.id,1)}>{item.option_b}</button>
-          </div>
-        : <div style={S.res}>
-            {[item.option_a,item.option_b].map((opt,oi)=>(
-              <div key={oi} style={S.rrow}>
-                <span style={{...S.rlbl,opacity:uv===oi||uv===-1?1:.35,color:uv===oi?(oi===0?"#00d4ff":"#ff4d4d"):"#6a8090"}}>{opt}</span>
-                <div style={S.btrack}>
-                  <div className="banim" style={{
-                    width:`${pct(item.id,oi)}%`,
-                    background:oi===0?"linear-gradient(90deg,#0099bb,#00d4ff)":"linear-gradient(90deg,#cc2233,#ff4d4d)",
-                    opacity:uv===oi||uv===-1?1:.25,
-                    height:"100%",borderRadius:4,
-                  }}/>
+
+      {!hasVoted ? (
+        <div>
+          {/* Teaser — blurred results for logged-out users */}
+          {!loggedIn && (
+            <div style={{ position: "relative", marginBottom: 4 }}>
+              {/* Blurred fake results */}
+              <div style={{ filter: "blur(4px)", pointerEvents: "none", userSelect: "none", marginBottom: 0 }}>
+                <div style={S.res}>
+                  {[item.option_a, item.option_b].map((opt, oi) => (
+                    <div key={oi} style={S.rrow}>
+                      <span style={{ ...S.rlbl, color: "#6a8090" }}>{opt}</span>
+                      <div style={S.btrack}>
+                        <div style={{ width: oi === 0 ? "61%" : "39%", background: oi === 0 ? "linear-gradient(90deg,#0099bb,#00d4ff)" : "linear-gradient(90deg,#cc2233,#ff4d4d)", height: "100%", borderRadius: 4 }} />
+                      </div>
+                      <span style={{ ...S.rpct, color: "#2a4050" }}>{oi === 0 ? "61" : "39"}%</span>
+                    </div>
+                  ))}
+                  <div style={S.vtot}>12,847 fan verdicts</div>
                 </div>
-                <span style={{...S.rpct,color:uv===oi?(oi===0?"#00d4ff":"#ff4d4d"):"#2a4050"}}>{pct(item.id,oi)}%</span>
               </div>
-            ))}
-            <div style={S.vtot}>{total(item.id).toLocaleString()} fan verdicts</div>
+              {/* Lock overlay */}
+              <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                <span style={{ fontSize: 18 }}>🔒</span>
+                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.5, color: "#3a5060" }}>SIGN UP TO SEE RESULTS</span>
+              </div>
+            </div>
+          )}
+          {/* Vote buttons */}
+          <div style={S.vrow}>
+            <button
+              className="vote-gate-btn"
+              style={{ ...S.vb, ...S.vba }}
+              onClick={() => onVote(item.id, 0)}
+            >
+              {item.option_a}
+              {!loggedIn && <span style={{ display: "block", fontSize: 10, opacity: 0.5, marginTop: 2, letterSpacing: 1 }}>SIGN UP TO VOTE</span>}
+            </button>
+            <button
+              className="vote-gate-btn"
+              style={{ ...S.vb, ...S.vbb }}
+              onClick={() => onVote(item.id, 1)}
+            >
+              {item.option_b}
+              {!loggedIn && <span style={{ display: "block", fontSize: 10, opacity: 0.5, marginTop: 2, letterSpacing: 1 }}>SIGN UP TO VOTE</span>}
+            </button>
           </div>
-      }
+        </div>
+      ) : (
+        <div style={S.res}>
+          {[item.option_a, item.option_b].map((opt, oi) => (
+            <div key={oi} style={S.rrow}>
+              <span style={{ ...S.rlbl, opacity: uv === oi || uv === -1 ? 1 : 0.35, color: uv === oi ? (oi === 0 ? "#00d4ff" : "#ff4d4d") : "#6a8090" }}>{opt}</span>
+              <div style={S.btrack}>
+                <div className="banim" style={{
+                  width: `${pct(item.id, oi)}%`,
+                  background: oi === 0 ? "linear-gradient(90deg,#0099bb,#00d4ff)" : "linear-gradient(90deg,#cc2233,#ff4d4d)",
+                  opacity: uv === oi || uv === -1 ? 1 : 0.25,
+                  height: "100%", borderRadius: 4,
+                }} />
+              </div>
+              <span style={{ ...S.rpct, color: uv === oi ? (oi === 0 ? "#00d4ff" : "#ff4d4d") : "#2a4050" }}>{pct(item.id, oi)}%</span>
+            </div>
+          ))}
+          <div style={S.vtot}>{total(item.id).toLocaleString()} fan verdicts</div>
+        </div>
+      )}
     </>
   );
 }
 
 // ── Admin Panel ──
 function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, parlays, onAddParlay, onDeleteParlay }) {
-  const [pw,setPw]       = useState("");
-  const [err,setErr]     = useState(false);
-  const [tab,setTab]     = useState("post");
-  const [ok,setOk]       = useState(false);
-  const [artOk,setArtOk] = useState(false);
-  const [parOk,setParOk] = useState(false);
-  const [busy,setBusy]   = useState(false);
-  const [form,setForm]   = useState({type:"GOAL REVIEW",game:"",title:"",description:"",option_a:"",option_b:"",official_call:"",hot:false});
-  const [artForm,setArtForm] = useState({category:"CONTROVERSIAL CALL",title:"",excerpt:"",author:"FanVerdict Staff",read_time:"5 min read",hot:false,photo:""});
+  const [pw, setPw]       = useState("");
+  const [err, setErr]     = useState(false);
+  const [tab, setTab]     = useState("post");
+  const [ok, setOk]       = useState(false);
+  const [artOk, setArtOk] = useState(false);
+  const [parOk, setParOk] = useState(false);
+  const [busy, setBusy]   = useState(false);
+  const [form, setForm]   = useState({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false });
+  const [artForm, setArtForm] = useState({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", hot: false, photo: "" });
 
-  // Parlay form state
-  const emptyPick = () => ({ game:"", bet:"", line:"", sport:"NHL" });
-  const [parForm, setParForm] = useState({
-    label:"", odds:"", description:"", hot:false, payout:"",
-    picks:[emptyPick(), emptyPick()],
-  });
+  const emptyPick = () => ({ game: "", bet: "", line: "", sport: "NHL" });
+  const [parForm, setParForm] = useState({ label: "", odds: "", description: "", hot: false, payout: "", picks: [emptyPick(), emptyPick()] });
 
-  const set    = (k,v) => setForm(p=>({...p,[k]:v}));
-  const setArt = (k,v) => setArtForm(p=>({...p,[k]:v}));
-  const setPar = (k,v) => setParForm(p=>({...p,[k]:v}));
+  const set    = (k, v) => setForm(p => ({ ...p, [k]: v }));
+  const setArt = (k, v) => setArtForm(p => ({ ...p, [k]: v }));
+  const setPar = (k, v) => setParForm(p => ({ ...p, [k]: v }));
 
   const updatePick = (idx, k, v) => {
-    setParForm(p => {
-      const picks = [...p.picks];
-      picks[idx] = { ...picks[idx], [k]: v };
-      return { ...p, picks };
-    });
+    setParForm(p => { const picks = [...p.picks]; picks[idx] = { ...picks[idx], [k]: v }; return { ...p, picks }; });
   };
   const addPick = () => setParForm(p => ({ ...p, picks: [...p.picks, emptyPick()] }));
-  const removePick = (idx) => setParForm(p => ({ ...p, picks: p.picks.filter((_,i)=>i!==idx) }));
+  const removePick = (idx) => setParForm(p => ({ ...p, picks: p.picks.filter((_, i) => i !== idx) }));
 
-  const tryAuth = () => { if(pw===ADMIN_PASSWORD){onAuth(true);setErr(false);}else setErr(true); };
+  const tryAuth = () => { if (pw === ADMIN_PASSWORD) { onAuth(true); setErr(false); } else setErr(true); };
 
   const post = async () => {
-    if(!form.title||!form.description||!form.option_a||!form.option_b||!form.official_call) return alert("Fill in all required fields (*)");
+    if (!form.title || !form.description || !form.option_a || !form.option_b || !form.official_call) return alert("Fill in all required fields (*)");
     setBusy(true);
-    await db.insert("controversies",{...form,votes_a:0,votes_b:0});
-    setOk(true); setTimeout(()=>setOk(false),3500);
-    setForm({type:"GOAL REVIEW",game:"",title:"",description:"",option_a:"",option_b:"",official_call:"",hot:false});
+    await db.insert("controversies", { ...form, votes_a: 0, votes_b: 0 });
+    setOk(true); setTimeout(() => setOk(false), 3500);
+    setForm({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", hot: false });
     onRefresh(); setBusy(false);
   };
 
   const postArticle = async () => {
-    if(!artForm.title||!artForm.excerpt) return alert("Fill in title and excerpt.");
+    if (!artForm.title || !artForm.excerpt) return alert("Fill in title and excerpt.");
     setBusy(true);
-    const newArt = {
-      ...artForm,
-      id:"art_"+Date.now(),
-      color: CAT_COLORS[artForm.category]||"#00d4ff",
-      date: new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),
-      photo: artForm.photo || "https://images.unsplash.com/photo-1515703407324-5f753afd8be8?w=800&q=80",
-    };
+    const newArt = { ...artForm, id: "art_" + Date.now(), color: CAT_COLORS[artForm.category] || "#00d4ff", date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }), photo: artForm.photo || "https://images.unsplash.com/photo-1515703407324-5f753afd8be8?w=800&q=80" };
     await db.insert("articles", newArt);
     onAddArticle(newArt);
-    setArtOk(true); setTimeout(()=>setArtOk(false),3500);
-    setArtForm({category:"CONTROVERSIAL CALL",title:"",excerpt:"",author:"FanVerdict Staff",read_time:"5 min read",hot:false,photo:""});
+    setArtOk(true); setTimeout(() => setArtOk(false), 3500);
+    setArtForm({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", hot: false, photo: "" });
     setBusy(false);
   };
 
   const postParlay = async () => {
-    if(!parForm.label||!parForm.odds||!parForm.description||!parForm.payout) return alert("Fill in all required parlay fields (*).");
-    const validPicks = parForm.picks.filter(p=>p.game&&p.bet&&p.line);
-    if(validPicks.length < 2) return alert("Add at least 2 complete picks.");
+    if (!parForm.label || !parForm.odds || !parForm.description || !parForm.payout) return alert("Fill in all required parlay fields (*).");
+    const validPicks = parForm.picks.filter(p => p.game && p.bet && p.line);
+    if (validPicks.length < 2) return alert("Add at least 2 complete picks.");
     setBusy(true);
-    const newParlay = {
-      id: "par_"+Date.now(),
-      label: parForm.label,
-      legs: validPicks.length,
-      odds: parForm.odds,
-      hot: parForm.hot,
-      description: parForm.description,
-      payout: parForm.payout,
-      picks: validPicks,
-    };
+    const newParlay = { id: "par_" + Date.now(), label: parForm.label, legs: validPicks.length, odds: parForm.odds, hot: parForm.hot, description: parForm.description, payout: parForm.payout, picks: validPicks };
     await db.insert("parlays", newParlay);
     onAddParlay(newParlay);
-    setParOk(true); setTimeout(()=>setParOk(false),3500);
-    setParForm({ label:"", odds:"", description:"", hot:false, payout:"", picks:[emptyPick(), emptyPick()] });
+    setParOk(true); setTimeout(() => setParOk(false), 3500);
+    setParForm({ label: "", odds: "", description: "", hot: false, payout: "", picks: [emptyPick(), emptyPick()] });
     setBusy(false);
   };
 
-  const remove = async (id) => {
-    if(!window.confirm("Delete this controversy?")) return;
-    await db.del("controversies",id); onRefresh();
-  };
+  const remove = async (id) => { if (!window.confirm("Delete this controversy?")) return; await db.del("controversies", id); onRefresh(); };
+  const removeArticle = async (id) => { if (!window.confirm("Delete this article?")) return; await db.del("articles", id); onDeleteArticle(id); };
+  const removeParlay = async (id) => { if (!window.confirm("Delete this parlay?")) return; await db.del("parlays", id); onDeleteParlay(id); };
 
-  const removeArticle = async (id) => {
-    if(!window.confirm("Delete this article?")) return;
-    await db.del("articles",id); onDeleteArticle(id);
-  };
-
-  const removeParlay = async (id) => {
-    if(!window.confirm("Delete this parlay?")) return;
-    await db.del("parlays",id); onDeleteParlay(id);
-  };
-
-  if(!authed) return (
+  if (!authed) return (
     <main style={S.main}>
       <div style={S.authBox}>
-        <div style={{fontSize:44,marginBottom:16}}>🔐</div>
-        <h2 style={{fontSize:24,fontWeight:900,letterSpacing:4,margin:"0 0 24px",color:"#dce6f0"}}>ADMIN ACCESS</h2>
-        <input style={{...S.inp,textAlign:"center",letterSpacing:6}} type="password" placeholder="Password" value={pw} onChange={e=>setPw(e.target.value)} onKeyDown={e=>e.key==="Enter"&&tryAuth()}/>
-        {err && <p style={{color:"#ff4d4d",fontSize:13,marginTop:8}}>Wrong password</p>}
-        <button style={{...S.subBtn,marginTop:18}} onClick={tryAuth}>ENTER</button>
+        <div style={{ fontSize: 44, marginBottom: 16 }}>🔐</div>
+        <h2 style={{ fontSize: 24, fontWeight: 900, letterSpacing: 4, margin: "0 0 24px", color: "#dce6f0" }}>ADMIN ACCESS</h2>
+        <input style={{ ...S.inp, textAlign: "center", letterSpacing: 6 }} type="password" placeholder="Password" value={pw} onChange={e => setPw(e.target.value)} onKeyDown={e => e.key === "Enter" && tryAuth()} />
+        {err && <p style={{ color: "#ff4d4d", fontSize: 13, marginTop: 8 }}>Wrong password</p>}
+        <button style={{ ...S.subBtn, marginTop: 18 }} onClick={tryAuth}>ENTER</button>
       </div>
     </main>
   );
 
-  const tabs = [
-    ["post","POST VERDICT"],
-    ["manage","MANAGE VERDICTS"],
-    ["forum_post","POST ARTICLE"],
-    ["forum_manage","MANAGE ARTICLES"],
-    ["parlay_post","POST PARLAY"],
-    ["parlay_manage","MANAGE PARLAYS"],
-  ];
+  const tabs = [["post", "POST VERDICT"], ["manage", "MANAGE VERDICTS"], ["forum_post", "POST ARTICLE"], ["forum_manage", "MANAGE ARTICLES"], ["parlay_post", "POST PARLAY"], ["parlay_manage", "MANAGE PARLAYS"]];
 
   return (
     <main style={S.main}>
-      <div style={{maxWidth:740,margin:"0 auto"}}>
-        <h2 style={{fontSize:26,fontWeight:900,letterSpacing:3,marginBottom:28,color:"#dce6f0"}}>⚙ ADMIN PANEL</h2>
-        <div style={{display:"flex",gap:8,marginBottom:28,flexWrap:"wrap"}}>
-          {tabs.map(([t,l])=>(
-            <button key={t} style={{...S.tabBtn,...(tab===t?S.tabOn:{})}} onClick={()=>setTab(t)}>{l}</button>
+      <div style={{ maxWidth: 740, margin: "0 auto" }}>
+        <h2 style={{ fontSize: 26, fontWeight: 900, letterSpacing: 3, marginBottom: 28, color: "#dce6f0" }}>⚙ ADMIN PANEL</h2>
+        <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
+          {tabs.map(([t, l]) => (
+            <button key={t} style={{ ...S.tabBtn, ...(tab === t ? S.tabOn : {}) }} onClick={() => setTab(t)}>{l}</button>
           ))}
         </div>
 
-        {tab==="post" && (
+        {tab === "post" && (
           <div style={S.fbox}>
             {ok && <div style={S.succ}>✅ Posted live!</div>}
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-              <FG label="TYPE"><select style={S.sel} value={form.type} onChange={e=>set("type",e.target.value)}>{TYPES.map(t=><option key={t}>{t}</option>)}</select></FG>
-              <FG label="GAME / DATE"><input style={S.inp} placeholder="e.g. Oilers vs Flames · Apr 27" value={form.game} onChange={e=>set("game",e.target.value)}/></FG>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <FG label="TYPE"><select style={S.sel} value={form.type} onChange={e => set("type", e.target.value)}>{TYPES.map(t => <option key={t}>{t}</option>)}</select></FG>
+              <FG label="GAME / DATE"><input style={S.inp} placeholder="e.g. Oilers vs Flames · Apr 27" value={form.game} onChange={e => set("game", e.target.value)} /></FG>
             </div>
-            <FG label="HEADLINE *"><input style={S.inp} placeholder="e.g. Was that a clean hit?" value={form.title} onChange={e=>set("title",e.target.value)}/></FG>
-            <FG label="DESCRIPTION *"><textarea style={{...S.inp,minHeight:100,resize:"vertical",lineHeight:1.6}} placeholder="Describe what happened…" value={form.description} onChange={e=>set("description",e.target.value)}/></FG>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-              <FG label="OPTION A *"><input style={S.inp} placeholder="e.g. GOOD GOAL" value={form.option_a} onChange={e=>set("option_a",e.target.value)}/></FG>
-              <FG label="OPTION B *"><input style={S.inp} placeholder="e.g. NO GOAL" value={form.option_b} onChange={e=>set("option_b",e.target.value)}/></FG>
+            <FG label="HEADLINE *"><input style={S.inp} placeholder="e.g. Was that a clean hit?" value={form.title} onChange={e => set("title", e.target.value)} /></FG>
+            <FG label="DESCRIPTION *"><textarea style={{ ...S.inp, minHeight: 100, resize: "vertical", lineHeight: 1.6 }} placeholder="Describe what happened…" value={form.description} onChange={e => set("description", e.target.value)} /></FG>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <FG label="OPTION A *"><input style={S.inp} placeholder="e.g. GOOD GOAL" value={form.option_a} onChange={e => set("option_a", e.target.value)} /></FG>
+              <FG label="OPTION B *"><input style={S.inp} placeholder="e.g. NO GOAL" value={form.option_b} onChange={e => set("option_b", e.target.value)} /></FG>
             </div>
-            <FG label="OFFICIAL CALL *"><input style={S.inp} placeholder="e.g. Goal stands after review" value={form.official_call} onChange={e=>set("official_call",e.target.value)}/></FG>
-            <label style={{display:"flex",alignItems:"center",gap:8,fontSize:15,fontWeight:700,color:"#5a7080",cursor:"pointer",marginBottom:22}}>
-              <input type="checkbox" checked={form.hot} onChange={e=>set("hot",e.target.checked)}/> 🔥 Mark as HOT
+            <FG label="OFFICIAL CALL *"><input style={S.inp} placeholder="e.g. Goal stands after review" value={form.official_call} onChange={e => set("official_call", e.target.value)} /></FG>
+            <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 22 }}>
+              <input type="checkbox" checked={form.hot} onChange={e => set("hot", e.target.checked)} /> 🔥 Mark as HOT
             </label>
-            <button style={{...S.subBtn,opacity:busy?.6:1}} onClick={post} disabled={busy}>{busy?"POSTING…":"POST CONTROVERSY"}</button>
+            <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={post} disabled={busy}>{busy ? "POSTING…" : "POST CONTROVERSY"}</button>
           </div>
         )}
 
-        {tab==="manage" && (
-          <div style={{background:"#0c1420",border:"1px solid #111828",borderRadius:14,overflow:"hidden"}}>
-            {items.length===0
-              ? <p style={{color:"#334",textAlign:"center",padding:40}}>No controversies yet.</p>
-              : items.map(c=>(
-                <div key={c.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0d1620",gap:12}}>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#00d4ff",marginBottom:4}}>{c.type}</div>
-                    <div style={{fontSize:15,fontWeight:700,color:"#dce6f0",marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.title}</div>
-                    <div style={{fontSize:12,color:"#2a3a4a"}}>{c.option_a}: {lv?.[c.id]?.[0]??c.votes_a??0} | {c.option_b}: {lv?.[c.id]?.[1]??c.votes_b??0}</div>
+        {tab === "manage" && (
+          <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
+            {items.length === 0
+              ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No controversies yet.</p>
+              : items.map(c => (
+                <div key={c.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", borderBottom: "1px solid #0d1620", gap: 12 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#00d4ff", marginBottom: 4 }}>{c.type}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.title}</div>
+                    <div style={{ fontSize: 12, color: "#2a3a4a" }}>{c.option_a}: {lv?.[c.id]?.[0] ?? c.votes_a ?? 0} | {c.option_b}: {lv?.[c.id]?.[1] ?? c.votes_b ?? 0}</div>
                   </div>
-                  <button style={S.delBtn} onClick={()=>remove(c.id)}>🗑 Delete</button>
+                  <button style={S.delBtn} onClick={() => remove(c.id)}>🗑 Delete</button>
                 </div>
               ))
             }
           </div>
         )}
 
-        {tab==="forum_post" && (
+        {tab === "forum_post" && (
           <div style={S.fbox}>
             {artOk && <div style={S.succ}>✅ Article published to the Forum!</div>}
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-              <FG label="CATEGORY">
-                <select style={S.sel} value={artForm.category} onChange={e=>setArt("category",e.target.value)}>
-                  {ARTICLE_CATEGORIES.map(c=><option key={c}>{c}</option>)}
-                </select>
-              </FG>
-              <FG label="AUTHOR"><input style={S.inp} placeholder="e.g. FanVerdict Staff" value={artForm.author} onChange={e=>setArt("author",e.target.value)}/></FG>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <FG label="CATEGORY"><select style={S.sel} value={artForm.category} onChange={e => setArt("category", e.target.value)}>{ARTICLE_CATEGORIES.map(c => <option key={c}>{c}</option>)}</select></FG>
+              <FG label="AUTHOR"><input style={S.inp} placeholder="e.g. FanVerdict Staff" value={artForm.author} onChange={e => setArt("author", e.target.value)} /></FG>
             </div>
-            <FG label="TITLE *"><input style={S.inp} placeholder="e.g. The Call That Ended a Dynasty" value={artForm.title} onChange={e=>setArt("title",e.target.value)}/></FG>
-            <FG label="EXCERPT *"><textarea style={{...S.inp,minHeight:100,resize:"vertical",lineHeight:1.6}} placeholder="2-3 hook sentences. AI writes the full body automatically." value={artForm.excerpt} onChange={e=>setArt("excerpt",e.target.value)}/></FG>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-              <FG label="READ TIME"><input style={S.inp} placeholder="5 min read" value={artForm.read_time} onChange={e=>setArt("read_time",e.target.value)}/></FG>
-              <FG label="PHOTO URL"><input style={S.inp} placeholder="https://images.unsplash.com/..." value={artForm.photo} onChange={e=>setArt("photo",e.target.value)}/></FG>
+            <FG label="TITLE *"><input style={S.inp} placeholder="e.g. The Call That Ended a Dynasty" value={artForm.title} onChange={e => setArt("title", e.target.value)} /></FG>
+            <FG label="EXCERPT *"><textarea style={{ ...S.inp, minHeight: 100, resize: "vertical", lineHeight: 1.6 }} placeholder="2-3 hook sentences. AI writes the full body automatically." value={artForm.excerpt} onChange={e => setArt("excerpt", e.target.value)} /></FG>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <FG label="READ TIME"><input style={S.inp} placeholder="5 min read" value={artForm.read_time} onChange={e => setArt("read_time", e.target.value)} /></FG>
+              <FG label="PHOTO URL"><input style={S.inp} placeholder="https://images.unsplash.com/..." value={artForm.photo} onChange={e => setArt("photo", e.target.value)} /></FG>
             </div>
-            <label style={{display:"flex",alignItems:"center",gap:8,fontSize:15,fontWeight:700,color:"#5a7080",cursor:"pointer",marginBottom:16}}>
-              <input type="checkbox" checked={artForm.hot} onChange={e=>setArt("hot",e.target.checked)}/> 🔥 Mark as HOT
+            <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 16 }}>
+              <input type="checkbox" checked={artForm.hot} onChange={e => setArt("hot", e.target.checked)} /> 🔥 Mark as HOT
             </label>
-            <div style={{background:"#070b12",border:"1px solid #0f1825",borderRadius:8,padding:"11px 14px",marginBottom:18,fontSize:12,color:"#2a4050",letterSpacing:.3}}>
+            <div style={{ background: "#070b12", border: "1px solid #0f1825", borderRadius: 8, padding: "11px 14px", marginBottom: 18, fontSize: 12, color: "#2a4050", letterSpacing: 0.3 }}>
               💡 AI writes the full article body automatically when readers open it.
             </div>
-            <button style={{...S.subBtn,opacity:busy?.6:1}} onClick={postArticle} disabled={busy}>{busy?"PUBLISHING…":"PUBLISH ARTICLE"}</button>
+            <button style={{ ...S.subBtn, opacity: busy ? 0.6 : 1 }} onClick={postArticle} disabled={busy}>{busy ? "PUBLISHING…" : "PUBLISH ARTICLE"}</button>
           </div>
         )}
 
-        {tab==="forum_manage" && (
-          <div style={{background:"#0c1420",border:"1px solid #111828",borderRadius:14,overflow:"hidden"}}>
-            {articles.length===0
-              ? <p style={{color:"#334",textAlign:"center",padding:40}}>No articles yet.</p>
-              : articles.map(a=>(
-                <div key={a.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0d1620",gap:12}}>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{fontSize:10,fontWeight:800,letterSpacing:2,color:CAT_COLORS[a.category]||"#00d4ff",marginBottom:4}}>{a.category}</div>
-                    <div style={{fontSize:15,fontWeight:700,color:"#dce6f0",marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
-                    <div style={{fontSize:12,color:"#2a4050"}}>{a.author} · {a.date}{a.hot?" · 🔥":""}</div>
+        {tab === "forum_manage" && (
+          <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
+            {articles.length === 0
+              ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No articles yet.</p>
+              : articles.map(a => (
+                <div key={a.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", borderBottom: "1px solid #0d1620", gap: 12 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: CAT_COLORS[a.category] || "#00d4ff", marginBottom: 4 }}>{a.category}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.title}</div>
+                    <div style={{ fontSize: 12, color: "#2a4050" }}>{a.author} · {a.date}{a.hot ? " · 🔥" : ""}</div>
                   </div>
-                  <button style={S.delBtn} onClick={()=>removeArticle(a.id)}>🗑 Delete</button>
+                  <button style={S.delBtn} onClick={() => removeArticle(a.id)}>🗑 Delete</button>
                 </div>
               ))
             }
           </div>
         )}
 
-        {tab==="parlay_post" && (
+        {tab === "parlay_post" && (
           <div style={S.fbox}>
             {parOk && <div style={S.succ}>✅ Parlay posted to the board!</div>}
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-              <FG label="PARLAY LABEL *"><input style={S.inp} placeholder="e.g. GAME 7 CHAOS PARLAY" value={parForm.label} onChange={e=>setPar("label",e.target.value)}/></FG>
-              <FG label="ODDS *"><input style={S.inp} placeholder="e.g. +1840 or -110" value={parForm.odds} onChange={e=>setPar("odds",e.target.value)}/></FG>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <FG label="PARLAY LABEL *"><input style={S.inp} placeholder="e.g. GAME 7 CHAOS PARLAY" value={parForm.label} onChange={e => setPar("label", e.target.value)} /></FG>
+              <FG label="ODDS *"><input style={S.inp} placeholder="e.g. +1840 or -110" value={parForm.odds} onChange={e => setPar("odds", e.target.value)} /></FG>
             </div>
-            <FG label="DESCRIPTION *"><textarea style={{...S.inp,minHeight:80,resize:"vertical",lineHeight:1.6}} placeholder="Short hook for the parlay…" value={parForm.description} onChange={e=>setPar("description",e.target.value)}/></FG>
-            <FG label="PAYOUT *"><input style={S.inp} placeholder="e.g. $100 → $1,940" value={parForm.payout} onChange={e=>setPar("payout",e.target.value)}/></FG>
-            <label style={{display:"flex",alignItems:"center",gap:8,fontSize:15,fontWeight:700,color:"#5a7080",cursor:"pointer",marginBottom:22}}>
-              <input type="checkbox" checked={parForm.hot} onChange={e=>setPar("hot",e.target.checked)}/> 🔥 Mark as HOT
+            <FG label="DESCRIPTION *"><textarea style={{ ...S.inp, minHeight: 80, resize: "vertical", lineHeight: 1.6 }} placeholder="Short hook for the parlay…" value={parForm.description} onChange={e => setPar("description", e.target.value)} /></FG>
+            <FG label="PAYOUT *"><input style={S.inp} placeholder="e.g. $100 → $1,940" value={parForm.payout} onChange={e => setPar("payout", e.target.value)} /></FG>
+            <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#5a7080", cursor: "pointer", marginBottom: 22 }}>
+              <input type="checkbox" checked={parForm.hot} onChange={e => setPar("hot", e.target.checked)} /> 🔥 Mark as HOT
             </label>
-
-            <div style={{fontSize:11,fontWeight:800,letterSpacing:2.5,color:"#1e3040",marginBottom:14}}>PICKS (min 2)</div>
-            <div style={{display:"flex",flexDirection:"column",gap:12,marginBottom:16}}>
+            <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2.5, color: "#1e3040", marginBottom: 14 }}>PICKS (min 2)</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
               {parForm.picks.map((pick, idx) => (
-                <div key={idx} style={{background:"#070b12",border:"1px solid #0f1820",borderRadius:10,padding:"14px 16px"}}>
-                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
-                    <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:"#ffd700"}}>LEG {idx+1}</span>
+                <div key={idx} style={{ background: "#070b12", border: "1px solid #0f1820", borderRadius: 10, padding: "14px 16px" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#ffd700" }}>LEG {idx + 1}</span>
                     {parForm.picks.length > 2 && (
-                      <button onClick={()=>removePick(idx)} style={{background:"transparent",border:"1px solid #ff1a1a22",color:"#cc3333",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:5,cursor:"pointer"}}>✕ Remove</button>
+                      <button onClick={() => removePick(idx)} style={{ background: "transparent", border: "1px solid #ff1a1a22", color: "#cc3333", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 5, cursor: "pointer" }}>✕ Remove</button>
                     )}
                   </div>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:10}}>
-                    <FG label="GAME"><input style={S.inp} placeholder="e.g. Oilers vs Canucks" value={pick.game} onChange={e=>updatePick(idx,"game",e.target.value)}/></FG>
-                    <FG label="SPORT">
-                      <select style={S.sel} value={pick.sport} onChange={e=>updatePick(idx,"sport",e.target.value)}>
-                        {SPORT_OPTIONS.map(s=><option key={s}>{s}</option>)}
-                      </select>
-                    </FG>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                    <FG label="GAME"><input style={S.inp} placeholder="e.g. Oilers vs Canucks" value={pick.game} onChange={e => updatePick(idx, "game", e.target.value)} /></FG>
+                    <FG label="SPORT"><select style={S.sel} value={pick.sport} onChange={e => updatePick(idx, "sport", e.target.value)}>{SPORT_OPTIONS.map(s => <option key={s}>{s}</option>)}</select></FG>
                   </div>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr auto",gap:10}}>
-                    <FG label="BET / SELECTION"><input style={S.inp} placeholder="e.g. Oilers ML (Game 7)" value={pick.bet} onChange={e=>updatePick(idx,"bet",e.target.value)}/></FG>
-                    <FG label="LINE"><input style={{...S.inp,width:90}} placeholder="-118" value={pick.line} onChange={e=>updatePick(idx,"line",e.target.value)}/></FG>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 10 }}>
+                    <FG label="BET / SELECTION"><input style={S.inp} placeholder="e.g. Oilers ML (Game 7)" value={pick.bet} onChange={e => updatePick(idx, "bet", e.target.value)} /></FG>
+                    <FG label="LINE"><input style={{ ...S.inp, width: 90 }} placeholder="-118" value={pick.line} onChange={e => updatePick(idx, "line", e.target.value)} /></FG>
                   </div>
                 </div>
               ))}
             </div>
-            <button onClick={addPick} style={{width:"100%",padding:"10px",background:"transparent",border:"1px dashed #1e3040",borderRadius:8,color:"#2a4050",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer",marginBottom:22,transition:"all .15s"}}>
-              + ADD LEG
-            </button>
-            <button style={{...S.subBtn,background:"linear-gradient(135deg,#9a7a00,#c09800)",opacity:busy?.6:1}} onClick={postParlay} disabled={busy}>{busy?"POSTING…":"POST PARLAY"}</button>
+            <button onClick={addPick} style={{ width: "100%", padding: "10px", background: "transparent", border: "1px dashed #1e3040", borderRadius: 8, color: "#2a4050", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 1, cursor: "pointer", marginBottom: 22, transition: "all .15s" }}>+ ADD LEG</button>
+            <button style={{ ...S.subBtn, background: "linear-gradient(135deg,#9a7a00,#c09800)", opacity: busy ? 0.6 : 1 }} onClick={postParlay} disabled={busy}>{busy ? "POSTING…" : "POST PARLAY"}</button>
           </div>
         )}
 
-        {tab==="parlay_manage" && (
-          <div style={{background:"#0c1420",border:"1px solid #111828",borderRadius:14,overflow:"hidden"}}>
-            {parlays.length===0
-              ? <p style={{color:"#334",textAlign:"center",padding:40}}>No parlays yet.</p>
-              : parlays.map(p=>(
-                <div key={p.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 22px",borderBottom:"1px solid #0d1620",gap:12}}>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
-                      <span style={{fontSize:10,fontWeight:800,letterSpacing:2,color:"#ffd700"}}>💰 {p.legs}-LEG</span>
-                      {p.hot && <span style={{fontSize:10,color:"#ff6633"}}>🔥 HOT</span>}
+        {tab === "parlay_manage" && (
+          <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
+            {parlays.length === 0
+              ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No parlays yet.</p>
+              : parlays.map(p => (
+                <div key={p.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", borderBottom: "1px solid #0d1620", gap: 12 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                      <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#ffd700" }}>💰 {p.legs}-LEG</span>
+                      {p.hot && <span style={{ fontSize: 10, color: "#ff6633" }}>🔥 HOT</span>}
                     </div>
-                    <div style={{fontSize:15,fontWeight:700,color:"#dce6f0",marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{p.label}</div>
-                    <div style={{fontSize:12,color:"#2a4050"}}>{p.odds} · {p.payout}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "#dce6f0", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.label}</div>
+                    <div style={{ fontSize: 12, color: "#2a4050" }}>{p.odds} · {p.payout}</div>
                   </div>
-                  <button style={S.delBtn} onClick={()=>removeParlay(p.id)}>🗑 Delete</button>
+                  <button style={S.delBtn} onClick={() => removeParlay(p.id)}>🗑 Delete</button>
                 </div>
               ))
             }
@@ -1403,78 +1405,76 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   );
 }
 
-const FG = ({label,children}) => (
-  <div style={{marginBottom:18}}>
-    <label style={{display:"block",fontSize:11,fontWeight:800,letterSpacing:2,color:"#243040",marginBottom:7}}>{label}</label>
+const FG = ({ label, children }) => (
+  <div style={{ marginBottom: 18 }}>
+    <label style={{ display: "block", fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#243040", marginBottom: 7 }}>{label}</label>
     {children}
   </div>
 );
 
 const S = {
-  root:      {minHeight:"100vh",background:"#07090d",color:"#dce6f0",fontFamily:"'Barlow Condensed',sans-serif"},
-  hdr:       {background:"#080c13",borderBottom:"1px solid #0f1820",position:"sticky",top:0,zIndex:100},
-  hdrI:      {maxWidth:1100,margin:"0 auto",padding:"13px 24px",display:"flex",alignItems:"center",justifyContent:"space-between"},
-  logo:      {display:"flex",alignItems:"center",gap:10,cursor:"pointer"},
-  logoIcon:  {fontSize:20},
-  logoT:     {fontSize:21,fontWeight:900,letterSpacing:3,color:"#dce6f0"},
-  acc:       {color:"#00d4ff"},
-  nav:       {display:"flex",gap:4,alignItems:"center"},
-  live:      {fontSize:11,fontWeight:800,letterSpacing:2,color:"#5a6070",display:"flex",alignItems:"center",gap:5},
-  main:      {maxWidth:1100,margin:"0 auto",padding:"44px 24px 80px"},
-  hero:      {textAlign:"center",marginBottom:44,paddingTop:12},
-  heroPill:  {display:"inline-block",fontSize:13,fontWeight:800,letterSpacing:2.5,color:"#3a6070",background:"#0c1820",border:"1px solid #0f2030",borderRadius:20,padding:"5px 14px",marginBottom:18},
-  heroT:     {fontSize:"clamp(52px,10vw,100px)",fontWeight:900,letterSpacing:4,margin:"0 0 10px",background:"linear-gradient(135deg,#e8f0f8 20%,#00d4ff 80%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",lineHeight:1},
-  heroS:     {fontSize:20,color:"#2a4050",letterSpacing:2,marginTop:6},
-  signupBanner:{display:"flex",alignItems:"center",justifyContent:"space-between",background:"#0a1420",border:"1px solid #0f2030",borderRadius:12,padding:"16px 22px",marginBottom:36,flexWrap:"wrap",gap:12},
-  bannerBtn: {background:"#00d4ff",color:"#07090d",border:"none",borderRadius:6,padding:"8px 18px",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:900,letterSpacing:2,cursor:"pointer",flexShrink:0},
-  ldg:       {textAlign:"center",padding:80,color:"#2a4050",fontSize:16,letterSpacing:2},
-  grid:      {display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",gap:22},
-  card:      {background:"#0b1018",border:"1px solid #111820",borderRadius:16,padding:"24px 26px",position:"relative",overflow:"hidden"},
-  hotBadge:  {position:"absolute",top:14,right:14,display:"inline-flex",alignItems:"center",gap:5,background:"#0d0a07",border:"1px solid #ff5a1a44",borderRadius:6,padding:"4px 10px"},
-  hotText:   {fontSize:10,fontWeight:900,letterSpacing:2.5,color:"#ff6633"},
-  meta:      {display:"flex",alignItems:"center",gap:10,marginBottom:13},
-  tag:       {fontSize:10,fontWeight:800,letterSpacing:2,padding:"3px 10px",borderRadius:4,border:"1px solid"},
-  game:      {fontSize:11,color:"#243040",letterSpacing:.5},
-  ctitle:    {fontSize:21,fontWeight:800,margin:"0 0 10px",lineHeight:1.2,color:"#d0dce8"},
-  cdesc:     {fontSize:13,color:"#3a5060",lineHeight:1.7,margin:"0 0 16px"},
-  offBox:    {background:"#080d14",border:"1px solid #0f1820",borderRadius:8,padding:"10px 14px",marginBottom:20,fontSize:12,display:"flex",gap:8,alignItems:"baseline"},
-  offLbl:    {fontWeight:800,color:"#1e3040",letterSpacing:1.5,fontSize:10,flexShrink:0},
-  offTxt:    {color:"#5a7080",lineHeight:1.4},
-  vrow:      {display:"flex",gap:10,marginBottom:14},
-  vb:        {flex:1,padding:"13px 8px",borderRadius:8,border:"1px solid",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:800,letterSpacing:.5,cursor:"pointer",transition:"all .2s"},
-  vba:       {background:"#00d4ff0d",borderColor:"#00d4ff33",color:"#00d4ff"},
-  vbb:       {background:"#ff4d4d0d",borderColor:"#ff4d4d33",color:"#ff5555"},
-  res:       {marginBottom:14},
-  rrow:      {display:"flex",alignItems:"center",gap:10,marginBottom:10},
-  rlbl:      {width:115,fontSize:12,fontWeight:700,flexShrink:0,lineHeight:1.2,transition:"color .2s"},
-  btrack:    {flex:1,height:7,background:"#0a0f18",borderRadius:4,overflow:"hidden"},
-  rpct:      {width:36,textAlign:"right",fontSize:13,fontWeight:800,flexShrink:0,transition:"color .2s"},
-  vtot:      {fontSize:11,color:"#1e2e3e",letterSpacing:1,textAlign:"right",marginTop:6},
-  aiBtn:     {width:"100%",marginTop:12,padding:"11px 16px",background:"#0a0f18",border:"1px solid #141e30",borderRadius:8,color:"#4060a0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer",transition:"all .2s",display:"flex",alignItems:"center",justifyContent:"center"},
-  aiBox:     {marginTop:4,background:"#080d16",border:"1px solid #0f1830",borderRadius:0,borderBottomLeftRadius:16,borderBottomRightRadius:16,padding:"18px 26px 22px"},
-  aiHdr:     {display:"flex",alignItems:"center",gap:8,marginBottom:14},
-  aiIcon:    {fontSize:16},
-  aiLbl:     {fontSize:11,fontWeight:800,letterSpacing:3,color:"#3a4870"},
-  aiWait:    {color:"#2a3860",fontSize:13,fontStyle:"italic",margin:0},
-  aiTxt:     {fontSize:14,color:"#7a96b0",lineHeight:1.8,margin:0},
-  aiCallBtn: {width:"100%",padding:12,background:"#0a0f18",border:"1px solid #141e30",borderRadius:8,color:"#4060a0",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,cursor:"pointer"},
-  back:      {background:"none",border:"1px solid #0f1820",color:"#2a4050",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,fontWeight:700,letterSpacing:1,padding:"7px 16px",borderRadius:6,cursor:"pointer",marginBottom:28,transition:"all .2s"},
-  authBox:   {maxWidth:360,margin:"80px auto",background:"#0b1018",border:"1px solid #111820",borderRadius:18,padding:40,textAlign:"center"},
-  modal:     {background:"#0b1018",border:"1px solid #141e2e",borderRadius:18,padding:"36px 32px",width:"100%",maxWidth:400,position:"relative"},
-  modalClose:{position:"absolute",top:14,right:16,background:"none",border:"none",color:"#2a3a4a",fontSize:18,cursor:"pointer",padding:4},
-  googleBtn: {display:"flex",alignItems:"center",justifyContent:"center",width:"100%",padding:"12px",background:"#fff",borderRadius:9,color:"#111",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,fontWeight:700,letterSpacing:.5,cursor:"pointer",textDecoration:"none",marginBottom:18,transition:"opacity .15s"},
-  divider:   {display:"flex",alignItems:"center",gap:12,margin:"0 0 18px"},
-  divTxt:    {color:"#1e2e3e",fontSize:12,letterSpacing:1},
-  tabBtn:    {padding:"9px 18px",background:"transparent",border:"1px solid #0f1820",borderRadius:8,color:"#2a4050",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,letterSpacing:1.5,cursor:"pointer",transition:"all .15s"},
-  tabOn:     {background:"#00d4ff0d",borderColor:"#00d4ff33",color:"#00d4ff"},
-  fbox:      {background:"#0b1018",border:"1px solid #111820",borderRadius:14,padding:28},
-  inp:       {width:"100%",background:"#070b12",border:"1px solid #0f1820",borderRadius:8,color:"#b0c4d4",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",boxSizing:"border-box",transition:"border-color .15s"},
-  sel:       {width:"100%",background:"#070b12",border:"1px solid #0f1820",borderRadius:8,color:"#b0c4d4",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,padding:"11px 14px",cursor:"pointer"},
-  subBtn:    {width:"100%",padding:14,background:"linear-gradient(135deg,#0099bb,#007a99)",border:"none",borderRadius:9,color:"#fff",fontFamily:"'Barlow Condensed',sans-serif",fontSize:15,fontWeight:900,letterSpacing:3,cursor:"pointer",transition:"opacity .15s"},
-  succ:      {background:"#00ff8811",border:"1px solid #00ff8833",color:"#00cc66",borderRadius:8,padding:"11px 16px",marginBottom:20,fontSize:13,fontWeight:700,letterSpacing:.5},
-  delBtn:    {background:"transparent",border:"1px solid #ff1a1a22",color:"#cc3333",fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:700,padding:"6px 12px",borderRadius:6,cursor:"pointer",flexShrink:0,transition:"all .15s"},
-  foot:      {textAlign:"center",padding:"28px 20px",fontSize:11,letterSpacing:2,borderTop:"1px solid #0a0f18"},
-  statBox:   {background:"#080d14",border:"1px solid #0f1820",borderRadius:12,padding:"18px 28px",textAlign:"center",flex:1},
-  statNum:   {fontSize:34,fontWeight:900,color:"#00d4ff",letterSpacing:2,lineHeight:1},
-  statLbl:   {fontSize:10,fontWeight:800,letterSpacing:2,color:"#1e3040",marginTop:6},
+  root:      { minHeight: "100vh", background: "#07090d", color: "#dce6f0", fontFamily: "'Barlow Condensed',sans-serif" },
+  hdr:       { background: "#080c13", borderBottom: "1px solid #0f1820", position: "sticky", top: 0, zIndex: 100 },
+  hdrI:      { maxWidth: 1100, margin: "0 auto", padding: "13px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" },
+  logo:      { display: "flex", alignItems: "center", gap: 10, cursor: "pointer" },
+  logoIcon:  { fontSize: 20 },
+  logoT:     { fontSize: 21, fontWeight: 900, letterSpacing: 3, color: "#dce6f0" },
+  acc:       { color: "#00d4ff" },
+  nav:       { display: "flex", gap: 4, alignItems: "center" },
+  live:      { fontSize: 11, fontWeight: 800, letterSpacing: 2, color: "#5a6070", display: "flex", alignItems: "center", gap: 5 },
+  main:      { maxWidth: 1100, margin: "0 auto", padding: "44px 24px 80px" },
+  hero:      { textAlign: "center", marginBottom: 44, paddingTop: 12 },
+  heroPill:  { display: "inline-block", fontSize: 13, fontWeight: 800, letterSpacing: 2.5, color: "#3a6070", background: "#0c1820", border: "1px solid #0f2030", borderRadius: 20, padding: "5px 14px", marginBottom: 18 },
+  heroT:     { fontSize: "clamp(52px,10vw,100px)", fontWeight: 900, letterSpacing: 4, margin: "0 0 10px", background: "linear-gradient(135deg,#e8f0f8 20%,#00d4ff 80%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1 },
+  heroS:     { fontSize: 20, color: "#2a4050", letterSpacing: 2, marginTop: 6 },
+  ldg:       { textAlign: "center", padding: 80, color: "#2a4050", fontSize: 16, letterSpacing: 2 },
+  grid:      { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 },
+  card:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 16, padding: "24px 26px", position: "relative", overflow: "hidden" },
+  hotBadge:  { position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: "#0d0a07", border: "1px solid #ff5a1a44", borderRadius: 6, padding: "4px 10px" },
+  hotText:   { fontSize: 10, fontWeight: 900, letterSpacing: 2.5, color: "#ff6633" },
+  meta:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 13 },
+  tag:       { fontSize: 10, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid" },
+  game:      { fontSize: 11, color: "#243040", letterSpacing: 0.5 },
+  ctitle:    { fontSize: 21, fontWeight: 800, margin: "0 0 10px", lineHeight: 1.2, color: "#d0dce8" },
+  cdesc:     { fontSize: 13, color: "#3a5060", lineHeight: 1.7, margin: "0 0 16px" },
+  offBox:    { background: "#080d14", border: "1px solid #0f1820", borderRadius: 8, padding: "10px 14px", marginBottom: 20, fontSize: 12, display: "flex", gap: 8, alignItems: "baseline" },
+  offLbl:    { fontWeight: 800, color: "#1e3040", letterSpacing: 1.5, fontSize: 10, flexShrink: 0 },
+  offTxt:    { color: "#5a7080", lineHeight: 1.4 },
+  vrow:      { display: "flex", gap: 10, marginBottom: 14 },
+  vb:        { flex: 1, padding: "13px 8px", borderRadius: 8, border: "1px solid", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 800, letterSpacing: 0.5, cursor: "pointer", transition: "all .2s" },
+  vba:       { background: "#00d4ff0d", borderColor: "#00d4ff33", color: "#00d4ff" },
+  vbb:       { background: "#ff4d4d0d", borderColor: "#ff4d4d33", color: "#ff5555" },
+  res:       { marginBottom: 14 },
+  rrow:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 10 },
+  rlbl:      { width: 115, fontSize: 12, fontWeight: 700, flexShrink: 0, lineHeight: 1.2, transition: "color .2s" },
+  btrack:    { flex: 1, height: 7, background: "#0a0f18", borderRadius: 4, overflow: "hidden" },
+  rpct:      { width: 36, textAlign: "right", fontSize: 13, fontWeight: 800, flexShrink: 0, transition: "color .2s" },
+  vtot:      { fontSize: 11, color: "#1e2e3e", letterSpacing: 1, textAlign: "right", marginTop: 6 },
+  aiBtn:     { width: "100%", marginTop: 12, padding: "11px 16px", background: "#0a0f18", border: "1px solid #141e30", borderRadius: 8, color: "#4060a0", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 1, cursor: "pointer", transition: "all .2s", display: "flex", alignItems: "center", justifyContent: "center" },
+  aiBox:     { marginTop: 4, background: "#080d16", border: "1px solid #0f1830", borderRadius: 0, borderBottomLeftRadius: 16, borderBottomRightRadius: 16, padding: "18px 26px 22px" },
+  aiHdr:     { display: "flex", alignItems: "center", gap: 8, marginBottom: 14 },
+  aiIcon:    { fontSize: 16 },
+  aiLbl:     { fontSize: 11, fontWeight: 800, letterSpacing: 3, color: "#3a4870" },
+  aiWait:    { color: "#2a3860", fontSize: 13, fontStyle: "italic", margin: 0 },
+  aiTxt:     { fontSize: 14, color: "#7a96b0", lineHeight: 1.8, margin: 0 },
+  aiCallBtn: { width: "100%", padding: 12, background: "#0a0f18", border: "1px solid #141e30", borderRadius: 8, color: "#4060a0", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 1, cursor: "pointer" },
+  back:      { background: "none", border: "1px solid #0f1820", color: "#2a4050", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: 1, padding: "7px 16px", borderRadius: 6, cursor: "pointer", marginBottom: 28, transition: "all .2s" },
+  authBox:   { maxWidth: 360, margin: "80px auto", background: "#0b1018", border: "1px solid #111820", borderRadius: 18, padding: 40, textAlign: "center" },
+  modal:     { background: "#0b1018", border: "1px solid #141e2e", borderRadius: 18, padding: "36px 32px", width: "100%", maxWidth: 400, position: "relative" },
+  modalClose: { position: "absolute", top: 14, right: 16, background: "none", border: "none", color: "#2a3a4a", fontSize: 18, cursor: "pointer", padding: 4 },
+  googleBtn: { display: "flex", alignItems: "center", justifyContent: "center", width: "100%", padding: "12px", background: "#fff", borderRadius: 9, color: "#111", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, fontWeight: 700, letterSpacing: 0.5, cursor: "pointer", textDecoration: "none", marginBottom: 18, transition: "opacity .15s" },
+  divider:   { display: "flex", alignItems: "center", gap: 12, margin: "0 0 18px" },
+  divTxt:    { color: "#1e2e3e", fontSize: 12, letterSpacing: 1 },
+  tabBtn:    { padding: "9px 18px", background: "transparent", border: "1px solid #0f1820", borderRadius: 8, color: "#2a4050", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: 1.5, cursor: "pointer", transition: "all .15s" },
+  tabOn:     { background: "#00d4ff0d", borderColor: "#00d4ff33", color: "#00d4ff" },
+  fbox:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 14, padding: 28 },
+  inp:       { width: "100%", background: "#070b12", border: "1px solid #0f1820", borderRadius: 8, color: "#b0c4d4", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, padding: "11px 14px", boxSizing: "border-box", transition: "border-color .15s" },
+  sel:       { width: "100%", background: "#070b12", border: "1px solid #0f1820", borderRadius: 8, color: "#b0c4d4", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, padding: "11px 14px", cursor: "pointer" },
+  subBtn:    { width: "100%", padding: 14, background: "linear-gradient(135deg,#0099bb,#007a99)", border: "none", borderRadius: 9, color: "#fff", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 15, fontWeight: 900, letterSpacing: 3, cursor: "pointer", transition: "opacity .15s" },
+  succ:      { background: "#00ff8811", border: "1px solid #00ff8833", color: "#00cc66", borderRadius: 8, padding: "11px 16px", marginBottom: 20, fontSize: 13, fontWeight: 700, letterSpacing: 0.5 },
+  delBtn:    { background: "transparent", border: "1px solid #ff1a1a22", color: "#cc3333", fontFamily: "'Barlow Condensed',sans-serif", fontSize: 12, fontWeight: 700, padding: "6px 12px", borderRadius: 6, cursor: "pointer", flexShrink: 0, transition: "all .15s" },
+  foot:      { textAlign: "center", padding: "28px 20px", fontSize: 11, letterSpacing: 2, borderTop: "1px solid #0a0f18" },
+  statBox:   { background: "#080d14", border: "1px solid #0f1820", borderRadius: 12, padding: "18px 28px", textAlign: "center", flex: 1 },
+  statNum:   { fontSize: 34, fontWeight: 900, color: "#00d4ff", letterSpacing: 2, lineHeight: 1 },
+  statLbl:   { fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#1e3040", marginTop: 6 },
 };
