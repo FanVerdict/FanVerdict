@@ -66,7 +66,6 @@ const db = {
   },
 };
 
-// Badge system — replaces the old boolean "hot"
 const BADGES = [
   { value: "none",    label: "None",     emoji: "",   color: "#3a5060", bg: "#0a0f18",  border: "#1e2e3e" },
   { value: "hot",     label: "🔥 HOT",   emoji: "🔥", color: "#ff6633", bg: "#0d0a07",  border: "#ff5a1a44" },
@@ -78,7 +77,7 @@ const BADGES = [
 
 const getBadge = (item) => {
   if (item.badge) return BADGES.find(b => b.value === item.badge) || BADGES[0];
-  if (item.hot) return BADGES[1]; // legacy support
+  if (item.hot) return BADGES[1];
   return BADGES[0];
 };
 
@@ -188,7 +187,6 @@ const css = `
   ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
 `;
 
-// ── Badge Picker Component ──
 function BadgePicker({ value, onChange }) {
   return (
     <div>
@@ -212,6 +210,18 @@ function BadgePicker({ value, onChange }) {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// ── Badge pill rendered inline (no absolute positioning) ──
+function BadgePill({ item }) {
+  const badge = getBadge(item);
+  if (badge.value === "none") return null;
+  return (
+    <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px", flexShrink: 0 }}>
+      <span style={{ fontSize: 12 }}>{badge.emoji}</span>
+      <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
     </div>
   );
 }
@@ -702,16 +712,10 @@ function EmptyState({ icon, title, sub }) {
   );
 }
 
+// ── FeedCard: badge now inline in meta row ──
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
-  const badge = getBadge(item);
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s` }} className="cfade feed-card">
-      {badge.value !== "none" && (
-        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px" }}>
-          <span style={{ fontSize: 12 }}>{badge.emoji}</span>
-          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
-        </div>
-      )}
       <CardBody item={item} uv={uv} lv={lv} pct={pct} total={total} onVote={onVote} loggedIn={loggedIn} onAuthPrompt={onAuthPrompt} />
       <button style={S.aiBtn} className="hbtn" onClick={() => onDetail(item)}>
         <span style={{ marginRight: 6 }}>🤖</span> Get AI Ref Verdict →
@@ -720,17 +724,11 @@ function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, o
   );
 }
 
+// ── PredictionCard: badge now inline in meta row ──
 function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
-  const badge = getBadge(item);
   return (
     <div style={{ ...S.card, animationDelay: `${idx * .07}s`, borderColor: "#1a1030", background: "#0b0a18" }} className="cfade pred-card">
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #a78bfa, #7c3aed)" }} />
-      {badge.value !== "none" && (
-        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px" }}>
-          <span style={{ fontSize: 12 }}>{badge.emoji}</span>
-          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
-        </div>
-      )}
       {item.game_date && (
         <div style={{ position: "absolute", bottom: 68, right: 16, fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#6040a0", background: "#120d20", border: "1px solid #a78bfa22", borderRadius: 4, padding: "3px 8px" }}>
           📅 {item.game_date}
@@ -744,15 +742,19 @@ function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, logge
   );
 }
 
+// ── CardBody: badge rendered inline alongside type tag ──
 function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, isPrediction }) {
   const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
   const hasVoted = uv !== undefined;
 
   return (
     <>
-      <div style={S.meta}>
-        <span style={{ ...S.tag, background: bg, color: tc, borderColor: bc }}>{item.type}</span>
-        <span style={S.game}>{item.game}</span>
+      <div style={{ ...S.meta, justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+          <span style={{ ...S.tag, background: bg, color: tc, borderColor: bc }}>{item.type}</span>
+          <span style={S.game}>{item.game}</span>
+        </div>
+        <BadgePill item={item} />
       </div>
       <h2 style={S.ctitle}>{item.title}</h2>
       <p style={S.cdesc}>{item.description}</p>
@@ -915,21 +917,23 @@ function ParlayPage({ parlays, onOpenParlay }) {
   );
 }
 
+// ── ParlayCard: badge inline with the leg-count pill ──
 function ParlayCard({ parlay, idx, onOpen }) {
   const isPos = parlay.odds.startsWith("+");
   const badge = getBadge(parlay);
   return (
     <div className="cfade parlay-card" style={{ background: "#0b1018", border: "1px solid #161e2e", borderRadius: 16, padding: "22px 24px", position: "relative", overflow: "hidden", animationDelay: `${idx * .07}s`, cursor: "pointer" }} onClick={onOpen}>
-      {badge.value !== "none" && (
-        <div style={{ position: "absolute", top: 14, right: 14, display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px" }}>
-          <span style={{ fontSize: 12 }}>{badge.emoji}</span>
-          <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2.5, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
-        </div>
-      )}
+      {/* Leg count + badge on the same row */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
         <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, color: "#ffd700", background: "#ffd70014", border: "1px solid #ffd70033", padding: "3px 9px", borderRadius: 4 }}>💰 {parlay.legs}-LEG PARLAY</span>
+        {badge.value !== "none" && (
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "3px 9px" }}>
+            <span style={{ fontSize: 11 }}>{badge.emoji}</span>
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: 2, color: badge.color }}>{badge.label.replace(badge.emoji, "").trim()}</span>
+          </div>
+        )}
       </div>
-      <h2 style={{ fontSize: 19, fontWeight: 900, letterSpacing: 1.5, color: "#dce6f0", marginBottom: 8, lineHeight: 1.2, paddingRight: badge.value !== "none" ? 60 : 0 }}>{parlay.label}</h2>
+      <h2 style={{ fontSize: 19, fontWeight: 900, letterSpacing: 1.5, color: "#dce6f0", marginBottom: 8, lineHeight: 1.2 }}>{parlay.label}</h2>
       <p style={{ fontSize: 15, color: "#4a6070", lineHeight: 1.6, marginBottom: 18 }}>{parlay.description}</p>
       <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 18 }}>
         <div style={{ fontSize: 28, fontWeight: 900, color: isPos ? "#4ade80" : "#ff4d4d", letterSpacing: 1, lineHeight: 1 }}>{parlay.odds}</div>
@@ -1230,7 +1234,6 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
   );
 }
 
-// ── Admin Panel ──
 function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, onUpdateArticle, parlays, onAddParlay, onDeleteParlay, onUpdateParlay, onUpdateItem }) {
   const [pw, setPw]         = useState("");
   const [err, setErr]       = useState(false);
@@ -1239,10 +1242,10 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const [artOk, setArtOk]   = useState(false);
   const [parOk, setParOk]   = useState(false);
   const [busy, setBusy]     = useState(false);
-  const [editingId, setEditingId]   = useState(null); // for verdicts
-  const [editingArt, setEditingArt] = useState(null); // for articles
-  const [editingPar, setEditingPar] = useState(null); // for parlays
-  const [saveOk, setSaveOk]         = useState(null); // id of recently saved
+  const [editingId, setEditingId]   = useState(null);
+  const [editingArt, setEditingArt] = useState(null);
+  const [editingPar, setEditingPar] = useState(null);
+  const [saveOk, setSaveOk]         = useState(null);
 
   const [form, setForm] = useState({ type: "GOAL REVIEW", game: "", title: "", description: "", option_a: "", option_b: "", official_call: "", badge: "none", feed_type: "verdict", game_date: "" });
   const [artForm, setArtForm] = useState({ category: "CONTROVERSIAL CALL", title: "", excerpt: "", author: "FanVerdict Staff", read_time: "5 min read", badge: "none", photo: "" });
@@ -1250,7 +1253,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const emptyPick = () => ({ game: "", bet: "", line: "", sport: "NHL" });
   const [parForm, setParForm] = useState({ label: "", odds: "", description: "", badge: "none", payout: "", picks: [emptyPick(), emptyPick()] });
 
-  // Inline edit state
   const [editForm, setEditForm]     = useState({});
   const [editArtForm, setEditArtForm] = useState({});
   const [editParForm, setEditParForm] = useState({});
@@ -1306,7 +1308,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const removeArticle = async (id) => { if (!window.confirm("Delete this article?")) return; await db.del("articles", id); onDeleteArticle(id); };
   const removeParlay  = async (id) => { if (!window.confirm("Delete this parlay?")) return; await db.del("parlays", id); onDeleteParlay(id); };
 
-  // Inline edit handlers
   const startEdit = (item) => { setEditingId(item.id); setEditForm({ ...item }); };
   const cancelEdit = () => { setEditingId(null); setEditForm({}); };
   const saveEdit = async () => {
@@ -1367,7 +1368,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           ))}
         </div>
 
-        {/* ── POST VERDICT ── */}
         {tab === "post" && (
           <div style={S.fbox}>
             {ok && <div style={S.succ}>✅ Posted live!</div>}
@@ -1407,14 +1407,12 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           </div>
         )}
 
-        {/* ── MANAGE VERDICTS ── */}
         {tab === "manage" && (
           <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
             {items.length === 0
               ? <p style={{ color: "#334", textAlign: "center", padding: 40 }}>No items yet.</p>
               : items.map(c => (
                 <div key={c.id} style={{ borderBottom: "1px solid #0d1620" }}>
-                  {/* Row header */}
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 22px", gap: 12 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
@@ -1433,7 +1431,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
                       <button style={S.delBtn} onClick={() => remove(c.id)}>🗑</button>
                     </div>
                   </div>
-                  {/* Inline edit panel */}
                   {editingId === c.id && (
                     <div className="edit-panel" style={{ background: "#070b12", borderTop: "1px solid #0f1a2a", padding: "20px 22px 24px" }}>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
@@ -1466,7 +1463,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           </div>
         )}
 
-        {/* ── POST ARTICLE ── */}
         {tab === "forum_post" && (
           <div style={S.fbox}>
             {artOk && <div style={S.succ}>✅ Article published to the Forum!</div>}
@@ -1490,7 +1486,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           </div>
         )}
 
-        {/* ── MANAGE ARTICLES ── */}
         {tab === "forum_manage" && (
           <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
             {articles.length === 0
@@ -1542,7 +1537,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           </div>
         )}
 
-        {/* ── POST PARLAY ── */}
         {tab === "parlay_post" && (
           <div style={S.fbox}>
             {parOk && <div style={S.succ}>✅ Parlay posted to the board!</div>}
@@ -1581,7 +1575,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
           </div>
         )}
 
-        {/* ── MANAGE PARLAYS ── */}
         {tab === "parlay_manage" && (
           <div style={{ background: "#0c1420", border: "1px solid #111828", borderRadius: 14, overflow: "hidden" }}>
             {parlays.length === 0
@@ -1677,7 +1670,7 @@ const S = {
   grid:      { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 },
   card:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 16, padding: "24px 26px", position: "relative", overflow: "hidden" },
   meta:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 13 },
-  tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid" },
+  tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid", flexShrink: 0 },
   game:      { fontSize: 13, color: "#3a5060", letterSpacing: 0.5 },
   ctitle:    { fontSize: 21, fontWeight: 800, margin: "0 0 10px", lineHeight: 1.2, color: "#d0dce8" },
   cdesc:     { fontSize: 15, color: "#4a6070", lineHeight: 1.75, margin: "0 0 16px" },
