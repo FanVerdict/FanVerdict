@@ -187,14 +187,17 @@ const css = `
   ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
   .mobile-nav{display:none}
   .desktop-live{display:flex}
+  .mobile-header-top{display:none}
   @media(max-width:640px){
     .desktop-nav{display:none!important}
     .desktop-live{display:none!important}
-    .mobile-nav{display:flex!important;width:100%;border-top:1px solid #0f1820;padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .desktop-logo{display:none!important}
+    .mobile-header-top{display:flex!important;width:100%;justify-content:center;align-items:center;padding:12px 16px}
+    .mobile-nav{display:flex!important;width:100%;border-top:1px solid #0f1820;padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;justify-content:center}
     .mobile-nav::-webkit-scrollbar{display:none}
     .mobile-nav-btn{background:none;border:none;border-bottom:2px solid transparent;color:#3a5060;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;padding:10px 14px;cursor:pointer;transition:all .18s ease;white-space:nowrap;flex-shrink:0}
     .mobile-nav-btn.active{color:#00d4ff;border-bottom-color:#00d4ff}
-    .hdr-top{padding:10px 16px!important}
+    .hdr-top{padding:0!important}
   }
 `;
 
@@ -510,7 +513,7 @@ export default function App() {
   };
   const homeNavCls = () => "nav-btn" + (isHomePage ? " active" : "");
 
-  // Mobile nav items
+  // Mobile nav items — LOG IN has no pages array so it never gets .active
   const mobileNavItems = [
     { label: "HOME", pages: ["verdicts", "predictions"], action: goHome },
     { label: "FORUM", pages: ["forum", "article"], action: () => setPage("forum") },
@@ -519,20 +522,21 @@ export default function App() {
       { label: "SAVED", pages: ["saved"], action: () => setPage("saved") },
       { label: profile?.display_name?.split(" ")[0]?.toUpperCase() || "ME", pages: ["profile"], action: () => setPage("profile") },
     ] : [
-      { label: "LOG IN", pages: [], action: () => setShowAuth(true), highlight: true },
+      { label: "LOG IN", pages: [], action: () => setShowAuth(true) },
     ]),
   ];
 
-  const isMobileNavActive = (item) => item.pages.includes(page);
+  const isMobileNavActive = (item) => item.pages.length > 0 && item.pages.includes(page);
 
   return (
     <div style={S.root}>
       <style>{css}</style>
 
       <header style={S.hdr}>
-        {/* Top row: logo + desktop nav + live indicator */}
+        {/* Desktop top row */}
         <div style={S.hdrI} className="hdr-top">
-          <div style={S.logo} onClick={goHome}>
+          {/* Logo — hidden on mobile via CSS */}
+          <div style={S.logo} className="desktop-logo" onClick={goHome}>
             <span style={S.logoIcon}>🏒</span>
             <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span>
           </div>
@@ -558,6 +562,15 @@ export default function App() {
           </nav>
           <div style={S.live} className="desktop-live"><span className="blink" style={{ color: "#ff4d4d" }}>●</span> LIVE</div>
         </div>
+
+        {/* Mobile: centered logo row */}
+        <div className="mobile-header-top">
+          <div style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={goHome}>
+            <span style={{ fontSize: 20 }}>🏒</span>
+            <span style={{ fontSize: 21, fontWeight: 900, letterSpacing: 3, color: "#dce6f0" }}>FAN<span style={{ color: "#00d4ff" }}>VERDICT</span></span>
+          </div>
+        </div>
+
         {/* Mobile bottom nav bar */}
         <nav className="mobile-nav">
           {mobileNavItems.map((item, i) => (
@@ -565,7 +578,6 @@ export default function App() {
               key={i}
               className={`mobile-nav-btn${isMobileNavActive(item) ? " active" : ""}`}
               onClick={item.action}
-              style={item.highlight && !isMobileNavActive(item) ? { color: "#00d4ff" } : {}}
             >
               {item.label}
             </button>
