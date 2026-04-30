@@ -700,7 +700,6 @@ function EmptyState({ icon, title, sub }) {
   );
 }
 
-// ── FIXED: Badge is now inline in the meta row, not absolutely positioned ──
 function FeedCard({ item, idx, uv, lv, pct, total, onVote, onDetail, loggedIn, onAuthPrompt }) {
   const badge = getBadge(item);
   return (
@@ -731,7 +730,7 @@ function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, logge
   );
 }
 
-// ── FIXED: Badge rendered inline in the meta row alongside the type tag ──
+// ── FIXED: meta row uses nowrap so badge stays on same line as type tag on mobile ──
 function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, isPrediction, badge: badgeProp }) {
   const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
   const hasVoted = uv !== undefined;
@@ -739,10 +738,10 @@ function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, is
 
   return (
     <>
-      <div style={{ ...S.meta, justifyContent: "space-between" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-          <span style={{ ...S.tag, background: bg, color: tc, borderColor: bc }}>{item.type}</span>
-          <span style={S.game}>{item.game}</span>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 13, flexWrap: "nowrap" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0, overflow: "hidden" }}>
+          <span style={{ ...S.tag, flexShrink: 0 }}>{item.type}</span>
+          <span style={{ ...S.game, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.game}</span>
         </div>
         {badge.value !== "none" && (
           <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: badge.bg, border: `1px solid ${badge.border}`, borderRadius: 6, padding: "4px 10px", flexShrink: 0 }}>
@@ -912,7 +911,6 @@ function ParlayPage({ parlays, onOpenParlay }) {
   );
 }
 
-// ── FIXED: Badge inline in header row, not absolutely positioned ──
 function ParlayCard({ parlay, idx, onOpen }) {
   const isPos = parlay.odds.startsWith("+");
   const badge = getBadge(parlay);
@@ -1228,7 +1226,6 @@ function ProfilePage({ profile, user, savedCount, votedCount, onLogout, onBack }
   );
 }
 
-// ── Admin Panel ──
 function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArticle, onDeleteArticle, onUpdateArticle, parlays, onAddParlay, onDeleteParlay, onUpdateParlay, onUpdateItem }) {
   const [pw, setPw]         = useState("");
   const [err, setErr]       = useState(false);
@@ -1299,7 +1296,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
     setBusy(false);
   };
 
-  // ── FIXED: delete calls onRefresh only for new posts, not edits ──
   const remove       = async (id) => { if (!window.confirm("Delete this controversy?")) return; await db.del("controversies", id); onRefresh(); };
   const removeArticle = async (id) => { if (!window.confirm("Delete this article?")) return; await db.del("articles", id); onDeleteArticle(id); };
   const removeParlay  = async (id) => { if (!window.confirm("Delete this parlay?")) return; await db.del("parlays", id); onDeleteParlay(id); };
@@ -1307,7 +1303,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const startEdit = (item) => { setEditingId(item.id); setEditForm({ ...item }); };
   const cancelEdit = () => { setEditingId(null); setEditForm({}); };
 
-  // ── FIXED: saveEdit updates local state immediately, no refresh ──
   const saveEdit = async () => {
     setBusy(true);
     await db.update("controversies", editingId, editForm);
@@ -1320,7 +1315,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const startEditArt = (art) => { setEditingArt(art.id); setEditArtForm({ ...art }); };
   const cancelEditArt = () => { setEditingArt(null); setEditArtForm({}); };
 
-  // ── FIXED: saveEditArt updates local state immediately, no refresh ──
   const saveEditArt = async () => {
     setBusy(true);
     await db.update("articles", editingArt, editArtForm);
@@ -1333,7 +1327,6 @@ function AdminPanel({ authed, onAuth, items, lv, onRefresh, articles, onAddArtic
   const startEditPar = (par) => { setEditingPar(par.id); setEditParForm({ ...par, picks: par.picks ? [...par.picks.map(p => ({ ...p }))] : [emptyPick(), emptyPick()] }); };
   const cancelEditPar = () => { setEditingPar(null); setEditParForm({}); };
 
-  // ── FIXED: saveEditPar updates local state immediately, no refresh ──
   const saveEditPar = async () => {
     const validPicks = (editParForm.picks || []).filter(p => p.game && p.bet && p.line);
     if (validPicks.length < 2) return alert("Need at least 2 complete picks.");
@@ -1671,10 +1664,10 @@ const S = {
   ldg:       { textAlign: "center", padding: 80, color: "#3a5060", fontSize: 18, letterSpacing: 2 },
   grid:      { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 },
   card:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 16, padding: "24px 26px", position: "relative", overflow: "hidden" },
-  // ── FIXED: meta is now flex with space-between so badge aligns to same row as type tag ──
-  meta:      { display: "flex", alignItems: "center", gap: 10, marginBottom: 13 },
-  tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid", whiteSpace: "nowrap" },
-  game:      { fontSize: 13, color: "#3a5060", letterSpacing: 0.5 },
+  // ── FIXED: nowrap keeps badge on same line as type tag on mobile ──
+  meta:      { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 13, flexWrap: "nowrap" },
+  tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid", whiteSpace: "nowrap", background: "var(--tag-bg)", color: "var(--tag-color)", borderColor: "var(--tag-border)" },
+  game:      { fontSize: 13, color: "#3a5060", letterSpacing: 0.5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" },
   ctitle:    { fontSize: 21, fontWeight: 800, margin: "0 0 10px", lineHeight: 1.2, color: "#d0dce8" },
   cdesc:     { fontSize: 15, color: "#4a6070", lineHeight: 1.75, margin: "0 0 16px" },
   offBox:    { background: "#080d14", border: "1px solid #0f1820", borderRadius: 8, padding: "10px 14px", marginBottom: 20, fontSize: 13, display: "flex", gap: 8, alignItems: "baseline" },
