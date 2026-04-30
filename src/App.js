@@ -185,6 +185,17 @@ const css = `
   ::-webkit-scrollbar{width:6px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:#1e2840;border-radius:3px}
+  .mobile-nav{display:none}
+  .desktop-live{display:flex}
+  @media(max-width:640px){
+    .desktop-nav{display:none!important}
+    .desktop-live{display:none!important}
+    .mobile-nav{display:flex!important;width:100%;border-top:1px solid #0f1820;padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .mobile-nav::-webkit-scrollbar{display:none}
+    .mobile-nav-btn{background:none;border:none;border-bottom:2px solid transparent;color:#3a5060;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;padding:10px 14px;cursor:pointer;transition:all .18s ease;white-space:nowrap;flex-shrink:0}
+    .mobile-nav-btn.active{color:#00d4ff;border-bottom-color:#00d4ff}
+    .hdr-top{padding:10px 16px!important}
+  }
 `;
 
 function BadgePicker({ value, onChange }) {
@@ -499,17 +510,34 @@ export default function App() {
   };
   const homeNavCls = () => "nav-btn" + (isHomePage ? " active" : "");
 
+  // Mobile nav items
+  const mobileNavItems = [
+    { label: "HOME", pages: ["verdicts", "predictions"], action: goHome },
+    { label: "FORUM", pages: ["forum", "article"], action: () => setPage("forum") },
+    { label: "PARLAYS", pages: ["parlay", "parlay_detail"], action: () => setPage("parlay") },
+    ...(user ? [
+      { label: "SAVED", pages: ["saved"], action: () => setPage("saved") },
+      { label: profile?.display_name?.split(" ")[0]?.toUpperCase() || "ME", pages: ["profile"], action: () => setPage("profile") },
+    ] : [
+      { label: "LOG IN", pages: [], action: () => setShowAuth(true), highlight: true },
+    ]),
+  ];
+
+  const isMobileNavActive = (item) => item.pages.includes(page);
+
   return (
     <div style={S.root}>
       <style>{css}</style>
 
       <header style={S.hdr}>
-        <div style={S.hdrI}>
+        {/* Top row: logo + desktop nav + live indicator */}
+        <div style={S.hdrI} className="hdr-top">
           <div style={S.logo} onClick={goHome}>
             <span style={S.logoIcon}>🏒</span>
             <span style={S.logoT}>FAN<span style={S.acc}>VERDICT</span></span>
           </div>
-          <nav style={S.nav}>
+          {/* Desktop nav */}
+          <nav style={S.nav} className="desktop-nav">
             <button className={homeNavCls()} onClick={goHome}>HOME</button>
             <button className={navCls(["forum", "article"])} onClick={() => setPage("forum")}>FORUM</button>
             <button className={navCls(["parlay", "parlay_detail"])} onClick={() => setPage("parlay")}>PARLAYS</button>
@@ -528,8 +556,21 @@ export default function App() {
               </button>
             )}
           </nav>
-          <div style={S.live}><span className="blink" style={{ color: "#ff4d4d" }}>●</span> LIVE</div>
+          <div style={S.live} className="desktop-live"><span className="blink" style={{ color: "#ff4d4d" }}>●</span> LIVE</div>
         </div>
+        {/* Mobile bottom nav bar */}
+        <nav className="mobile-nav">
+          {mobileNavItems.map((item, i) => (
+            <button
+              key={i}
+              className={`mobile-nav-btn${isMobileNavActive(item) ? " active" : ""}`}
+              onClick={item.action}
+              style={item.highlight && !isMobileNavActive(item) ? { color: "#00d4ff" } : {}}
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
       </header>
 
       {showVoteGate && (
