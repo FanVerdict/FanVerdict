@@ -112,11 +112,11 @@ const DEFAULT_PARLAYS = [
 ];
 
 const COLORS = {
-  "GOAL REVIEW":        ["#00d4ff18","#00d4ff","#00d4ff44"],
+  "GOAL REVIEW":        ["#00ff6618","#00ff66","#00ff6644"],
   "FIGHT VERDICT":      ["#ff4d4d18","#ff4d4d","#ff4d4d44"],
   "PENALTY CALL":       ["#ffd70018","#ffd700","#ffd70044"],
   "3 STARS":            ["#c084fc18","#c084fc","#c084fc44"],
-  "OFFSIDE REVIEW":     ["#4ade8018","#4ade80","#4ade8044"],
+  "OFFSIDE REVIEW":     ["#00d4ff18","#00d4ff","#00d4ff44"],
   "GENERAL":            ["#fb923c18","#fb923c","#fb923c44"],
   "SERIES PREDICTION":  ["#a78bfa18","#a78bfa","#a78bfa44"],
   "AWARD PREDICTION":   ["#fbbf2418","#fbbf24","#fbbf2444"],
@@ -730,7 +730,6 @@ function PredictionCard({ item, idx, uv, lv, pct, total, onVote, onDetail, logge
   );
 }
 
-// ── FIXED: meta row uses nowrap so badge stays on same line as type tag on mobile ──
 function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, isPrediction, badge: badgeProp }) {
   const [bg, tc, bc] = COLORS[item.type] || COLORS["GENERAL"];
   const hasVoted = uv !== undefined;
@@ -740,7 +739,13 @@ function CardBody({ item, uv, lv, pct, total, onVote, loggedIn, onAuthPrompt, is
     <>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 13, flexWrap: "nowrap" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0, overflow: "hidden" }}>
-          <span style={{ ...S.tag, flexShrink: 0 }}>{item.type}</span>
+          <span style={{
+            ...S.tag,
+            flexShrink: 0,
+            background: bg,
+            color: tc,
+            borderColor: bc,
+          }}>{item.type}</span>
           <span style={{ ...S.game, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.game}</span>
         </div>
         {badge.value !== "none" && (
@@ -1664,9 +1669,7 @@ const S = {
   ldg:       { textAlign: "center", padding: 80, color: "#3a5060", fontSize: 18, letterSpacing: 2 },
   grid:      { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 22 },
   card:      { background: "#0b1018", border: "1px solid #111820", borderRadius: 16, padding: "24px 26px", position: "relative", overflow: "hidden" },
-  // ── FIXED: nowrap keeps badge on same line as type tag on mobile ──
-  meta:      { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 13, flexWrap: "nowrap" },
-  tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid", whiteSpace: "nowrap", background: "var(--tag-bg)", color: "var(--tag-color)", borderColor: "var(--tag-border)" },
+  tag:       { fontSize: 11, fontWeight: 800, letterSpacing: 2, padding: "3px 10px", borderRadius: 4, border: "1px solid", whiteSpace: "nowrap" },
   game:      { fontSize: 13, color: "#3a5060", letterSpacing: 0.5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" },
   ctitle:    { fontSize: 21, fontWeight: 800, margin: "0 0 10px", lineHeight: 1.2, color: "#d0dce8" },
   cdesc:     { fontSize: 15, color: "#4a6070", lineHeight: 1.75, margin: "0 0 16px" },
